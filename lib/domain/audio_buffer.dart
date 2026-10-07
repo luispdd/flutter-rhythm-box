@@ -17,23 +17,15 @@ class AudioBuffer {
   /// Nominal duration of one full loop iteration.
   final Duration duration;
 
-  /// Tempo in BPM used when rendering this buffer.
-  final double bpm;
-
-  /// Number of sequence steps in this buffer.
-  final int stepCount;
-
   const AudioBuffer({
     required this.wavBytes,
     required this.pcmSamples,
     required this.sampleRate,
     required this.totalSamples,
     required this.duration,
-    required this.bpm,
-    required this.stepCount,
   });
 
   @override
   String toString() =>
-      'AudioBuffer(bpm: $bpm, steps: $stepCount, samples: $totalSamples, duration: $duration)';
+      'AudioBuffer(samples: $totalSamples, duration: $duration)';
 }

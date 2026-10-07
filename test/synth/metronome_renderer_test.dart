@@ -131,8 +131,6 @@ void main() {
       expect(buffer.pcmSamples.length, equals(88200));
       expect(buffer.wavBytes.length, equals(44 + 88200 * 2));
       expect(buffer.duration, equals(const Duration(seconds: 2)));
-      expect(buffer.bpm, equals(120.0));
-      expect(buffer.stepCount, equals(16));
     });
   });
 }

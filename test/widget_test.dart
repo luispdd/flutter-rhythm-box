@@ -1,46 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rhythm_box/audio/audio_engine.dart';
-import 'package:rhythm_box/domain/audio_buffer.dart';
 import 'package:rhythm_box/main.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
-
-class FakeAudioEngine implements AudioEngine {
-  bool _isPlaying = false;
-  int startLoopCalls = 0;
-  int swapLoopCalls = 0;
-  int stopCalls = 0;
-
-  @override
-  bool get isPlaying => _isPlaying;
-
-  @override
-  Stream<Duration>? get positionStream => null;
-
-  @override
-  Future<void> init() async {}
-
-  @override
-  Future<void> dispose() async {}
-
-  @override
-  Future<void> startLoop(AudioBuffer buffer) async {
-    _isPlaying = true;
-    startLoopCalls++;
-  }
-
-  @override
-  Future<void> swapLoopAtBoundary(AudioBuffer nextBuffer) async {
-    swapLoopCalls++;
-  }
-
-  @override
-  Future<void> stop() async {
-    _isPlaying = false;
-    stopCalls++;
-  }
-}
+import 'audio/fake_audio_engine.dart';
 
 void main() {
   testWidgets('SpikeScreen renders controls and responds to user actions',

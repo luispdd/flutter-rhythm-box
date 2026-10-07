@@ -105,8 +105,6 @@ class MetronomeRenderer {
       sampleRate: sampleRate,
       totalSamples: pcm.length,
       duration: Duration(microseconds: durationUs),
-      bpm: bpm,
-      stepCount: settings.beatsPerBar * SynthTiming.stepsPerBeat,
     );
   }
 }

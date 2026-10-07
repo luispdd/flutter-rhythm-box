@@ -104,8 +104,6 @@ class PatternRenderer {
       sampleRate: sampleRate,
       totalSamples: pcm.length,
       duration: Duration(microseconds: durationUs),
-      bpm: effectiveBpm,
-      stepCount: pattern.stepCount,
     );
   }
 }

@@ -205,8 +205,6 @@ class ClickSynthesizer {
       sampleRate: sampleRate,
       totalSamples: pcm.length,
       duration: Duration(microseconds: durationUs),
-      bpm: bpm,
-      stepCount: stepCount,
     );
   }
 
@@ -234,8 +232,6 @@ class ClickSynthesizer {
       sampleRate: sampleRate,
       totalSamples: pcm.length,
       duration: Duration(microseconds: durationUs),
-      bpm: bpm,
-      stepCount: beatsPerBar * stepsPerBeat,
     );
   }
 }

@@ -21,8 +21,33 @@ RECORDINGS_DIR = REPO_ROOT / "recordings"
 APP_BINARY = REPO_ROOT / "build/linux/x64/debug/bundle/rhythm_box"
 ANALYZER_SCRIPT = REPO_ROOT / "tools/analyze_timing.py"
 
-# Default target serial for PipeWire monitor
-TARGET_SERIAL = "702"
+def get_default_sink_name() -> str:
+    name_env = os.environ.get("TARGET_SINK")
+    if name_env:
+        return name_env
+    try:
+        out = subprocess.check_output(["wpctl", "status"], text=True)
+        in_sinks = False
+        node_id = None
+        for line in out.splitlines():
+            if "Sinks:" in line:
+                in_sinks = True
+                continue
+            if in_sinks:
+                if "Sources:" in line or "Devices:" in line:
+                    break
+                if "*" in line:
+                    parts = line.strip().lstrip("│").strip().lstrip("*").strip().split(".")
+                    node_id = parts[0].strip()
+                    break
+        if node_id:
+            info = subprocess.check_output(["pw-cli", "info", node_id], text=True)
+            for iline in info.splitlines():
+                if "node.name =" in iline:
+                    return iline.split("=")[1].strip().strip('"')
+    except Exception:
+        pass
+    return "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__HDMI1__sink"
 
 
 def record_test(name: str, app_args: list[str], duration_sec: int, analyzer_args: list[str]) -> dict:
@@ -32,10 +57,13 @@ def record_test(name: str, app_args: list[str], duration_sec: int, analyzer_args
     print(f"Output WAV: {wav_path}")
     print(f"=======================================================")
 
-    # 1. Start audio recording via pw-record
-    rec_cmd = ["pw-record", "--target", TARGET_SERIAL, str(wav_path)]
+    # 1. Start audio recording via pw-record targeting unlinked input, then link to active sink monitor
+    rec_cmd = ["pw-record", "--latency", "250ms", "--target", "0", str(wav_path)]
     rec_proc = subprocess.Popen(rec_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(0.5)
+    time.sleep(0.3)
+    sink_prefix = get_default_sink_name()
+    subprocess.run(["pw-link", f"{sink_prefix}:monitor_FL", "pw-record:input_FL"], capture_output=True)
+    subprocess.run(["pw-link", f"{sink_prefix}:monitor_FR", "pw-record:input_FR"], capture_output=True)
 
     # 2. Run Flutter app
     app_cmd = [str(APP_BINARY)] + app_args

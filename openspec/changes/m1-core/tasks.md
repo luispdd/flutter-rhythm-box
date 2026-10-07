@@ -14,10 +14,10 @@
 
 ## 3. Audio buffer and engine
 
-- [ ] 3.1 Slim `AudioBuffer` (drop `bpm` and `stepCount`) and update its users; verify `flutter analyze` is clean and `flutter test` passes
-- [ ] 3.2 Add a fake `AudioEngine` for tests that records starts, swaps and stops; verify it with a test that exercises start, swap, latest-wins and stop
-- [ ] 3.3 Rework `SoLoudAudioEngine` swap handling per design D9 (separate audible and pending state, cancel pending on a new swap, dispose the audible source only after its boundary); verify on Linux that three rapid swaps play only the last one and that the audible loop is not cut early
-- [ ] 3.4 Re-run the Linux 5-minute and swap benchmarks (`python3 tools/run_full_benchmarks_linux.py`) after the engine change; verify the numbers still meet the loop-timing criteria and compare them with the archived M0 results
+- [x] 3.1 Slim `AudioBuffer` (drop `bpm` and `stepCount`) and update its users; verify `flutter analyze` is clean and `flutter test` passes
+- [x] 3.2 Add a fake `AudioEngine` for tests that records starts, swaps and stops; verify it with a test that exercises start, swap, latest-wins and stop
+- [x] 3.3 Rework `SoLoudAudioEngine` swap handling per design D9 (separate audible and pending state, cancel pending on a new swap, dispose the audible source only after its boundary); verify on Linux that three rapid swaps play only the last one and that the audible loop is not cut early
+- [x] 3.4 Re-run the Linux 5-minute and swap benchmarks (`python3 tools/run_full_benchmarks_linux.py`) after the engine change; verify the numbers still meet the loop-timing criteria and compare them with the archived M0 results
 
 ## 4. Shared tempo and playback layer
 

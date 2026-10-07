@@ -16,12 +16,17 @@ class SoLoudAudioEngine implements AudioEngine {
   final SoLoud _soloud;
   int _bufferCounter = 0;
 
-  AudioSource? _currentSource;
-  SoundHandle? _currentHandle;
-  SoundHandle? _previousHandle;
-  AudioBuffer? _currentBuffer;
+  AudioSource? _audibleSource;
+  SoundHandle? _audibleHandle;
+  AudioBuffer? _audibleBuffer;
+  Duration? _audibleAnchorTime;
 
-  AudioSource? _pendingRetireSource;
+  AudioSource? _pendingSource;
+  SoundHandle? _pendingHandle;
+  AudioBuffer? _pendingBuffer;
+  Duration? _pendingBoundaryTime;
+
+  AudioSource? _retiringAudibleSource;
 
   bool _isInitialized = false;
   bool _isPlaying = false;
@@ -31,8 +36,6 @@ class SoLoudAudioEngine implements AudioEngine {
       StreamController<Duration>.broadcast();
 
   SoLoudAudioEngine({SoLoud? soloud}) : _soloud = soloud ?? SoLoud.instance;
-
-  Duration? _currentLoopAnchorEngineTime;
 
   @override
   bool get isPlaying => _isPlaying;
@@ -75,61 +78,100 @@ class SoLoudAudioEngine implements AudioEngine {
     final startTime = _soloud.getEngineTime() + const Duration(milliseconds: 20);
     final handle = _soloud.playScheduled(source, startTime, looping: true);
 
-    _currentLoopAnchorEngineTime = startTime;
-    _currentSource = source;
-    _currentHandle = handle;
-    _currentBuffer = buffer;
+    _audibleAnchorTime = startTime;
+    _audibleSource = source;
+    _audibleHandle = handle;
+    _audibleBuffer = buffer;
     _isPlaying = true;
 
     _startPositionReporting();
   }
 
+  Future<void> _promotePendingIfBoundaryPassed() async {
+    final pendingBoundary = _pendingBoundaryTime;
+    if (pendingBoundary != null && _soloud.getEngineTime() >= pendingBoundary) {
+      if (_retiringAudibleSource != null) {
+        try {
+          await _soloud.disposeSource(_retiringAudibleSource!);
+        } catch (_) {}
+        _retiringAudibleSource = null;
+      }
+      _audibleSource = _pendingSource;
+      _audibleHandle = _pendingHandle;
+      _audibleBuffer = _pendingBuffer;
+      _audibleAnchorTime = pendingBoundary;
+
+      _pendingSource = null;
+      _pendingHandle = null;
+      _pendingBuffer = null;
+      _pendingBoundaryTime = null;
+    }
+  }
+
   @override
   Future<void> swapLoopAtBoundary(AudioBuffer nextBuffer) async {
-    if (!_isPlaying || _currentHandle == null || _currentBuffer == null || _currentLoopAnchorEngineTime == null) {
+    if (!_isPlaying ||
+        _audibleHandle == null ||
+        _audibleBuffer == null ||
+        _audibleAnchorTime == null) {
       await startLoop(nextBuffer);
       return;
+    }
+
+    // Check if the previous pending boundary already passed
+    await _promotePendingIfBoundaryPassed();
+
+    final now = _soloud.getEngineTime();
+    const leadMarginUs = 30000; // 30 ms lead time
+
+    // If a swap is already pending before its boundary, cancel it immediately.
+    // Latest swap wins: intermediate pending buffers are never heard.
+    // The currently audible loop continues uninterrupted until the boundary.
+    if (_pendingHandle != null) {
+      try {
+        await _soloud.stop(_pendingHandle!);
+      } catch (_) {}
+      _pendingHandle = null;
+    }
+    if (_pendingSource != null) {
+      try {
+        await _soloud.disposeSource(_pendingSource!);
+      } catch (_) {}
+      _pendingSource = null;
     }
 
     final nextSoundId = 'loop_${_bufferCounter++}';
     final nextSource = await _soloud.loadMem(nextSoundId, nextBuffer.wavBytes);
 
-    // Compute boundary strictly on SoLoud's engine clock anchor
-    final now = _soloud.getEngineTime();
-    final elapsedUs = (now - _currentLoopAnchorEngineTime!).inMicroseconds;
-    final loopDurUs = _currentBuffer!.duration.inMicroseconds;
+    Duration boundaryEngineTime;
+    if (_pendingBoundaryTime != null &&
+        (_pendingBoundaryTime! - now).inMicroseconds >= leadMarginUs) {
+      // Reuse the established boundary time for the current cycle
+      boundaryEngineTime = _pendingBoundaryTime!;
+    } else {
+      // Compute boundary strictly from the audible loop's anchor timeline
+      final elapsedUs = (now - _audibleAnchorTime!).inMicroseconds;
+      final loopDurUs = _audibleBuffer!.duration.inMicroseconds;
+      final cycles = ((elapsedUs + leadMarginUs) / loopDurUs).ceil();
+      boundaryEngineTime =
+          _audibleAnchorTime! + Duration(microseconds: cycles * loopDurUs);
 
-    // Determine the next integer loop cycle with at least 30 ms lead time
-    const leadMarginUs = 30000;
-    final cycles = ((elapsedUs + leadMarginUs) / loopDurUs).ceil();
-    final boundaryEngineTime =
-        _currentLoopAnchorEngineTime! + Duration(microseconds: cycles * loopDurUs);
+      // Stop audible handle at the boundary
+      _soloud.stopScheduled(_audibleHandle!, boundaryEngineTime);
+      _retiringAudibleSource = _audibleSource;
+    }
 
-    // Stop current handle sample-accurately at boundaryEngineTime
-    _soloud.stopScheduled(_currentHandle!, boundaryEngineTime);
-
-    // Start next handle sample-accurately at boundaryEngineTime
+    // Schedule next handle to play cleanly at boundaryEngineTime
     final nextHandle = _soloud.playScheduled(
       nextSource,
       boundaryEngineTime,
       looping: true,
     );
 
-    // Update anchor to the new boundary
-    _currentLoopAnchorEngineTime = boundaryEngineTime;
-
-    // Retire old audio source
-    if (_pendingRetireSource != null) {
-      try {
-        await _soloud.disposeSource(_pendingRetireSource!);
-      } catch (_) {}
-    }
-    _pendingRetireSource = _currentSource;
-
-    _previousHandle = _currentHandle;
-    _currentSource = nextSource;
-    _currentHandle = nextHandle;
-    _currentBuffer = nextBuffer;
+    _pendingSource = nextSource;
+    _pendingHandle = nextHandle;
+    _pendingBuffer = nextBuffer;
+    _pendingBoundaryTime = boundaryEngineTime;
   }
 
   @override
@@ -137,36 +179,39 @@ class SoLoudAudioEngine implements AudioEngine {
     _positionTimer?.cancel();
     _positionTimer = null;
 
-    if (_currentHandle != null) {
+    if (_audibleHandle != null) {
       try {
-        await _soloud.stop(_currentHandle!);
+        await _soloud.stop(_audibleHandle!);
       } catch (_) {}
-      _currentHandle = null;
+      _audibleHandle = null;
     }
 
-    if (_previousHandle != null) {
+    if (_pendingHandle != null) {
       try {
-        await _soloud.stop(_previousHandle!);
+        await _soloud.stop(_pendingHandle!);
       } catch (_) {}
-      _previousHandle = null;
+      _pendingHandle = null;
     }
 
-    if (_currentSource != null) {
+    final sourcesToDispose = <AudioSource>{
+      ?_audibleSource,
+      ?_retiringAudibleSource,
+      ?_pendingSource,
+    };
+    for (final src in sourcesToDispose) {
       try {
-        await _soloud.disposeSource(_currentSource!);
+        await _soloud.disposeSource(src);
       } catch (_) {}
-      _currentSource = null;
     }
 
-    if (_pendingRetireSource != null) {
-      try {
-        await _soloud.disposeSource(_pendingRetireSource!);
-      } catch (_) {}
-      _pendingRetireSource = null;
-    }
+    _audibleSource = null;
+    _retiringAudibleSource = null;
+    _pendingSource = null;
 
-    _currentBuffer = null;
-    _currentLoopAnchorEngineTime = null;
+    _audibleBuffer = null;
+    _audibleAnchorTime = null;
+    _pendingBuffer = null;
+    _pendingBoundaryTime = null;
     _isPlaying = false;
   }
 
@@ -175,9 +220,12 @@ class SoLoudAudioEngine implements AudioEngine {
     // Position reporting is solely for visual/diagnostic feedback.
     // It never triggers sound generation or audio events.
     _positionTimer = Timer.periodic(const Duration(milliseconds: 50), (_) {
-      if (!_isPlaying || _currentHandle == null) return;
+      if (!_isPlaying) return;
+      unawaited(_promotePendingIfBoundaryPassed());
+      final handle = _audibleHandle;
+      if (handle == null) return;
       try {
-        final pos = _soloud.getPosition(_currentHandle!);
+        final pos = _soloud.getPosition(handle);
         if (!_positionStreamController.isClosed) {
           _positionStreamController.add(pos);
         }
