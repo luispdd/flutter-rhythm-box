@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/playback_state.dart';
 import 'playback_controller.dart';
+import 'theme.dart';
 
 /// Spike screen demonstrating audio-driven looped playback and boundary swapping.
 ///
@@ -18,13 +19,10 @@ class SpikeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(playbackNotifierProvider);
     final notifier = ref.read(playbackNotifierProvider.notifier);
-    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rhythm Box - Timing Spike'),
-        centerTitle: true,
-        backgroundColor: theme.colorScheme.surfaceContainerHighest,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -73,15 +71,15 @@ class SpikeScreen extends ConsumerWidget {
     IconData badgeIcon;
 
     if (isSequencer) {
-      badgeColor = Colors.green;
+      badgeColor = kAmber;
       badgeText = 'SEQUENCER ACTIVE';
       badgeIcon = Icons.graphic_eq;
     } else if (isMetronome) {
-      badgeColor = Colors.blue;
+      badgeColor = kAmberLight;
       badgeText = 'METRONOME ACTIVE';
       badgeIcon = Icons.access_time;
     } else {
-      badgeColor = Colors.grey;
+      badgeColor = theme.colorScheme.onSurface.withValues(alpha: 0.5);
       badgeText = 'IDLE';
       badgeIcon = Icons.stop_circle_outlined;
     }
@@ -108,7 +106,8 @@ class SpikeScreen extends ConsumerWidget {
                 const Spacer(),
                 Chip(
                   label: Text('${state.bpm.round()} BPM'),
-                  backgroundColor: theme.colorScheme.secondaryContainer,
+                  backgroundColor: kAmber.withValues(alpha: 0.15),
+                  side: BorderSide(color: theme.colorScheme.outline),
                 ),
               ],
             ),
@@ -122,7 +121,7 @@ class SpikeScreen extends ConsumerWidget {
                     state.lastEvent,
                     key: const Key('last_event_text'),
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: isPlaying ? theme.colorScheme.primary : Colors.grey[700],
+                      color: isPlaying ? kAmber : theme.colorScheme.onSurface.withValues(alpha: 0.7),
                       fontWeight: isPlaying ? FontWeight.w600 : FontWeight.normal,
                     ),
                   ),
@@ -174,11 +173,11 @@ class SpikeScreen extends ConsumerWidget {
                     height: 32,
                     decoration: BoxDecoration(
                       color: active
-                          ? (isSequencerRunning ? Colors.green : theme.colorScheme.primary)
-                          : theme.colorScheme.surfaceContainerHighest,
+                          ? (isSequencerRunning ? kAmber : kAmberDark)
+                          : kSurface,
                       borderRadius: BorderRadius.circular(6),
                       border: Border.all(
-                        color: active ? Colors.green.shade700 : Colors.grey.shade400,
+                        color: active ? kAmberLight : theme.colorScheme.outline,
                         width: 1.5,
                       ),
                     ),
@@ -186,7 +185,7 @@ class SpikeScreen extends ConsumerWidget {
                     child: Text(
                       '${index + 1}',
                       style: TextStyle(
-                        color: active ? Colors.white : Colors.grey,
+                        color: active ? Colors.black : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
@@ -196,7 +195,9 @@ class SpikeScreen extends ConsumerWidget {
                 const Spacer(),
                 Text(
                   state.patternPreset.label,
-                  style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
                 ),
               ],
             ),
@@ -266,11 +267,11 @@ class SpikeScreen extends ConsumerWidget {
                     height: 32,
                     decoration: BoxDecoration(
                       color: isMetronomeRunning
-                          ? (isAccent ? Colors.blue.shade700 : Colors.blue)
-                          : theme.colorScheme.surfaceContainerHighest,
+                          ? (isAccent ? kAmber : kAmberDark)
+                          : kSurface,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: isAccent ? Colors.blue.shade900 : Colors.grey.shade400,
+                        color: isAccent ? kAmberLight : theme.colorScheme.outline,
                         width: 2,
                       ),
                     ),
@@ -278,7 +279,7 @@ class SpikeScreen extends ConsumerWidget {
                     child: Text(
                       '${index + 1}',
                       style: TextStyle(
-                        color: isMetronomeRunning ? Colors.white : Colors.grey,
+                        color: isMetronomeRunning ? Colors.black : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
@@ -288,7 +289,9 @@ class SpikeScreen extends ConsumerWidget {
                 const Spacer(),
                 Text(
                   'Accent beat 1 (2500Hz)',
-                  style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
                 ),
               ],
             ),
@@ -347,7 +350,9 @@ class SpikeScreen extends ConsumerWidget {
             const SizedBox(height: 6),
             Text(
               'Swaps buffer at next loop boundary on audio engine clock. No audible clicks or gaps.',
-              style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+              ),
             ),
             const SizedBox(height: 16),
             Row(
@@ -424,8 +429,8 @@ class SpikeScreen extends ConsumerWidget {
           FilledButton.tonalIcon(
             key: const Key('stop_all_button'),
             style: FilledButton.styleFrom(
-              backgroundColor: Colors.red.shade100,
-              foregroundColor: Colors.red.shade900,
+              backgroundColor: Colors.red.shade900.withValues(alpha: 0.3),
+              foregroundColor: Colors.red.shade200,
             ),
             onPressed: () => notifier.stop(),
             icon: const Icon(Icons.stop_circle),
@@ -435,20 +440,20 @@ class SpikeScreen extends ConsumerWidget {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.grey.shade100,
+            color: kSurface,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey.shade300),
+            border: Border.all(color: Theme.of(context).colorScheme.outline),
           ),
           child: Row(
             children: [
-              Icon(Icons.verified, size: 20, color: Colors.green.shade700),
+              const Icon(Icons.verified, size: 20, color: kAmber),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Timing verified: Audio-driven buffer looping via SoLoud mixer clock. 0 Dart timers triggering audio.',
                   style: TextStyle(
                     fontSize: 11,
-                    color: Colors.grey.shade800,
+                    color: kTextPrimary.withValues(alpha: 0.8),
                     fontWeight: FontWeight.w500,
                   ),
                 ),

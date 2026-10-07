@@ -19,6 +19,8 @@
 
 - [x] 4.1 Build a minimal UI: sequencer start/stop, metronome start/stop, button to swap tempo/pattern; verify both loops play on Linux and swap while playing
 - [x] 4.2 Confirm by code search that no `Timer`, `Future.delayed` or periodic scheduler triggers any sound
+- [x] 4.3 Adapt current UI to the proposed Warm Amber theme template (`openspec/specs/ui-theme.md`): implement `buildAppTheme`, configure `MaterialApp`, align SpikeScreen components with palette, and verify `flutter test` and `flutter analyze` pass
+
 
 ## 5. Measurement and report
 

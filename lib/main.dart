@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'ui/spike_screen.dart';
+import 'ui/theme.dart';
 
 void main() {
   runApp(const ProviderScope(child: RhythmBoxApp()));
@@ -15,21 +16,11 @@ class RhythmBoxApp extends StatelessWidget {
     return MaterialApp(
       title: 'Rhythm Box',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      theme: buildAppTheme(),
+      darkTheme: buildAppTheme(),
+      themeMode: ThemeMode.dark,
       home: const SpikeScreen(),
     );
   }
 }
+
