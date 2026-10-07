@@ -1,7 +1,7 @@
 ## 1. Domain models
 
 - [x] 1.1 Add `Tempo` (whole BPM, clamp 30-300, default 120, increment/decrement at bounds) and verify with unit tests for default, clamping and bounds
-- [ ] 1.2 Add `Voice` and `Waveform` with JSON, plus the `defaultVoices` ladder (8 voices, values from the spec, gains from design D8) in one file; verify with tests for round trip, unknown waveform rejection, ladder size and track 0/7 values
+- [x] 1.2 Add `Voice` and `Waveform` with JSON, plus the `defaultVoices` ladder (8 voices, values from the spec, gains from design D8) in one file; verify with tests for round trip, unknown waveform rejection, ladder size and track 0/7 values
 - [ ] 1.3 Add `Pattern` (id, name, tempoBpm, stepCount 4-16, 8x16 steps, immutable toggle/clear/setStepCount, JSON); verify with tests for new-pattern defaults, shrink-then-grow preserving steps, toggle not mutating the original, clear keeping metadata, JSON round trip and malformed JSON errors
 - [ ] 1.4 Add `MetronomeSettings` (ranges, defaults, accent pitch = 1.5 x pitch, JSON with default fallback, noise rejected); verify with tests for defaults, clamping, round trip and partial JSON
 
