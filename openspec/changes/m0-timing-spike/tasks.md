@@ -11,9 +11,9 @@
 
 ## 3. Renderer and engine
 
-- [ ] 3.1 Implement the minimal pure-Dart renderer (single click voice, `stepsPerBeat = 4`, rounding rule from design D2) and verify with a unit test that loop length and onset indices match for 120 BPM x 4 steps and for a fractional step length
-- [ ] 3.2 Define the `AudioEngine` interface (`startLoop`, `swapLoopAtBoundary`, `stop`, optional position stream) and verify it compiles with no Flutter or UI imports
-- [ ] 3.3 Implement it with `flutter_soloud` using candidate 1 from design D3; verify a looped buffer plays on Linux
+- [x] 3.1 Implement the minimal pure-Dart renderer (single click voice, `stepsPerBeat = 4`, rounding rule from design D2) and verify with a unit test that loop length and onset indices match for 120 BPM x 4 steps and for a fractional step length
+- [x] 3.2 Define the `AudioEngine` interface (`startLoop`, `swapLoopAtBoundary`, `stop`, optional position stream) and verify it compiles with no Flutter or UI imports
+- [x] 3.3 Implement it with `flutter_soloud` using candidate 1 from design D3; verify a looped buffer plays on Linux
 
 ## 4. Spike app
 
