@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import '../domain/audio_buffer.dart';
+import 'synth_timing.dart';
 
 /// Pure-Dart audio synthesizer and buffer renderer.
 ///
@@ -21,41 +22,26 @@ class ClickSynthesizer {
 
   const ClickSynthesizer({this.sampleRate = defaultSampleRate});
 
+  SynthTiming get timing => SynthTiming(sampleRate: sampleRate);
+
   /// Computes the exact number of audio samples per 16th-note step for a given BPM.
-  double calculateSamplesPerStep(double bpm) {
-    if (bpm <= 0) {
-      throw ArgumentError.value(bpm, 'bpm', 'BPM must be positive');
-    }
-    return (sampleRate * 60.0) / (bpm * stepsPerBeat);
-  }
+  double calculateSamplesPerStep(double bpm) => timing.samplesPerStep(bpm);
 
   /// Calculates the onset sample index for step [stepIndex] at tempo [bpm].
   ///
   /// Uses Design D2 rounding rule: `round(i * samplesPerStep)`.
-  int onsetSampleForStep(int stepIndex, double bpm) {
-    final samplesPerStep = calculateSamplesPerStep(bpm);
-    return (stepIndex * samplesPerStep).round();
-  }
+  int onsetSampleForStep(int stepIndex, double bpm) =>
+      timing.onsetSampleForStep(stepIndex, bpm);
 
   /// Calculates the total loop length in samples for [stepCount] steps at tempo [bpm].
   ///
   /// Uses Design D2 rounding rule: `round(stepCount * samplesPerStep)`.
-  int loopLengthSamples(int stepCount, double bpm) {
-    if (stepCount <= 0) {
-      throw ArgumentError.value(stepCount, 'stepCount', 'stepCount must be positive');
-    }
-    final samplesPerStep = calculateSamplesPerStep(bpm);
-    return (stepCount * samplesPerStep).round();
-  }
+  int loopLengthSamples(int stepCount, double bpm) =>
+      timing.loopLengthSamples(stepCount, bpm);
 
   /// Calculates the onset indices for all steps from 0 to [stepCount] - 1.
-  List<int> calculateOnsetIndices(int stepCount, double bpm) {
-    return List<int>.generate(
-      stepCount,
-      (i) => onsetSampleForStep(i, bpm),
-      growable: false,
-    );
-  }
+  List<int> calculateOnsetIndices(int stepCount, double bpm) =>
+      timing.calculateStepOnsetIndices(stepCount, bpm);
 
   /// Generates a short, sharp click waveform kernel (16-bit PCM).
   ///

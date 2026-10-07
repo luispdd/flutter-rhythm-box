@@ -7,10 +7,10 @@
 
 ## 2. Synth renderer
 
-- [ ] 2.1 Extract the rounding helpers (`samplesPerStep`, onset index, loop length, metronome bar length) from `ClickSynthesizer` into a shared timing utility; verify with tests at 120 BPM (88200 samples for 16 steps) and 130 BPM (fractional step length, non-accumulating)
-- [ ] 2.2 Implement the voice renderer (waveforms, exponential sweep, 1.5 ms attack, exponential decay, seeded noise, one-pole filters); verify with tests for first sample 0, peak within 2 ms, decay below 1 percent at 5x the decay length, noise high-pass spectrum, and byte-identical output across two renders
-- [ ] 2.3 Implement the pattern renderer (per-track gain, `tanh` limiter, only the first `stepCount` steps); verify with tests for exact buffer length, onset indices, hidden steps not played, all-tracks-active within 16-bit range without clipped runs, and determinism
-- [ ] 2.4 Implement the metronome renderer (configured waveform, pitch, decay, accent on beat 1); verify with tests for bar length for 2 to 9 beats, accent dominant frequency near 1.5 x pitch and no accent when off
+- [x] 2.1 Extract the rounding helpers (`samplesPerStep`, onset index, loop length, metronome bar length) from `ClickSynthesizer` into a shared timing utility; verify with tests at 120 BPM (88200 samples for 16 steps) and 130 BPM (fractional step length, non-accumulating)
+- [x] 2.2 Implement the voice renderer (waveforms, exponential sweep, 1.5 ms attack, exponential decay, seeded noise, one-pole filters); verify with tests for first sample 0, peak within 2 ms, decay below 1 percent at 5x the decay length, noise high-pass spectrum, and byte-identical output across two renders
+- [x] 2.3 Implement the pattern renderer (per-track gain, `tanh` limiter, only the first `stepCount` steps); verify with tests for exact buffer length, onset indices, hidden steps not played, all-tracks-active within 16-bit range without clipped runs, and determinism
+- [x] 2.4 Implement the metronome renderer (configured waveform, pitch, decay, accent on beat 1); verify with tests for bar length for 2 to 9 beats, accent dominant frequency near 1.5 x pitch and no accent when off
 
 ## 3. Audio buffer and engine
 

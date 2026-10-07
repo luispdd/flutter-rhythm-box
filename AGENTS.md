@@ -16,6 +16,9 @@
 - Android toolchain & emulator: `adb` resides at `/home/fuchik0ma/Android/Sdk/platform-tools/adb` (not in system PATH). `flutter run -d <id>` only connects to running devices; launch stopped emulators first with `flutter emulators --launch <id>`. Set media volume via `adb shell cmd media_session volume --stream 3 --set 15` (`STREAM_MUSIC`).
 - Widget tests on scrollable views: default test canvas is 800x600; tapping elements below 600px fails hit-testing unless resized (`tester.view.physicalSize = const Size(1200, 1600)` + `addTearDown(tester.view.resetPhysicalSize)`) or navigated with `tester.ensureVisible`.
 - OpenSpec validation CLI: bare `openspec validate` prompts interactively and hangs subshells; always invoke with `--all` or `--no-interactive` (e.g. `openspec validate --all`).
+- `dart:math` lacks hyperbolic functions (`tanh`): implement soft-clipping manually via $(e^{2x} - 1)/(e^{2x} + 1)$ and guard $|x| > 20$ returning $\pm 1.0$ to prevent `exp` overflow.
+- Audio test peak tolerances on discrete sinusoids: discrete sampling at 44.1 kHz rarely strikes the exact continuous peak (e.g. 1 kHz sine sample peak is ~0.983); avoid over-tight assertions like `closeTo(1.0, 0.01)` and use `> 0.95`.
+- DTD hot reload error `-32603`: opaque VM service `-32603` error almost always indicates a compile/analyzer error (e.g. missing import or changing a `const` constructor); run `flutter analyze` immediately to reveal the exact issue.
 
 ## Verification Commands
 
