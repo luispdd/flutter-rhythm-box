@@ -20,6 +20,8 @@
 - `dart:math` lacks hyperbolic functions (`tanh`): implement soft-clipping manually via $(e^{2x} - 1)/(e^{2x} + 1)$ and guard $|x| > 20$ returning $\pm 1.0$ to prevent `exp` overflow.
 - Audio test peak tolerances on discrete sinusoids: discrete sampling at 44.1 kHz rarely strikes the exact continuous peak (e.g. 1 kHz sine sample peak is ~0.983); avoid over-tight assertions like `closeTo(1.0, 0.01)` and use `> 0.95`.
 - DTD hot reload error `-32603`: opaque VM service `-32603` error almost always indicates a compile/analyzer error (e.g. missing import or changing a `const` constructor); run `flutter analyze` immediately to reveal the exact issue.
+- Riverpod Notifier reactive swaps: do NOT use `ref.watch` inside a playback controller's `build()` to react to external state (like tempo or settings); `ref.watch` causes `build()` to re-execute and resets controller state (e.g. `isPlaying: false`). Use `ref.listen` inside `build()` to react to changes and trigger boundary swaps while preserving playback state.
+- `MetronomeSettings` constructor is non-`const` (clamps ranges in constructor body); calling `const MetronomeSettings(...)` fails analyzer with `const_with_non_const`.
 
 ## Verification Commands
 
@@ -27,6 +29,7 @@
 - Static check: `flutter analyze`
 - Unit and widget tests: `flutter test`
 - Linux build: `flutter build linux --debug`; binary: `build/linux/x64/debug/bundle/rhythm_box`
+- Linux CLI playback checks: `<binary> sequencer <sec>`, `<binary> metronome <sec>`, or `<binary> swap <swapSec> <totalSec>`
 - Android release build: `flutter build apk --release`; APK: `build/app/outputs/flutter-apk/app-release.apk`
 - Full Linux 5-minute benchmark: `python3 tools/run_full_benchmarks_linux.py`; outputs to `recordings/`
 - Android swap benchmark on emulator: `python3 tools/run_swap_benchmark_android.py`; outputs to `recordings/`

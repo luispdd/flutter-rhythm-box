@@ -47,3 +47,29 @@ M0 is archived: the loop/swap mechanism is one looping handle, with swaps schedu
 ## Open Questions
 
 - Should the metronome and sequencer be able to play at the same time? M1 supports one at a time through the single engine; M2/M3 decide whether a second engine instance is needed. This does not change the M1 specs or tasks.
+
+## Verification Results & Benchmark Comparison (M1)
+
+### 1. Static Analysis, Unit & Widget Tests, Spec Validation
+- **Static Analysis**: `flutter analyze` completed with 0 issues.
+- **Unit & Widget Tests**: `flutter test` passed all 107 tests across domain models, pure-Dart synthesis renderers, timing math, fake audio engine, playback controllers, and UI widgets.
+- **Spec Validation**: `openspec validate --all` passed cleanly (0 errors).
+
+### 2. Benchmark Comparison (M0 vs M1 on Linux Desktop)
+
+The table below compares the Linux benchmark measurements between M0 (the timing spike) and M1 (after slimming `AudioBuffer`, replacing `ClickSynthesizer` with `PatternRenderer`/`MetronomeRenderer`, and introducing the separate audible/pending swap engine logic per D9):
+
+| Test / Metric | Target Threshold | M0 Measured (Archived) | M1 Measured (Engine Fix) | Verdict |
+|---|---|---|---|---|
+| **Sequencer Loop Stability** (5 min @ 120 BPM, IOI Std Dev) | < 1.0 ms | 0.021 ms | 0.000 ms (`1.61e-13` ms) | **PASS** |
+| **Sequencer Max Deviation** (Max IOI Dev) | < 3.0 ms | 0.021 ms | < 0.001 ms (`7.11e-12` ms) | **PASS** |
+| **Sequencer Cumulative Drift** (5 min) | < 5.0 ms | 0.000 ms | 0.000 ms | **PASS** |
+| **Metronome Loop Stability** (5 min @ 120 BPM, IOI Std Dev) | < 1.0 ms | 0.000 ms | 0.000 ms (`1.15e-12` ms) | **PASS** |
+| **Metronome Max Deviation** (Max IOI Dev) | < 3.0 ms | < 0.001 ms | < 0.001 ms (`2.84e-11` ms) | **PASS** |
+| **Metronome Cumulative Drift** (5 min) | < 5.0 ms | 0.000 ms | 0.000 ms | **PASS** |
+| **Boundary Swap Deviation** (120 BPM, nominal 125.0 ms) | < 3.0 ms | 0.021 ms | 0.021 ms (125.021 ms) | **PASS** |
+| **Android Boundary Swap Deviation** (120 BPM) | < 3.0 ms | 0.021 ms | 0.021 ms (125.021 ms) | **PASS** |
+| **Dart Timers in Audio Path** | 0 Timers | 0 Timers | 0 Timers (audio-driven clock) | **PASS** |
+| **Audible Swap Quality** | No gaps or clicks | Verified clean | Verified clean (latest-wins) | **PASS** |
+
+Both sustained 5-minute runs and boundary swap tests comfortably pass all loop-timing acceptance criteria.

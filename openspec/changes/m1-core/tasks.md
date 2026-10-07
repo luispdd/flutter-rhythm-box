@@ -28,4 +28,4 @@
 
 ## 5. Wrap-up
 
-- [ ] 5.1 Run `flutter analyze`, `flutter test` and `openspec validate --all`; record the results and the benchmark comparison in `design.md` and report to the user
+- [x] 5.1 Run `flutter analyze`, `flutter test` and `openspec validate --all`; record the results and the benchmark comparison in `design.md` and report to the user
