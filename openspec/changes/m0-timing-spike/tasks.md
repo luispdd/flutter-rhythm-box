@@ -17,8 +17,8 @@
 
 ## 4. Spike app
 
-- [ ] 4.1 Build a minimal UI: sequencer start/stop, metronome start/stop, button to swap tempo/pattern; verify both loops play on Linux and swap while playing
-- [ ] 4.2 Confirm by code search that no `Timer`, `Future.delayed` or periodic scheduler triggers any sound
+- [x] 4.1 Build a minimal UI: sequencer start/stop, metronome start/stop, button to swap tempo/pattern; verify both loops play on Linux and swap while playing
+- [x] 4.2 Confirm by code search that no `Timer`, `Future.delayed` or periodic scheduler triggers any sound
 
 ## 5. Measurement and report
 

@@ -18,6 +18,7 @@ class SoLoudAudioEngine implements AudioEngine {
 
   AudioSource? _currentSource;
   SoundHandle? _currentHandle;
+  SoundHandle? _previousHandle;
   AudioBuffer? _currentBuffer;
 
   AudioSource? _pendingRetireSource;
@@ -118,6 +119,7 @@ class SoLoudAudioEngine implements AudioEngine {
     }
     _pendingRetireSource = _currentSource;
 
+    _previousHandle = _currentHandle;
     _currentSource = nextSource;
     _currentHandle = nextHandle;
     _currentBuffer = nextBuffer;
@@ -133,6 +135,13 @@ class SoLoudAudioEngine implements AudioEngine {
         await _soloud.stop(_currentHandle!);
       } catch (_) {}
       _currentHandle = null;
+    }
+
+    if (_previousHandle != null) {
+      try {
+        await _soloud.stop(_previousHandle!);
+      } catch (_) {}
+      _previousHandle = null;
     }
 
     if (_currentSource != null) {
