@@ -12,8 +12,8 @@
 - Boundary swap via SoLoud engine clock: do NOT compute boundary from `getPosition(handle)` + `getEngineTime()`; `getPosition` updates on buffer block chunks and lags by several milliseconds, introducing up to 15 ms swap jitter. Instead, anchor playback start to the engine clock (`anchor = getEngineTime() + lead`), start with `playScheduled(source, anchor)`, and compute boundary strictly as integer multiples on the anchor timeline (`anchor + ceil((now - anchor + lead)/dur) * dur`), then re-anchor.
 - Immediate `stop()` during scheduled boundary swap: store `_previousHandle = _currentHandle` when scheduling a swap and stop both handles in `stop()`, otherwise the retiring handle plays until the boundary. Clear `_currentLoopAnchorEngineTime = null` on stop.
 - Headless `flutter test` cannot invoke native SoLoud FFI: keep `AudioEngine` abstracted behind an interface and inject a fake/mock via Riverpod override (`audioEngineProvider.overrideWithValue(...)`).
-- Direct audio capture on Linux: record app playback without cables using `pw-record --target <sink_serial_or_name> <out.wav>` (inspect active sink with `wpctl status` / `pw-cli info <node>`; Flutter runs as PipeWire ALSA client).
-- Android toolchain & emulator: `adb` resides at `/home/fuchik0ma/Android/Sdk/platform-tools/adb` (not in system PATH). `flutter run -d <id>` only connects to running devices; launch stopped emulators first with `flutter emulators --launch <id>`.
+- Direct audio capture on Linux: record app playback without cables using `pw-record --target <sink_serial_or_name> <out.wav>` (inspect active sink with `wpctl status` / `pw-cli info <node>`; Flutter runs as PipeWire ALSA client). Note: passing integer node ID to `--target` can mislink to microphone inputs. For emulator capture, start unlinked (`pw-record --target 0 <out.wav>`) and link directly with `pw-link qemu-system-x86_64:output_FL pw-record:input_FL` (and `FR`).
+- Android toolchain & emulator: `adb` resides at `/home/fuchik0ma/Android/Sdk/platform-tools/adb` (not in system PATH). `flutter run -d <id>` only connects to running devices; launch stopped emulators first with `flutter emulators --launch <id>`. Set media volume via `adb shell cmd media_session volume --stream 3 --set 15` (`STREAM_MUSIC`).
 - Widget tests on scrollable views: default test canvas is 800x600; tapping elements below 600px fails hit-testing unless resized (`tester.view.physicalSize = const Size(1200, 1600)` + `addTearDown(tester.view.resetPhysicalSize)`) or navigated with `tester.ensureVisible`.
 - OpenSpec validation CLI: bare `openspec validate` prompts interactively and hangs subshells; always invoke with `--all` or `--no-interactive` (e.g. `openspec validate --all`).
 
@@ -25,6 +25,7 @@
 - Linux build: `flutter build linux --debug`; binary: `build/linux/x64/debug/bundle/rhythm_box`
 - Android release build: `flutter build apk --release`; APK: `build/app/outputs/flutter-apk/app-release.apk`
 - Full Linux 5-minute benchmark: `python3 tools/run_full_benchmarks_linux.py`; outputs to `recordings/`
+- Android swap benchmark on emulator: `python3 tools/run_swap_benchmark_android.py`; outputs to `recordings/`
 - Headless launch check: `timeout 8 <binary>`; exit 124 = ran until killed (OK).
 - Throwaway runtime check (e.g. soloud init): temp `lib/*_tmp.dart` with `main()` that prints a marker then `exit(0)`; run `flutter build linux --debug -t lib/<file>.dart`, run binary, grep marker, delete the file.
 - Timing analyzer test: `python3 tools/test_analyze_timing.py` or `python3 tools/analyze_timing.py --self-test`

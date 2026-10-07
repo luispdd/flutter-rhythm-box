@@ -1,0 +1,28 @@
+{
+  "total_samples": 1689728,
+  "sample_rate": 48000,
+  "duration_sec": 35.202666666666666,
+  "onset_count": 225,
+  "nominal_ioi_ms": 125.0,
+  "ioi_mean_ms": 126.43108258928571,
+  "ioi_std_ms": 19.444914088023925,
+  "ioi_min_ms": 68.66666666666887,
+  "ioi_max_ms": 317.33333333333394,
+  "max_dev_from_nominal_ms": 192.33333333333394,
+  "cumulative_drift_ms": 320.5625000000012,
+  "max_drift_ms": 410.2291666666673,
+  "swap_result": {
+    "swap_time_sec": 20.8086,
+    "onset_before_sec": 20.7415,
+    "onset_after_sec": 20.866520833333333,
+    "boundary_interval_ms": 125.02083333333402,
+    "nominal_interval_ms": 125.0,
+    "deviation_ms": 0.020833333334024928,
+    "passed": true
+  },
+  "passed_std": false,
+  "passed_max_dev": false,
+  "passed_drift": false,
+  "passed_swap": true,
+  "overall_passed": false
+}

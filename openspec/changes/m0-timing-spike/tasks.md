@@ -25,7 +25,7 @@
 ## 5. Measurement and report
 
 - [x] 5.1 Record 5 minutes of each loop (sequencer and metronome) on Linux and run the analyzer; save the numbers
-- [ ] 5.2 Build and run on a real Android device; record 5 minutes of each loop (speaker or wired headphones) and run the analyzer; save the numbers
-- [ ] 5.3 Record a swap test on each platform and verify the boundary interval and that no click, gap or doubled hit is audible
-- [ ] 5.4 If a candidate mechanism fails, try the next candidate from D3 and re-measure; if all fail, stop and report the numbers
-- [ ] 5.5 Write the results (numbers, chosen mechanism and why, pass/fail per criterion) into `design.md` and report to the user
+- [x] 5.2 Build and run on a real Android device; record 5 minutes of each loop (speaker or wired headphones) and run the analyzer; save the numbers
+- [x] 5.3 Record a swap test on each platform and verify the boundary interval and that no click, gap or doubled hit is audible
+- [x] 5.4 If a candidate mechanism fails, try the next candidate from D3 and re-measure; if all fail, stop and report the numbers
+- [x] 5.5 Write the results (numbers, chosen mechanism and why, pass/fail per criterion) into `design.md` and report to the user
