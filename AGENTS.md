@@ -22,6 +22,10 @@
 - DTD hot reload error `-32603`: opaque VM service `-32603` error almost always indicates a compile/analyzer error (e.g. missing import or changing a `const` constructor); run `flutter analyze` immediately to reveal the exact issue.
 - Riverpod Notifier reactive swaps: do NOT use `ref.watch` inside a playback controller's `build()` to react to external state (like tempo or settings); `ref.watch` causes `build()` to re-execute and resets controller state (e.g. `isPlaying: false`). Use `ref.listen` inside `build()` to react to changes and trigger boundary swaps while preserving playback state.
 - `MetronomeSettings` constructor is non-`const` (clamps ranges in constructor body); calling `const MetronomeSettings(...)` fails analyzer with `const_with_non_const`.
+- `Waveform` enum contains `sine`, `triangle`, `square`, `noise` (no `saw`); `MetronomeSettings` only accepts tonal waveforms (`sine`, `triangle`, `square`) and throws `ArgumentError` if instantiated with `Waveform.noise`.
+- Riverpod Notifier asynchronous initial load: unawaited async loading kicked off in `build()` resolves after the initial synchronous build returns; tests verifying loaded state must explicitly `await notifier.loadFromStore()` or `await pumpEventQueue()` instead of expecting synchronous population in `container.read(provider)`.
+- Riverpod unoverridden provider testing: Riverpod wraps exceptions thrown inside providers with an internal `ProviderException` (not exported publicly). Testing `expect(() => container.read(provider), throwsA(isA<UnimplementedError>()))` fails type matching, and `isA<ProviderException>()` fails compilation (`isn't a type`). Assert on the error message via predicate instead: `throwsA(predicate((e) => e.toString().contains('UnimplementedError')))`.
+
 
 ## Verification Commands
 

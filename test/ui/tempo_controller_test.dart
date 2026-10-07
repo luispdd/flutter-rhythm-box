@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rhythm_box/domain/tempo.dart';
+import 'package:rhythm_box/persistence/settings_store.dart';
 import 'package:rhythm_box/ui/tempo_controller.dart';
+
+import '../persistence/fake_settings_store.dart';
 
 void main() {
   group('TempoNotifier & tempoProvider', () {
@@ -80,5 +83,60 @@ void main() {
       container.read(tempoProvider.notifier).decrement(1);
       expect(container.read(tempoProvider), equals(30));
     });
+
+    group('SettingsStore persistence', () {
+      late FakeSettingsStore fakeStore;
+      late ProviderContainer storeContainer;
+
+      setUp(() {
+        fakeStore = FakeSettingsStore();
+        storeContainer = ProviderContainer(
+          overrides: [
+            settingsStoreProvider.overrideWithValue(fakeStore),
+          ],
+        );
+      });
+
+      tearDown(() {
+        storeContainer.dispose();
+      });
+
+      test('initializes with saved tempo from store', () async {
+        fakeStore.savedTempo = const Tempo(144);
+        final notifier = storeContainer.read(tempoProvider.notifier);
+        await notifier.loadFromStore();
+
+        expect(storeContainer.read(tempoProvider), equals(144));
+        expect(fakeStore.loadTempoCalls, greaterThanOrEqualTo(1));
+      });
+
+      test('setBpm persists updated tempo to SettingsStore', () async {
+        final notifier = storeContainer.read(tempoProvider.notifier);
+        await notifier.setBpm(160);
+
+        expect(storeContainer.read(tempoProvider), equals(160));
+        expect(fakeStore.saveTempoCalls, equals(1));
+        expect(fakeStore.savedTempo, equals(const Tempo(160)));
+      });
+
+      test('increment persists updated tempo to SettingsStore', () async {
+        final notifier = storeContainer.read(tempoProvider.notifier);
+        await notifier.increment(5);
+
+        expect(storeContainer.read(tempoProvider), equals(125));
+        expect(fakeStore.saveTempoCalls, equals(1));
+        expect(fakeStore.savedTempo, equals(const Tempo(125)));
+      });
+
+      test('decrement persists updated tempo to SettingsStore', () async {
+        final notifier = storeContainer.read(tempoProvider.notifier);
+        await notifier.decrement(10);
+
+        expect(storeContainer.read(tempoProvider), equals(110));
+        expect(fakeStore.saveTempoCalls, equals(1));
+        expect(fakeStore.savedTempo, equals(const Tempo(110)));
+      });
+    });
   });
 }
+

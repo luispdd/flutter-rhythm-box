@@ -5,9 +5,9 @@
 
 ## 2. State Management (Riverpod)
 
-- [ ] 2.1 Create a `TempoNotifier` to hold the global BPM, initializing from `SettingsStore` and saving on updates. Verify by testing that updates trigger the store save.
-- [ ] 2.2 Create a `MetronomeController` (Notifier) that holds the current `MetronomeSettings` and a boolean `isPlaying`. It must load initial settings from the store. Verify via a unit test (mocking the store).
-- [ ] 2.3 Integrate `MetronomeController` with the `AudioEngine`. When play is toggled, call `startLoop` or `stop`. When settings or tempo change *while playing*, call `swapLoopAtBoundary`. Verify via unit tests with a mock `AudioEngine`.
+- [x] 2.1 Create a `TempoNotifier` to hold the global BPM, initializing from `SettingsStore` and saving on updates. Verify by testing that updates trigger the store save.
+- [x] 2.2 Create a `MetronomeController` (Notifier) that holds the current `MetronomeSettings` and a boolean `isPlaying`. It must load initial settings from the store. Verify via a unit test (mocking the store).
+- [x] 2.3 Integrate `MetronomeController` with the `AudioEngine`. When play is toggled, call `startLoop` or `stop`. When settings or tempo change *while playing*, call `swapLoopAtBoundary`. Verify via unit tests with a mock `AudioEngine`.
 
 ## 3. User Interface
 
