@@ -32,6 +32,8 @@ class SoLoudAudioEngine implements AudioEngine {
 
   SoLoudAudioEngine({SoLoud? soloud}) : _soloud = soloud ?? SoLoud.instance;
 
+  Duration? _currentLoopAnchorEngineTime;
+
   @override
   bool get isPlaying => _isPlaying;
 
@@ -68,8 +70,12 @@ class SoLoudAudioEngine implements AudioEngine {
 
     final soundId = 'loop_${_bufferCounter++}';
     final source = await _soloud.loadMem(soundId, buffer.wavBytes);
-    final handle = _soloud.play(source, looping: true);
 
+    // Anchor start to engine clock with a small lead margin (20 ms)
+    final startTime = _soloud.getEngineTime() + const Duration(milliseconds: 20);
+    final handle = _soloud.playScheduled(source, startTime, looping: true);
+
+    _currentLoopAnchorEngineTime = startTime;
     _currentSource = source;
     _currentHandle = handle;
     _currentBuffer = buffer;
@@ -80,7 +86,7 @@ class SoLoudAudioEngine implements AudioEngine {
 
   @override
   Future<void> swapLoopAtBoundary(AudioBuffer nextBuffer) async {
-    if (!_isPlaying || _currentHandle == null || _currentBuffer == null) {
+    if (!_isPlaying || _currentHandle == null || _currentBuffer == null || _currentLoopAnchorEngineTime == null) {
       await startLoop(nextBuffer);
       return;
     }
@@ -88,18 +94,16 @@ class SoLoudAudioEngine implements AudioEngine {
     final nextSoundId = 'loop_${_bufferCounter++}';
     final nextSource = await _soloud.loadMem(nextSoundId, nextBuffer.wavBytes);
 
-    // Compute boundary on SoLoud's engine clock (Design Candidate 1)
+    // Compute boundary strictly on SoLoud's engine clock anchor
     final now = _soloud.getEngineTime();
-    final curPos = _soloud.getPosition(_currentHandle!);
+    final elapsedUs = (now - _currentLoopAnchorEngineTime!).inMicroseconds;
     final loopDurUs = _currentBuffer!.duration.inMicroseconds;
-    final curPosUs = curPos.inMicroseconds;
 
-    var remainingUs = loopDurUs - (curPosUs % loopDurUs);
-    // Provide a safe lead margin (30 ms) so the schedule call lands before the boundary
-    if (remainingUs < 30000) {
-      remainingUs += loopDurUs;
-    }
-    final boundaryEngineTime = now + Duration(microseconds: remainingUs);
+    // Determine the next integer loop cycle with at least 30 ms lead time
+    const leadMarginUs = 30000;
+    final cycles = ((elapsedUs + leadMarginUs) / loopDurUs).ceil();
+    final boundaryEngineTime =
+        _currentLoopAnchorEngineTime! + Duration(microseconds: cycles * loopDurUs);
 
     // Stop current handle sample-accurately at boundaryEngineTime
     _soloud.stopScheduled(_currentHandle!, boundaryEngineTime);
@@ -110,6 +114,9 @@ class SoLoudAudioEngine implements AudioEngine {
       boundaryEngineTime,
       looping: true,
     );
+
+    // Update anchor to the new boundary
+    _currentLoopAnchorEngineTime = boundaryEngineTime;
 
     // Retire old audio source
     if (_pendingRetireSource != null) {
@@ -159,6 +166,7 @@ class SoLoudAudioEngine implements AudioEngine {
     }
 
     _currentBuffer = null;
+    _currentLoopAnchorEngineTime = null;
     _isPlaying = false;
   }
 
