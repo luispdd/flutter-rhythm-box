@@ -1,8 +1,8 @@
 ## 1. Project setup
 
 - [x] 1.1 Run `flutter create` for platforms android and linux only; verify `flutter analyze` is clean and the default app launches on Linux
-- [ ] 1.2 Add `flutter_soloud` and `flutter_riverpod`; verify `flutter pub get` succeeds and a trivial soloud init runs on Linux
-- [ ] 1.3 Create the `lib/domain`, `lib/synth`, `lib/audio`, `lib/ui` and `tools/` folders; verify they exist and the app still builds
+- [x] 1.2 Add `flutter_soloud` and `flutter_riverpod`; verify `flutter pub get` succeeds and a trivial soloud init runs on Linux
+- [x] 1.3 Create the `lib/domain`, `lib/synth`, `lib/audio`, `lib/ui` and `tools/` folders; verify they exist and the app still builds
 
 ## 2. Timing measurement tool (before feature work)
 
