@@ -1,11 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rhythm_box/domain/playback_state.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
 import 'audio/fake_audio_engine.dart';
 
 void main() {
-  group('PlaybackNotifier', () {
+  group('Metronome & Sequencer Playback Controllers', () {
     late FakeAudioEngine fakeEngine;
     late ProviderContainer container;
 
@@ -22,92 +21,203 @@ void main() {
       container.dispose();
     });
 
-    test('initial state is idle at 120 BPM', () {
-      final state = container.read(playbackNotifierProvider);
-      expect(state.mode, equals(PlaybackMode.idle));
-      expect(state.bpm, equals(120.0));
-      expect(state.isPlaying, isFalse);
-      expect(state.patternPreset, equals(PatternPreset.fourOnTheFloor));
+    group('MetronomePlaybackController', () {
+      test('initial state is idle', () {
+        final state = container.read(metronomePlaybackControllerProvider);
+        expect(state.isPlaying, isFalse);
+      });
+
+      test('start begins playback on fake audio engine', () async {
+        final controller =
+            container.read(metronomePlaybackControllerProvider.notifier);
+        await controller.start();
+
+        final state = container.read(metronomePlaybackControllerProvider);
+        expect(state.isPlaying, isTrue);
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.lastStartedBuffer, isNotNull);
+        expect(fakeEngine.lastStartedBuffer!.totalSamples, greaterThan(0));
+      });
+
+      test('stop stops playback on audio engine', () async {
+        final controller =
+            container.read(metronomePlaybackControllerProvider.notifier);
+        await controller.start();
+        expect(
+            container.read(metronomePlaybackControllerProvider).isPlaying,
+            isTrue);
+
+        await controller.stop();
+        final state = container.read(metronomePlaybackControllerProvider);
+        expect(state.isPlaying, isFalse);
+        expect(fakeEngine.stopCalls, equals(1));
+      });
+
+      test('changing tempo while playing triggers a swap and NOT a restart',
+          () async {
+        final controller =
+            container.read(metronomePlaybackControllerProvider.notifier);
+        await controller.start();
+
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.swapLoopCalls, equals(0));
+
+        // Change global tempo
+        container.read(tempoProvider.notifier).setBpm(140);
+
+        // Verify that a boundary swap was called, not a restart
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.swapLoopCalls, equals(1));
+        expect(fakeEngine.lastSwappedBuffer, isNotNull);
+        expect(fakeEngine.lastSwappedBuffer!.totalSamples, greaterThan(0));
+      });
+
+      test('changing settings while playing triggers a swap', () async {
+        final controller =
+            container.read(metronomePlaybackControllerProvider.notifier);
+        await controller.start();
+        expect(fakeEngine.swapLoopCalls, equals(0));
+
+        container.read(metronomeSettingsProvider.notifier).setBeatsPerBar(3);
+
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.swapLoopCalls, equals(1));
+      });
+
+      test('changing tempo while stopped does not call engine swap', () async {
+        container.read(tempoProvider.notifier).setBpm(90);
+
+        expect(fakeEngine.startLoopCalls, equals(0));
+        expect(fakeEngine.swapLoopCalls, equals(0));
+
+        // Starting now renders at the updated tempo
+        await container
+            .read(metronomePlaybackControllerProvider.notifier)
+            .start();
+        expect(fakeEngine.startLoopCalls, equals(1));
+      });
     });
 
-    test('startSequencer starts engine loop with pattern buffer', () async {
-      final notifier = container.read(playbackNotifierProvider.notifier);
-      await notifier.startSequencer();
+    group('SequencerPlaybackController', () {
+      test('initial state is idle', () {
+        final state = container.read(sequencerPlaybackControllerProvider);
+        expect(state.isPlaying, isFalse);
+      });
 
-      final state = container.read(playbackNotifierProvider);
-      expect(state.mode, equals(PlaybackMode.sequencer));
-      expect(state.isPlaying, isTrue);
-      expect(fakeEngine.startLoopCalls, equals(1));
-      expect(fakeEngine.lastStartedBuffer, isNotNull);
-      expect(fakeEngine.lastStartedBuffer!.totalSamples, greaterThan(0));
+      test('start begins playback on fake audio engine', () async {
+        final controller =
+            container.read(sequencerPlaybackControllerProvider.notifier);
+        await controller.start();
+
+        final state = container.read(sequencerPlaybackControllerProvider);
+        expect(state.isPlaying, isTrue);
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.lastStartedBuffer, isNotNull);
+        expect(fakeEngine.lastStartedBuffer!.totalSamples, greaterThan(0));
+      });
+
+      test('stop stops playback on audio engine', () async {
+        final controller =
+            container.read(sequencerPlaybackControllerProvider.notifier);
+        await controller.start();
+        expect(
+            container.read(sequencerPlaybackControllerProvider).isPlaying,
+            isTrue);
+
+        await controller.stop();
+        final state = container.read(sequencerPlaybackControllerProvider);
+        expect(state.isPlaying, isFalse);
+        expect(fakeEngine.stopCalls, equals(1));
+      });
+
+      test('changing tempo while playing triggers a swap and NOT a restart',
+          () async {
+        final controller =
+            container.read(sequencerPlaybackControllerProvider.notifier);
+        await controller.start();
+
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.swapLoopCalls, equals(0));
+
+        // Change global tempo
+        container.read(tempoProvider.notifier).setBpm(140);
+
+        // Verify that a boundary swap was called, not a restart
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.swapLoopCalls, equals(1));
+        expect(fakeEngine.lastSwappedBuffer, isNotNull);
+        expect(fakeEngine.lastSwappedBuffer!.totalSamples, greaterThan(0));
+      });
+
+      test('changing pattern while playing triggers a swap', () async {
+        final controller =
+            container.read(sequencerPlaybackControllerProvider.notifier);
+        await controller.start();
+        expect(fakeEngine.swapLoopCalls, equals(0));
+
+        container
+            .read(sequencerPatternProvider.notifier)
+            .setPattern(spikePatternPresets[1]);
+
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeEngine.swapLoopCalls, equals(1));
+      });
     });
 
-    test('stopSequencer stops playback when sequencer is active', () async {
-      final notifier = container.read(playbackNotifierProvider.notifier);
-      await notifier.startSequencer();
-      expect(container.read(playbackNotifierProvider).isPlaying, isTrue);
+    group('Coordination between Metronome and Sequencer', () {
+      test('switching between sequencer and metronome swaps boundary cleanly',
+          () async {
+        final sequencer =
+            container.read(sequencerPlaybackControllerProvider.notifier);
+        final metronome =
+            container.read(metronomePlaybackControllerProvider.notifier);
 
-      await notifier.stopSequencer();
-      final state = container.read(playbackNotifierProvider);
-      expect(state.mode, equals(PlaybackMode.idle));
-      expect(state.isPlaying, isFalse);
-      expect(fakeEngine.stopCalls, equals(1));
-    });
+        await sequencer.start();
+        expect(fakeEngine.startLoopCalls, equals(1));
+        expect(
+            container.read(sequencerPlaybackControllerProvider).isPlaying,
+            isTrue);
+        expect(
+            container.read(metronomePlaybackControllerProvider).isPlaying,
+            isFalse);
 
-    test('startMetronome starts engine loop with metronome buffer', () async {
-      final notifier = container.read(playbackNotifierProvider.notifier);
-      await notifier.startMetronome();
+        // Start metronome while sequencer is active -> swaps loop at boundary
+        await metronome.start();
+        expect(fakeEngine.swapLoopCalls, equals(1));
+        expect(
+            container.read(sequencerPlaybackControllerProvider).isPlaying,
+            isFalse);
+        expect(
+            container.read(metronomePlaybackControllerProvider).isPlaying,
+            isTrue);
 
-      final state = container.read(playbackNotifierProvider);
-      expect(state.mode, equals(PlaybackMode.metronome));
-      expect(state.isPlaying, isTrue);
-      expect(fakeEngine.startLoopCalls, equals(1));
-      expect(fakeEngine.lastStartedBuffer, isNotNull);
-      expect(fakeEngine.lastStartedBuffer!.totalSamples, greaterThan(0));
-    });
+        // Stop metronome
+        await metronome.stop();
+        expect(fakeEngine.stopCalls, equals(1));
+        expect(
+            container.read(metronomePlaybackControllerProvider).isPlaying,
+            isFalse);
+      });
 
-    test('swapTempo while playing calls swapLoopAtBoundary on engine', () async {
-      final notifier = container.read(playbackNotifierProvider.notifier);
-      await notifier.startSequencer();
-      expect(fakeEngine.startLoopCalls, equals(1));
+      test('switching between metronome and sequencer swaps boundary cleanly',
+          () async {
+        final sequencer =
+            container.read(sequencerPlaybackControllerProvider.notifier);
+        final metronome =
+            container.read(metronomePlaybackControllerProvider.notifier);
 
-      await notifier.swapTempo(140.0);
-      final state = container.read(playbackNotifierProvider);
-      expect(state.bpm, equals(140.0));
-      expect(fakeEngine.swapLoopCalls, equals(1));
-      expect(fakeEngine.lastSwappedBuffer, isNotNull);
-      expect(fakeEngine.lastSwappedBuffer!.totalSamples, greaterThan(0));
-    });
+        await metronome.start();
+        expect(fakeEngine.startLoopCalls, equals(1));
 
-    test('toggleTempo switches between 120 and 140 BPM', () async {
-      final notifier = container.read(playbackNotifierProvider.notifier);
-      await notifier.startSequencer();
-
-      await notifier.toggleTempo();
-      expect(container.read(playbackNotifierProvider).bpm, equals(140.0));
-
-      await notifier.toggleTempo();
-      expect(container.read(playbackNotifierProvider).bpm, equals(120.0));
-    });
-
-    test('swapPattern while playing sequencer calls swapLoopAtBoundary', () async {
-      final notifier = container.read(playbackNotifierProvider.notifier);
-      await notifier.startSequencer();
-
-      await notifier.swapPattern(PatternPreset.alternating);
-      final state = container.read(playbackNotifierProvider);
-      expect(state.patternPreset, equals(PatternPreset.alternating));
-      expect(fakeEngine.swapLoopCalls, equals(1));
-    });
-
-    test('switching between sequencer and metronome swaps boundary cleanly', () async {
-      final notifier = container.read(playbackNotifierProvider.notifier);
-      await notifier.startSequencer();
-      expect(fakeEngine.startLoopCalls, equals(1));
-
-      await notifier.startMetronome();
-      expect(fakeEngine.swapLoopCalls, equals(1));
-      expect(container.read(playbackNotifierProvider).mode, equals(PlaybackMode.metronome));
+        await sequencer.start();
+        expect(fakeEngine.swapLoopCalls, equals(1));
+        expect(
+            container.read(metronomePlaybackControllerProvider).isPlaying,
+            isFalse);
+        expect(
+            container.read(sequencerPlaybackControllerProvider).isPlaying,
+            isTrue);
+      });
     });
   });
 }

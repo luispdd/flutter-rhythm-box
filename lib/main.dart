@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'audio/soloud_audio_engine.dart';
-import 'synth/click_synthesizer.dart';
+import 'domain/metronome_settings.dart';
+import 'synth/metronome_renderer.dart';
+import 'synth/pattern_renderer.dart';
+import 'ui/playback_controller.dart';
 import 'ui/spike_screen.dart';
 import 'ui/theme.dart';
 
@@ -14,14 +17,14 @@ void main(List<String> args) async {
     final mode = args[0];
     final engine = SoLoudAudioEngine();
 
-    final synth = const ClickSynthesizer(sampleRate: 44100);
+    const patternRenderer = PatternRenderer(sampleRate: 44100);
+    const metronomeRenderer = MetronomeRenderer(sampleRate: 44100);
 
     if (mode == 'sequencer') {
       final seconds = int.tryParse(args.length > 1 ? args[1] : '305') ?? 305;
-      final buffer = synth.renderPatternBuffer(
+      final buffer = patternRenderer.renderBuffer(
+        spikePatternPresets.first,
         bpm: 120,
-        stepCount: 4,
-        activeSteps: [true, true, true, true],
       );
       await engine.startLoop(buffer);
       await Future.delayed(Duration(seconds: seconds));
@@ -30,9 +33,9 @@ void main(List<String> args) async {
       exit(0);
     } else if (mode == 'metronome') {
       final seconds = int.tryParse(args.length > 1 ? args[1] : '305') ?? 305;
-      final buffer = synth.renderMetronomeBuffer(
+      final buffer = metronomeRenderer.renderBuffer(
+        settings: MetronomeSettings(beatsPerBar: 4),
         bpm: 120,
-        beatsPerBar: 4,
       );
       await engine.startLoop(buffer);
       await Future.delayed(Duration(seconds: seconds));
@@ -42,15 +45,13 @@ void main(List<String> args) async {
     } else if (mode == 'swap') {
       final swapSec = int.tryParse(args.length > 1 ? args[1] : '15') ?? 15;
       final totalSec = int.tryParse(args.length > 2 ? args[2] : '30') ?? 30;
-      final buf1 = synth.renderPatternBuffer(
+      final buf1 = patternRenderer.renderBuffer(
+        spikePatternPresets.first,
         bpm: 120,
-        stepCount: 4,
-        activeSteps: [true, true, true, true],
       );
-      final buf2 = synth.renderPatternBuffer(
+      final buf2 = patternRenderer.renderBuffer(
+        spikePatternPresets.first,
         bpm: 120,
-        stepCount: 4,
-        activeSteps: [true, true, true, true],
       );
 
       await engine.startLoop(buf1);
@@ -81,4 +82,3 @@ class RhythmBoxApp extends StatelessWidget {
     );
   }
 }
-

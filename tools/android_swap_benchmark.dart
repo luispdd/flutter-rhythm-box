@@ -5,7 +5,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rhythm_box/audio/soloud_audio_engine.dart';
-import 'package:rhythm_box/synth/click_synthesizer.dart';
+import 'package:rhythm_box/domain/pattern.dart';
+import 'package:rhythm_box/synth/pattern_renderer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,19 +26,18 @@ void main() async {
   );
 
   final engine = SoLoudAudioEngine();
-  final synth = const ClickSynthesizer(sampleRate: 44100);
+  const renderer = PatternRenderer(sampleRate: 44100);
 
-  final buffer1 = synth.renderPatternBuffer(
-    bpm: 120,
+  final pattern = Pattern(
     stepCount: 4,
-    activeSteps: [true, true, true, true],
+    tracks: [
+      [true, true, true, true, ...List.filled(12, false)],
+      ...List.generate(7, (_) => List.filled(16, false)),
+    ],
   );
 
-  final buffer2 = synth.renderPatternBuffer(
-    bpm: 120,
-    stepCount: 4,
-    activeSteps: [true, true, true, true],
-  );
+  final buffer1 = renderer.renderBuffer(pattern, bpm: 120);
+  final buffer2 = renderer.renderBuffer(pattern, bpm: 120);
 
   // Give the UI a moment to stabilize
   await Future.delayed(const Duration(seconds: 1));

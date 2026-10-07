@@ -21,10 +21,10 @@
 
 ## 4. Shared tempo and playback layer
 
-- [ ] 4.1 Add the tempo `Notifier` provider; verify with a provider test that changing it updates listeners and that it clamps
-- [ ] 4.2 Replace `PlaybackNotifier` and `PatternPreset`/`PlaybackState` with metronome and sequencer playback controllers that read tempo and settings or pattern, render, and call the engine (start, swap at boundary, stop); verify with tests using the fake engine and `audioEngineProvider.overrideWithValue`, including a tempo change causing a swap and not a restart
-- [ ] 4.3 Adapt the spike screen to the new layer and remove the old synthesizer; verify the app launches on Linux, both loops play, tempo and pattern swaps work while playing, and `flutter test` and `flutter analyze` pass
-- [ ] 4.4 Confirm by code search that no `Timer`, `Future.delayed` or periodic scheduler triggers any sound (the 50 ms position timer is display-only and documented as such)
+- [x] 4.1 Add the tempo `Notifier` provider; verify with a provider test that changing it updates listeners and that it clamps
+- [x] 4.2 Replace `PlaybackNotifier` and `PatternPreset`/`PlaybackState` with metronome and sequencer playback controllers that read tempo and settings or pattern, render, and call the engine (start, swap at boundary, stop); verify with tests using the fake engine and `audioEngineProvider.overrideWithValue`, including a tempo change causing a swap and not a restart
+- [x] 4.3 Adapt the spike screen to the new layer and remove the old synthesizer; verify the app launches on Linux, both loops play, tempo and pattern swaps work while playing, and `flutter test` and `flutter analyze` pass
+- [x] 4.4 Confirm by code search that no `Timer`, `Future.delayed` or periodic scheduler triggers any sound (the 50 ms position timer is display-only and documented as such)
 
 ## 5. Wrap-up
 

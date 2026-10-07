@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/playback_state.dart';
+import '../domain/metronome_settings.dart';
+import '../domain/pattern.dart';
 import 'playback_controller.dart';
 import 'theme.dart';
 
 /// Spike screen demonstrating audio-driven looped playback and boundary swapping.
 ///
-/// Implements Task 4.1:
+/// Features:
 /// - Sequencer start/stop
 /// - Metronome start/stop
 /// - Swap tempo/pattern buttons
@@ -17,8 +18,11 @@ class SpikeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(playbackNotifierProvider);
-    final notifier = ref.read(playbackNotifierProvider.notifier);
+    final tempo = ref.watch(tempoProvider);
+    final sequencerState = ref.watch(sequencerPlaybackControllerProvider);
+    final metronomeState = ref.watch(metronomePlaybackControllerProvider);
+    final pattern = ref.watch(sequencerPatternProvider);
+    final settings = ref.watch(metronomeSettingsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,23 +38,47 @@ class SpikeScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Status & Diagnostics Card
-                  _buildStatusCard(context, state),
+                  _buildStatusCard(
+                    context,
+                    tempo: tempo,
+                    sequencerState: sequencerState,
+                    metronomeState: metronomeState,
+                  ),
                   const SizedBox(height: 16),
 
                   // Sequencer Controls Card
-                  _buildSequencerCard(context, state, notifier),
+                  _buildSequencerCard(
+                    context,
+                    ref: ref,
+                    pattern: pattern,
+                    sequencerState: sequencerState,
+                  ),
                   const SizedBox(height: 16),
 
                   // Metronome Controls Card
-                  _buildMetronomeCard(context, state, notifier),
+                  _buildMetronomeCard(
+                    context,
+                    ref: ref,
+                    settings: settings,
+                    metronomeState: metronomeState,
+                  ),
                   const SizedBox(height: 16),
 
                   // Boundary Swap Controls Card
-                  _buildBoundarySwapCard(context, state, notifier),
+                  _buildBoundarySwapCard(
+                    context,
+                    ref: ref,
+                    tempo: tempo,
+                    pattern: pattern,
+                  ),
                   const SizedBox(height: 16),
 
                   // Stop All & Architectural info
-                  _buildFooter(context, state, notifier),
+                  _buildFooter(
+                    context,
+                    ref: ref,
+                    isPlaying: sequencerState.isPlaying || metronomeState.isPlaying,
+                  ),
                 ],
               ),
             ),
@@ -60,11 +88,16 @@ class SpikeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatusCard(BuildContext context, PlaybackState state) {
+  Widget _buildStatusCard(
+    BuildContext context, {
+    required int tempo,
+    required SequencerPlaybackState sequencerState,
+    required MetronomePlaybackState metronomeState,
+  }) {
     final theme = Theme.of(context);
-    final isSequencer = state.mode == PlaybackMode.sequencer;
-    final isMetronome = state.mode == PlaybackMode.metronome;
-    final isPlaying = state.isPlaying;
+    final isSequencer = sequencerState.isPlaying;
+    final isMetronome = metronomeState.isPlaying;
+    final isPlaying = isSequencer || isMetronome;
 
     Color badgeColor;
     String badgeText;
@@ -83,6 +116,10 @@ class SpikeScreen extends ConsumerWidget {
       badgeText = 'IDLE';
       badgeIcon = Icons.stop_circle_outlined;
     }
+
+    final lastEvent = isSequencer
+        ? sequencerState.lastEvent
+        : (isMetronome ? metronomeState.lastEvent : 'Ready');
 
     return Card(
       elevation: 2,
@@ -105,7 +142,7 @@ class SpikeScreen extends ConsumerWidget {
                 ),
                 const Spacer(),
                 Chip(
-                  label: Text('${state.bpm.round()} BPM'),
+                  label: Text('$tempo BPM'),
                   backgroundColor: kAmber.withValues(alpha: 0.15),
                   side: BorderSide(color: theme.colorScheme.outline),
                 ),
@@ -118,10 +155,12 @@ class SpikeScreen extends ConsumerWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    state.lastEvent,
+                    lastEvent,
                     key: const Key('last_event_text'),
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: isPlaying ? kAmber : theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                      color: isPlaying
+                          ? kAmber
+                          : theme.colorScheme.onSurface.withValues(alpha: 0.7),
                       fontWeight: isPlaying ? FontWeight.w600 : FontWeight.normal,
                     ),
                   ),
@@ -135,12 +174,15 @@ class SpikeScreen extends ConsumerWidget {
   }
 
   Widget _buildSequencerCard(
-    BuildContext context,
-    PlaybackState state,
-    PlaybackNotifier notifier,
-  ) {
+    BuildContext context, {
+    required WidgetRef ref,
+    required Pattern pattern,
+    required SequencerPlaybackState sequencerState,
+  }) {
     final theme = Theme.of(context);
-    final isSequencerRunning = state.mode == PlaybackMode.sequencer;
+    final isSequencerRunning = sequencerState.isPlaying;
+    final track0 = pattern.tracks[0];
+    final displaySteps = pattern.stepCount;
 
     return Card(
       elevation: 2,
@@ -155,7 +197,9 @@ class SpikeScreen extends ConsumerWidget {
                 const SizedBox(width: 8),
                 Text(
                   '16th-Note Sequencer',
-                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -165,8 +209,8 @@ class SpikeScreen extends ConsumerWidget {
               children: [
                 Text('Pattern: ', style: theme.textTheme.bodyMedium),
                 const SizedBox(width: 8),
-                ...List.generate(state.patternPreset.steps.length, (index) {
-                  final active = state.patternPreset.steps[index];
+                ...List.generate(displaySteps, (index) {
+                  final active = track0[index];
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     width: 32,
@@ -185,7 +229,9 @@ class SpikeScreen extends ConsumerWidget {
                     child: Text(
                       '${index + 1}',
                       style: TextStyle(
-                        color: active ? Colors.black : theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color: active
+                            ? Colors.black
+                            : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
@@ -194,7 +240,7 @@ class SpikeScreen extends ConsumerWidget {
                 }),
                 const Spacer(),
                 Text(
-                  state.patternPreset.label,
+                  pattern.name,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
@@ -207,7 +253,11 @@ class SpikeScreen extends ConsumerWidget {
                 Expanded(
                   child: FilledButton.icon(
                     key: const Key('start_sequencer_button'),
-                    onPressed: isSequencerRunning ? null : () => notifier.startSequencer(),
+                    onPressed: isSequencerRunning
+                        ? null
+                        : () => ref
+                            .read(sequencerPlaybackControllerProvider.notifier)
+                            .start(),
                     icon: const Icon(Icons.play_arrow),
                     label: const Text('Start Sequencer'),
                   ),
@@ -216,7 +266,11 @@ class SpikeScreen extends ConsumerWidget {
                 Expanded(
                   child: OutlinedButton.icon(
                     key: const Key('stop_sequencer_button'),
-                    onPressed: isSequencerRunning ? () => notifier.stopSequencer() : null,
+                    onPressed: isSequencerRunning
+                        ? () => ref
+                            .read(sequencerPlaybackControllerProvider.notifier)
+                            .stop()
+                        : null,
                     icon: const Icon(Icons.stop),
                     label: const Text('Stop Sequencer'),
                   ),
@@ -230,12 +284,13 @@ class SpikeScreen extends ConsumerWidget {
   }
 
   Widget _buildMetronomeCard(
-    BuildContext context,
-    PlaybackState state,
-    PlaybackNotifier notifier,
-  ) {
+    BuildContext context, {
+    required WidgetRef ref,
+    required MetronomeSettings settings,
+    required MetronomePlaybackState metronomeState,
+  }) {
     final theme = Theme.of(context);
-    final isMetronomeRunning = state.mode == PlaybackMode.metronome;
+    final isMetronomeRunning = metronomeState.isPlaying;
 
     return Card(
       elevation: 2,
@@ -249,8 +304,10 @@ class SpikeScreen extends ConsumerWidget {
                 Icon(Icons.timer_outlined, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
-                  'Metronome (4/4 Bar)',
-                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  'Metronome (${settings.beatsPerBar}/4 Bar)',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -259,8 +316,8 @@ class SpikeScreen extends ConsumerWidget {
               children: [
                 Text('Beats: ', style: theme.textTheme.bodyMedium),
                 const SizedBox(width: 8),
-                ...List.generate(state.beatsPerBar, (index) {
-                  final isAccent = index == 0;
+                ...List.generate(settings.beatsPerBar, (index) {
+                  final isAccent = index == 0 && settings.accent;
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     width: 32,
@@ -279,7 +336,9 @@ class SpikeScreen extends ConsumerWidget {
                     child: Text(
                       '${index + 1}',
                       style: TextStyle(
-                        color: isMetronomeRunning ? Colors.black : theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                        color: isMetronomeRunning
+                            ? Colors.black
+                            : theme.colorScheme.onSurface.withValues(alpha: 0.5),
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
@@ -288,7 +347,9 @@ class SpikeScreen extends ConsumerWidget {
                 }),
                 const Spacer(),
                 Text(
-                  'Accent beat 1 (2500Hz)',
+                  settings.accent
+                      ? 'Accent beat 1 (${settings.accentPitchHz.round()}Hz)'
+                      : 'No accent',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
@@ -301,7 +362,11 @@ class SpikeScreen extends ConsumerWidget {
                 Expanded(
                   child: FilledButton.icon(
                     key: const Key('start_metronome_button'),
-                    onPressed: isMetronomeRunning ? null : () => notifier.startMetronome(),
+                    onPressed: isMetronomeRunning
+                        ? null
+                        : () => ref
+                            .read(metronomePlaybackControllerProvider.notifier)
+                            .start(),
                     icon: const Icon(Icons.play_arrow),
                     label: const Text('Start Metronome'),
                   ),
@@ -310,7 +375,11 @@ class SpikeScreen extends ConsumerWidget {
                 Expanded(
                   child: OutlinedButton.icon(
                     key: const Key('stop_metronome_button'),
-                    onPressed: isMetronomeRunning ? () => notifier.stopMetronome() : null,
+                    onPressed: isMetronomeRunning
+                        ? () => ref
+                            .read(metronomePlaybackControllerProvider.notifier)
+                            .stop()
+                        : null,
                     icon: const Icon(Icons.stop),
                     label: const Text('Stop Metronome'),
                   ),
@@ -324,10 +393,11 @@ class SpikeScreen extends ConsumerWidget {
   }
 
   Widget _buildBoundarySwapCard(
-    BuildContext context,
-    PlaybackState state,
-    PlaybackNotifier notifier,
-  ) {
+    BuildContext context, {
+    required WidgetRef ref,
+    required int tempo,
+    required Pattern pattern,
+  }) {
     final theme = Theme.of(context);
 
     return Card(
@@ -343,7 +413,9 @@ class SpikeScreen extends ConsumerWidget {
                 const SizedBox(width: 8),
                 Text(
                   'Live Boundary Swap Controls',
-                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -360,16 +432,30 @@ class SpikeScreen extends ConsumerWidget {
                 Expanded(
                   child: ElevatedButton.icon(
                     key: const Key('swap_tempo_button'),
-                    onPressed: () => notifier.toggleTempo(),
+                    onPressed: () {
+                      final next = tempo == 120 ? 140 : 120;
+                      ref.read(tempoProvider.notifier).setBpm(next);
+                    },
                     icon: const Icon(Icons.speed),
-                    label: Text('Swap Tempo (${state.bpm.round() == 120 ? "→ 140" : "→ 120"})'),
+                    label: Text(
+                      'Swap Tempo (${tempo == 120 ? "→ 140" : "→ 120"})',
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
                     key: const Key('swap_pattern_button'),
-                    onPressed: () => notifier.togglePattern(),
+                    onPressed: () {
+                      final currentIdx = spikePatternPresets.indexWhere(
+                        (p) => p.id == pattern.id,
+                      );
+                      final nextIdx =
+                          (currentIdx + 1) % spikePatternPresets.length;
+                      ref
+                          .read(sequencerPatternProvider.notifier)
+                          .setPattern(spikePatternPresets[nextIdx]);
+                    },
                     icon: const Icon(Icons.shuffle),
                     label: const Text('Swap Pattern'),
                   ),
@@ -381,14 +467,16 @@ class SpikeScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
-              children: [100.0, 120.0, 140.0, 160.0].map((bpm) {
-                final isSelected = state.bpm == bpm;
+              children: [100, 120, 140, 160].map((bpm) {
+                final isSelected = tempo == bpm;
                 return ChoiceChip(
-                  key: Key('bpm_chip_${bpm.round()}'),
-                  label: Text('${bpm.round()} BPM'),
+                  key: Key('bpm_chip_$bpm'),
+                  label: Text('$bpm BPM'),
                   selected: isSelected,
                   onSelected: (selected) {
-                    if (selected) notifier.swapTempo(bpm);
+                    if (selected) {
+                      ref.read(tempoProvider.notifier).setBpm(bpm);
+                    }
                   },
                 );
               }).toList(),
@@ -399,14 +487,18 @@ class SpikeScreen extends ConsumerWidget {
             Wrap(
               spacing: 8,
               runSpacing: 4,
-              children: PatternPreset.values.map((preset) {
-                final isSelected = state.patternPreset == preset;
+              children: spikePatternPresets.map((preset) {
+                final isSelected = pattern.id == preset.id;
                 return ChoiceChip(
-                  key: Key('pattern_chip_${preset.name}'),
-                  label: Text(preset.label),
+                  key: Key('pattern_chip_${preset.id}'),
+                  label: Text(preset.name),
                   selected: isSelected,
                   onSelected: (selected) {
-                    if (selected) notifier.swapPattern(preset);
+                    if (selected) {
+                      ref
+                          .read(sequencerPatternProvider.notifier)
+                          .setPattern(preset);
+                    }
                   },
                 );
               }).toList(),
@@ -418,21 +510,21 @@ class SpikeScreen extends ConsumerWidget {
   }
 
   Widget _buildFooter(
-    BuildContext context,
-    PlaybackState state,
-    PlaybackNotifier notifier,
-  ) {
+    BuildContext context, {
+    required WidgetRef ref,
+    required bool isPlaying,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (state.isPlaying)
+        if (isPlaying)
           FilledButton.tonalIcon(
             key: const Key('stop_all_button'),
             style: FilledButton.styleFrom(
               backgroundColor: Colors.red.shade900.withValues(alpha: 0.3),
               foregroundColor: Colors.red.shade200,
             ),
-            onPressed: () => notifier.stop(),
+            onPressed: () => stopAllPlayback(ref),
             icon: const Icon(Icons.stop_circle),
             label: const Text('Stop All Playback'),
           ),
