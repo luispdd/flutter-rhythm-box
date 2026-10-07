@@ -6,8 +6,8 @@
 
 ## 2. Timing measurement tool (before feature work)
 
-- [ ] 2.1 Write `tools/analyze_timing.py`: WAV in, onset detection, report of IOI mean, std, max deviation from nominal, and cumulative drift; verify with a synthetic WAV of known intervals (including a deliberately jittered one) that numbers match expectations
-- [ ] 2.2 Add a swap-boundary check (interval across a known swap time) and verify on a synthetic WAV
+- [x] 2.1 Write `tools/analyze_timing.py`: WAV in, onset detection, report of IOI mean, std, max deviation from nominal, and cumulative drift; verify with a synthetic WAV of known intervals (including a deliberately jittered one) that numbers match expectations
+- [x] 2.2 Add a swap-boundary check (interval across a known swap time) and verify on a synthetic WAV
 
 ## 3. Renderer and engine
 
