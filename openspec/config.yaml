@@ -4,29 +4,50 @@ schema: spec-driven
 # This is shown to AI when creating artifacts.
 # Add your tech stack, conventions, style guides, domain knowledge, etc.
 # Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Project: Rhythm Box, a personal-use proof of concept. A metronome and an
+  8-track step sequencer (simple drum machine) for practicing guitar/keyboards.
+  Tech stack: Flutter (Dart), flutter_soloud for audio playback.
+  Platforms: Android (primary, test on a real device), Linux desktop (secondary).
+  Web is not a target.
+  All sounds are synthesized in Dart. No audio sample files.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  Core principle: rhythm timing must come from the audio side. Never use Dart
+  timers (Timer, Future.delayed) or the UI thread to trigger sounds. Render one
+  full loop into a PCM buffer and play it as a gapless loop; apply any change
+  (tempo, steps, pattern) by re-rendering and swapping at the next loop boundary.
+  Consistent timing matters more than low latency. No live input/finger drumming.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+  Architecture layers (keep them separate): domain models (pure Dart),
+  synth renderer (pure Dart, unit-testable), AudioEngine interface with a
+  flutter_soloud implementation (so a native engine could replace it later),
+  persistence (local JSON), UI. Audio logic never goes in widgets.
+
+  Conventions: keep dependencies minimal and ask before adding large ones.
+  Unit-test the renderer and model serialization.
+
+rules:
+  proposal:
+    - Include a "Non-goals" section
+    - Keep proposals short; this is a solo POC
+  specs:
+    - Write requirements with concrete, testable scenarios
+    - Use measurable numbers for any timing requirement
+  design:
+    - Record every non-trivial decision (looping mechanism, state management,
+      storage format, library versions) and why it was chosen
+  tasks:
+    - Keep tasks small enough to complete and verify in one sitting
+    - Put the timing measurement task before any feature work that depends on it
+
+operations:
+  apply:
+    guidance:
+      - Work one change at a time and stop for review at the end of each
+      - If the timing spike misses its acceptance criteria, stop and report the
+        measured numbers; do not work around it with timers
+      - If any unexpected error or non well defined requirement occurs, stop and
+        report the issue with suggestions for resolution instead proceeding to solve on your own
+  archive:
+    guidance:
+      - Summarize the outcome, including any measured timing results
