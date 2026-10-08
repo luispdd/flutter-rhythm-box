@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'audio/soloud_audio_engine.dart';
 import 'domain/metronome_settings.dart';
+import 'domain/sequence.dart';
 import 'persistence/settings_store.dart';
 import 'persistence/shared_preferences_settings_store.dart';
 import 'synth/metronome_renderer.dart';
@@ -62,6 +63,36 @@ void main(List<String> args) async {
       await Future.delayed(Duration(seconds: swapSec));
       await engine.swapLoopAtBoundary(buf2);
       await Future.delayed(Duration(seconds: totalSec - swapSec));
+      await engine.stop();
+      await engine.dispose();
+      exit(0);
+    } else if (mode == 'sequence') {
+      final seconds = int.tryParse(args.length > 1 ? args[1] : '305') ?? 305;
+      final patternA = spikePatternPresets.first.copyWith(
+        id: 'patA',
+        name: 'Pattern A 120',
+        tempoBpm: 120,
+      );
+      final patternB = spikePatternPresets.first.copyWith(
+        id: 'patB',
+        name: 'Pattern B 140',
+        tempoBpm: 140,
+      );
+      final sequence = Sequence(
+        id: 'test_seq',
+        name: 'Test Sequence',
+        loop: true,
+        entries: [
+          SequenceEntry(patternId: 'patA', repeats: 1),
+          SequenceEntry(patternId: 'patB', repeats: 1),
+        ],
+      );
+      final buffer = patternRenderer.renderSequenceBuffer(
+        sequence,
+        {'patA': patternA, 'patB': patternB},
+      );
+      await engine.startLoop(buffer, looping: true);
+      await Future.delayed(Duration(seconds: seconds));
       await engine.stop();
       await engine.dispose();
       exit(0);

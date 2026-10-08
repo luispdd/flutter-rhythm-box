@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/pattern.dart';
 import '../persistence/settings_store.dart';
+import 'sequence_library_notifier.dart';
 
 /// Riverpod [Notifier] managing the library of saved [Pattern]s.
 ///
@@ -53,13 +54,20 @@ class PatternLibraryNotifier extends Notifier<List<Pattern>> {
     await _saveToStore(state);
   }
 
-  /// Deletes a pattern from the library by its [id].
+  /// Deletes a pattern from the library by its [id] and cascades the deletion
+  /// by removing references from any saved sequences.
   Future<void> deletePattern(String id) async {
     final newList = state.where((p) => p.id != id).toList();
     if (newList.length == state.length) return;
 
     state = List.unmodifiable(newList);
     await _saveToStore(state);
+
+    try {
+      await ref.read(sequenceLibraryProvider.notifier).removePatternReferences(id);
+    } catch (_) {
+      // Sequence library provider may not be initialized or available.
+    }
   }
 
   Future<void> _saveToStore(List<Pattern> patterns) async {

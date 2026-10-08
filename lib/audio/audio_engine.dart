@@ -13,10 +13,10 @@ abstract interface class AudioEngine {
   /// Releases audio engine resources.
   Future<void> dispose();
 
-  /// Starts playback of [buffer] as a seamless, gapless loop.
+  /// Starts playback of [buffer] as a seamless, gapless loop (or one-shot if [looping] is false).
   ///
   /// Sound onsets and loop repeating are strictly driven by the audio side clock.
-  Future<void> startLoop(AudioBuffer buffer);
+  Future<void> startLoop(AudioBuffer buffer, {bool looping = true});
 
   /// Schedules [nextBuffer] to seamlessly replace the currently playing loop
   /// at the next loop boundary, without audible click, gap, or doubled hit.

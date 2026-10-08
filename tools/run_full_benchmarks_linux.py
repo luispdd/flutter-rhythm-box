@@ -130,6 +130,15 @@ def main():
     )
     all_results["swap_boundary"] = swap_results
 
+    # Test 4: Sequence 5-minute loop (305s)
+    seq_5min_results = record_test(
+        name="linux_sequence_5min",
+        app_args=["sequence", "305"],
+        duration_sec=305,
+        analyzer_args=["--sequence", "120:4,140:4"],
+    )
+    all_results["sequence_5min"] = seq_5min_results
+
     # Save aggregated results
     summary_path = RECORDINGS_DIR / "linux_benchmark_results.json"
     with open(summary_path, "w") as f:

@@ -7,6 +7,7 @@ import '../domain/voice.dart';
 import '../persistence/settings_store.dart';
 import '../synth/metronome_renderer.dart';
 import 'playback_controller.dart';
+import 'sequence_controller.dart';
 import 'sequencer_controller.dart';
 
 /// Immutable state describing the active metronome configuration and playback status.
@@ -125,6 +126,7 @@ class MetronomeController extends Notifier<MetronomeState> {
     if (state.isPlaying) return;
 
     ref.read(sequencerControllerProvider.notifier).onExternalStop();
+    ref.read(sequenceControllerProvider.notifier).onExternalStop();
 
     final bpm = ref.read(tempoProvider).toDouble();
     final buffer = _renderer.renderBuffer(settings: state.settings, bpm: bpm);

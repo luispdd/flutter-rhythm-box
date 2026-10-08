@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rhythm_box/domain/metronome_settings.dart';
 import 'package:rhythm_box/domain/pattern.dart';
+import 'package:rhythm_box/domain/sequence.dart';
 import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/domain/voice.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
@@ -190,22 +191,82 @@ void main() {
       });
     });
 
+    group('Sequence Library', () {
+      test('loadSequenceLibrary returns empty list when empty', () async {
+        final result = await store.loadSequenceLibrary();
+        expect(result, isEmpty);
+      });
+
+      test('round-trips custom Sequence Library correctly', () async {
+        final seq1 = Sequence(
+          id: 'seq-1',
+          name: 'Verse-Chorus Sequence',
+          loop: true,
+          entries: [
+            SequenceEntry(patternId: 'pat-1', repeats: 2),
+            SequenceEntry(patternId: 'pat-2', repeats: 4),
+          ],
+        );
+
+        final seq2 = Sequence(
+          id: 'seq-2',
+          name: 'Solo Section',
+          loop: false,
+          entries: [
+            SequenceEntry(patternId: 'pat-3', repeats: 1),
+          ],
+        );
+
+        final library = [seq1, seq2];
+
+        await store.saveSequenceLibrary(library);
+        final loaded = await store.loadSequenceLibrary();
+
+        expect(loaded, isNotEmpty);
+        expect(loaded.length, equals(2));
+        expect(loaded[0], equals(seq1));
+        expect(loaded[1], equals(seq2));
+
+        final raw = prefs.getString(SharedPreferencesSettingsStore.sequenceLibraryKey);
+        expect(raw, isNotNull);
+        final decoded = jsonDecode(raw!) as List<dynamic>;
+        expect(decoded.length, equals(2));
+        expect(decoded[0]['name'], equals('Verse-Chorus Sequence'));
+      });
+
+      test('returns empty list gracefully when stored JSON is invalid or corrupted', () async {
+        await prefs.setString(
+          SharedPreferencesSettingsStore.sequenceLibraryKey,
+          'not valid json {[[',
+        );
+
+        final result = await store.loadSequenceLibrary();
+        expect(result, isEmpty);
+      });
+    });
+
     group('clear', () {
       test('removes all saved settings from storage', () async {
         final settings = MetronomeSettings(beatsPerBar: 5);
         await store.saveMetronomeSettings(settings);
         await store.saveTempo(const Tempo(90));
         await store.saveWorkingPattern(Pattern.empty());
+        await store.savePatternLibrary([Pattern.empty()]);
+        await store.saveSequenceLibrary([Sequence.empty()]);
 
         expect(await store.loadMetronomeSettings(), isNotNull);
         expect(await store.loadTempo(), isNotNull);
         expect(await store.loadWorkingPattern(), isNotNull);
+        expect(await store.loadPatternLibrary(), isNotEmpty);
+        expect(await store.loadSequenceLibrary(), isNotEmpty);
 
         await store.clear();
 
         expect(await store.loadMetronomeSettings(), isNull);
         expect(await store.loadTempo(), isNull);
         expect(await store.loadWorkingPattern(), isNull);
+        expect(await store.loadPatternLibrary(), isEmpty);
+        expect(await store.loadSequenceLibrary(), isEmpty);
       });
     });
 

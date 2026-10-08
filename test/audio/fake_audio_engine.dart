@@ -55,13 +55,16 @@ class FakeAudioEngine implements AudioEngine {
     await _positionController.close();
   }
 
+  bool lastLooping = true;
+
   @override
-  Future<void> startLoop(AudioBuffer buffer) async {
+  Future<void> startLoop(AudioBuffer buffer, {bool looping = true}) async {
     await init();
     if (_isPlaying) {
       await stop();
     }
     _isPlaying = true;
+    lastLooping = looping;
     startLoopCalls++;
     startedBuffers.add(buffer);
     audibleBuffer = buffer;

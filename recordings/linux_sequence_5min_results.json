@@ -1,0 +1,5929 @@
+{
+  "total_samples": 14688256,
+  "sample_rate": 48000,
+  "duration_sec": 306.00533333333334,
+  "onset_count": 2627,
+  "nominal_ioi_ms": 116.07142857142857,
+  "ioi_mean_ms": 116.07820830159939,
+  "ioi_std_ms": 0.03149030287609097,
+  "ioi_min_ms": 107.06249999998363,
+  "ioi_max_ms": 125.06250000001273,
+  "max_dev_from_nominal_ms": 0.08630952382711143,
+  "cumulative_drift_ms": -0.053571426406051614,
+  "max_drift_ms": 0.10119047811940618,
+  "swap_result": null,
+  "passed_std": true,
+  "passed_max_dev": true,
+  "passed_drift": true,
+  "passed_swap": null,
+  "overall_passed": true,
+  "sequence_spec": "120:4,140:4",
+  "sequence_transitions": [
+    {
+      "interval_index": 3,
+      "onset_before_sec": 1.0048958333333333,
+      "onset_after_sec": 1.1299375,
+      "interval_ms": 125.04166666666671,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666666714036,
+      "passed": true
+    },
+    {
+      "interval_index": 7,
+      "onset_before_sec": 1.4514583333333333,
+      "onset_after_sec": 1.5585208333333334,
+      "interval_ms": 107.06250000000006,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285708195,
+      "passed": true
+    },
+    {
+      "interval_index": 11,
+      "onset_before_sec": 1.9334791666666666,
+      "onset_after_sec": 2.058520833333333,
+      "interval_ms": 125.0416666666665,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666650087,
+      "passed": true
+    },
+    {
+      "interval_index": 15,
+      "onset_before_sec": 2.3800208333333335,
+      "onset_after_sec": 2.4870833333333335,
+      "interval_ms": 107.06250000000006,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285708195,
+      "passed": true
+    },
+    {
+      "interval_index": 19,
+      "onset_before_sec": 2.862041666666667,
+      "onset_after_sec": 2.9870833333333335,
+      "interval_ms": 125.04166666666671,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666666714036,
+      "passed": true
+    },
+    {
+      "interval_index": 23,
+      "onset_before_sec": 3.3086041666666666,
+      "onset_after_sec": 3.4156666666666666,
+      "interval_ms": 107.06250000000006,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285708195,
+      "passed": true
+    },
+    {
+      "interval_index": 27,
+      "onset_before_sec": 3.7906041666666668,
+      "onset_after_sec": 3.9156666666666666,
+      "interval_ms": 125.06249999999986,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999985789,
+      "passed": true
+    },
+    {
+      "interval_index": 31,
+      "onset_before_sec": 4.237166666666667,
+      "onset_after_sec": 4.344229166666667,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 35,
+      "onset_before_sec": 4.7191875,
+      "onset_after_sec": 4.844229166666667,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 39,
+      "onset_before_sec": 5.16575,
+      "onset_after_sec": 5.2728125,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 43,
+      "onset_before_sec": 5.64775,
+      "onset_after_sec": 5.7728125,
+      "interval_ms": 125.0624999999994,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999999403144,
+      "passed": true
+    },
+    {
+      "interval_index": 47,
+      "onset_before_sec": 6.0943125,
+      "onset_after_sec": 6.201375,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 51,
+      "onset_before_sec": 6.576333333333333,
+      "onset_after_sec": 6.701375,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 55,
+      "onset_before_sec": 7.022875,
+      "onset_after_sec": 7.1299375,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 59,
+      "onset_before_sec": 7.504895833333333,
+      "onset_after_sec": 7.6299375,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 63,
+      "onset_before_sec": 7.951458333333333,
+      "onset_after_sec": 8.058520833333333,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 67,
+      "onset_before_sec": 8.433479166666666,
+      "onset_after_sec": 8.558520833333333,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 71,
+      "onset_before_sec": 8.880020833333333,
+      "onset_after_sec": 8.987083333333333,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 75,
+      "onset_before_sec": 9.362041666666666,
+      "onset_after_sec": 9.487083333333333,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 79,
+      "onset_before_sec": 9.808604166666667,
+      "onset_after_sec": 9.915666666666667,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 83,
+      "onset_before_sec": 10.290604166666666,
+      "onset_after_sec": 10.415666666666667,
+      "interval_ms": 125.0625000000003,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000000029843,
+      "passed": true
+    },
+    {
+      "interval_index": 87,
+      "onset_before_sec": 10.737166666666667,
+      "onset_after_sec": 10.844229166666667,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 91,
+      "onset_before_sec": 11.2191875,
+      "onset_after_sec": 11.344229166666667,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 95,
+      "onset_before_sec": 11.66575,
+      "onset_after_sec": 11.7728125,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 99,
+      "onset_before_sec": 12.14775,
+      "onset_after_sec": 12.2728125,
+      "interval_ms": 125.0625000000003,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000000029843,
+      "passed": true
+    },
+    {
+      "interval_index": 103,
+      "onset_before_sec": 12.5943125,
+      "onset_after_sec": 12.701375,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 107,
+      "onset_before_sec": 13.076333333333332,
+      "onset_after_sec": 13.201375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 111,
+      "onset_before_sec": 13.522875,
+      "onset_after_sec": 13.6299375,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 115,
+      "onset_before_sec": 14.004895833333334,
+      "onset_after_sec": 14.1299375,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 119,
+      "onset_before_sec": 14.451458333333333,
+      "onset_after_sec": 14.558520833333333,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 123,
+      "onset_before_sec": 14.933479166666666,
+      "onset_after_sec": 15.058520833333333,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 127,
+      "onset_before_sec": 15.380020833333333,
+      "onset_after_sec": 15.487083333333333,
+      "interval_ms": 107.06249999999962,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285752249,
+      "passed": true
+    },
+    {
+      "interval_index": 131,
+      "onset_before_sec": 15.862041666666666,
+      "onset_after_sec": 15.987083333333333,
+      "interval_ms": 125.04166666666627,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.0416666666662735,
+      "passed": true
+    },
+    {
+      "interval_index": 135,
+      "onset_before_sec": 16.308604166666665,
+      "onset_after_sec": 16.415666666666667,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 139,
+      "onset_before_sec": 16.790604166666668,
+      "onset_after_sec": 16.915666666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 143,
+      "onset_before_sec": 17.237166666666667,
+      "onset_after_sec": 17.34422916666667,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 147,
+      "onset_before_sec": 17.7191875,
+      "onset_after_sec": 17.84422916666667,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 151,
+      "onset_before_sec": 18.16575,
+      "onset_after_sec": 18.2728125,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 155,
+      "onset_before_sec": 18.64775,
+      "onset_after_sec": 18.7728125,
+      "interval_ms": 125.06250000000207,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000000207478,
+      "passed": true
+    },
+    {
+      "interval_index": 159,
+      "onset_before_sec": 19.0943125,
+      "onset_after_sec": 19.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 163,
+      "onset_before_sec": 19.576333333333334,
+      "onset_after_sec": 19.701375,
+      "interval_ms": 125.0416666666645,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666449714,
+      "passed": true
+    },
+    {
+      "interval_index": 167,
+      "onset_before_sec": 20.022875,
+      "onset_after_sec": 20.1299375,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 171,
+      "onset_before_sec": 20.504895833333332,
+      "onset_after_sec": 20.6299375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 175,
+      "onset_before_sec": 20.951458333333335,
+      "onset_after_sec": 21.058520833333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 179,
+      "onset_before_sec": 21.433479166666668,
+      "onset_after_sec": 21.558520833333333,
+      "interval_ms": 125.0416666666645,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666449714,
+      "passed": true
+    },
+    {
+      "interval_index": 183,
+      "onset_before_sec": 21.880020833333333,
+      "onset_after_sec": 21.987083333333334,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 187,
+      "onset_before_sec": 22.362041666666666,
+      "onset_after_sec": 22.487083333333334,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 191,
+      "onset_before_sec": 22.808604166666665,
+      "onset_after_sec": 22.915666666666667,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 195,
+      "onset_before_sec": 23.290604166666668,
+      "onset_after_sec": 23.415666666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 199,
+      "onset_before_sec": 23.737166666666667,
+      "onset_after_sec": 23.84422916666667,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 203,
+      "onset_before_sec": 24.2191875,
+      "onset_after_sec": 24.34422916666667,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 207,
+      "onset_before_sec": 24.66575,
+      "onset_after_sec": 24.7728125,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 211,
+      "onset_before_sec": 25.14775,
+      "onset_after_sec": 25.2728125,
+      "interval_ms": 125.06250000000207,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000000207478,
+      "passed": true
+    },
+    {
+      "interval_index": 215,
+      "onset_before_sec": 25.5943125,
+      "onset_after_sec": 25.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 219,
+      "onset_before_sec": 26.076333333333334,
+      "onset_after_sec": 26.201375,
+      "interval_ms": 125.0416666666645,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666449714,
+      "passed": true
+    },
+    {
+      "interval_index": 223,
+      "onset_before_sec": 26.522875,
+      "onset_after_sec": 26.6299375,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 227,
+      "onset_before_sec": 27.004895833333332,
+      "onset_after_sec": 27.1299375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 231,
+      "onset_before_sec": 27.451458333333335,
+      "onset_after_sec": 27.558520833333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 235,
+      "onset_before_sec": 27.933479166666668,
+      "onset_after_sec": 28.058520833333333,
+      "interval_ms": 125.0416666666645,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666449714,
+      "passed": true
+    },
+    {
+      "interval_index": 239,
+      "onset_before_sec": 28.380020833333333,
+      "onset_after_sec": 28.487083333333334,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 243,
+      "onset_before_sec": 28.862041666666666,
+      "onset_after_sec": 28.987083333333334,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 247,
+      "onset_before_sec": 29.308604166666665,
+      "onset_after_sec": 29.415666666666667,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 251,
+      "onset_before_sec": 29.790604166666668,
+      "onset_after_sec": 29.915666666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 255,
+      "onset_before_sec": 30.237166666666667,
+      "onset_after_sec": 30.34422916666667,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 259,
+      "onset_before_sec": 30.7191875,
+      "onset_after_sec": 30.84422916666667,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 263,
+      "onset_before_sec": 31.16575,
+      "onset_after_sec": 31.2728125,
+      "interval_ms": 107.06250000000139,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285574613,
+      "passed": true
+    },
+    {
+      "interval_index": 267,
+      "onset_before_sec": 31.64775,
+      "onset_after_sec": 31.7728125,
+      "interval_ms": 125.06250000000207,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000000207478,
+      "passed": true
+    },
+    {
+      "interval_index": 271,
+      "onset_before_sec": 32.0943125,
+      "onset_after_sec": 32.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 275,
+      "onset_before_sec": 32.57633333333333,
+      "onset_after_sec": 32.701375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 279,
+      "onset_before_sec": 33.022875,
+      "onset_after_sec": 33.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 283,
+      "onset_before_sec": 33.504895833333336,
+      "onset_after_sec": 33.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 287,
+      "onset_before_sec": 33.951458333333335,
+      "onset_after_sec": 34.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 291,
+      "onset_before_sec": 34.433479166666665,
+      "onset_after_sec": 34.55852083333333,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 295,
+      "onset_before_sec": 34.88002083333333,
+      "onset_after_sec": 34.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 299,
+      "onset_before_sec": 35.36204166666667,
+      "onset_after_sec": 35.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 303,
+      "onset_before_sec": 35.80860416666667,
+      "onset_after_sec": 35.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 307,
+      "onset_before_sec": 36.29060416666667,
+      "onset_after_sec": 36.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 311,
+      "onset_before_sec": 36.73716666666667,
+      "onset_after_sec": 36.844229166666665,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 315,
+      "onset_before_sec": 37.2191875,
+      "onset_after_sec": 37.344229166666665,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 319,
+      "onset_before_sec": 37.66575,
+      "onset_after_sec": 37.7728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 323,
+      "onset_before_sec": 38.14775,
+      "onset_after_sec": 38.2728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 327,
+      "onset_before_sec": 38.5943125,
+      "onset_after_sec": 38.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 331,
+      "onset_before_sec": 39.07633333333333,
+      "onset_after_sec": 39.201375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 335,
+      "onset_before_sec": 39.522875,
+      "onset_after_sec": 39.6299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 339,
+      "onset_before_sec": 40.004895833333336,
+      "onset_after_sec": 40.1299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 343,
+      "onset_before_sec": 40.451458333333335,
+      "onset_after_sec": 40.55852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 347,
+      "onset_before_sec": 40.933479166666665,
+      "onset_after_sec": 41.05852083333333,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 351,
+      "onset_before_sec": 41.38002083333333,
+      "onset_after_sec": 41.48708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 355,
+      "onset_before_sec": 41.86204166666667,
+      "onset_after_sec": 41.98708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 359,
+      "onset_before_sec": 42.30860416666667,
+      "onset_after_sec": 42.41566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 363,
+      "onset_before_sec": 42.79060416666667,
+      "onset_after_sec": 42.91566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 367,
+      "onset_before_sec": 43.23716666666667,
+      "onset_after_sec": 43.344229166666665,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 371,
+      "onset_before_sec": 43.7191875,
+      "onset_after_sec": 43.844229166666665,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 375,
+      "onset_before_sec": 44.16575,
+      "onset_after_sec": 44.2728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 379,
+      "onset_before_sec": 44.64775,
+      "onset_after_sec": 44.7728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 383,
+      "onset_before_sec": 45.0943125,
+      "onset_after_sec": 45.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 387,
+      "onset_before_sec": 45.57633333333333,
+      "onset_after_sec": 45.701375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 391,
+      "onset_before_sec": 46.022875,
+      "onset_after_sec": 46.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 395,
+      "onset_before_sec": 46.504895833333336,
+      "onset_after_sec": 46.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 399,
+      "onset_before_sec": 46.951458333333335,
+      "onset_after_sec": 47.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 403,
+      "onset_before_sec": 47.433479166666665,
+      "onset_after_sec": 47.55852083333333,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 407,
+      "onset_before_sec": 47.88002083333333,
+      "onset_after_sec": 47.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 411,
+      "onset_before_sec": 48.36204166666667,
+      "onset_after_sec": 48.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 415,
+      "onset_before_sec": 48.80860416666667,
+      "onset_after_sec": 48.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 419,
+      "onset_before_sec": 49.29060416666667,
+      "onset_after_sec": 49.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 423,
+      "onset_before_sec": 49.73716666666667,
+      "onset_after_sec": 49.844229166666665,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 427,
+      "onset_before_sec": 50.2191875,
+      "onset_after_sec": 50.344229166666665,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 431,
+      "onset_before_sec": 50.66575,
+      "onset_after_sec": 50.7728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 435,
+      "onset_before_sec": 51.14775,
+      "onset_after_sec": 51.2728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 439,
+      "onset_before_sec": 51.5943125,
+      "onset_after_sec": 51.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 443,
+      "onset_before_sec": 52.07633333333333,
+      "onset_after_sec": 52.201375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 447,
+      "onset_before_sec": 52.522875,
+      "onset_after_sec": 52.6299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 451,
+      "onset_before_sec": 53.004895833333336,
+      "onset_after_sec": 53.1299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 455,
+      "onset_before_sec": 53.451458333333335,
+      "onset_after_sec": 53.55852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 459,
+      "onset_before_sec": 53.933479166666665,
+      "onset_after_sec": 54.05852083333333,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 463,
+      "onset_before_sec": 54.38002083333333,
+      "onset_after_sec": 54.48708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 467,
+      "onset_before_sec": 54.86204166666667,
+      "onset_after_sec": 54.98708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 471,
+      "onset_before_sec": 55.30860416666667,
+      "onset_after_sec": 55.41566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 475,
+      "onset_before_sec": 55.79060416666667,
+      "onset_after_sec": 55.91566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 479,
+      "onset_before_sec": 56.23716666666667,
+      "onset_after_sec": 56.344229166666665,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 483,
+      "onset_before_sec": 56.7191875,
+      "onset_after_sec": 56.844229166666665,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 487,
+      "onset_before_sec": 57.16575,
+      "onset_after_sec": 57.2728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 491,
+      "onset_before_sec": 57.64775,
+      "onset_after_sec": 57.7728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 495,
+      "onset_before_sec": 58.0943125,
+      "onset_after_sec": 58.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 499,
+      "onset_before_sec": 58.57633333333333,
+      "onset_after_sec": 58.701375,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 503,
+      "onset_before_sec": 59.022875,
+      "onset_after_sec": 59.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 507,
+      "onset_before_sec": 59.504895833333336,
+      "onset_after_sec": 59.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 511,
+      "onset_before_sec": 59.951458333333335,
+      "onset_after_sec": 60.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 515,
+      "onset_before_sec": 60.433479166666665,
+      "onset_after_sec": 60.55852083333333,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 519,
+      "onset_before_sec": 60.88002083333333,
+      "onset_after_sec": 60.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 523,
+      "onset_before_sec": 61.36204166666667,
+      "onset_after_sec": 61.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 527,
+      "onset_before_sec": 61.80860416666667,
+      "onset_after_sec": 61.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 531,
+      "onset_before_sec": 62.29060416666667,
+      "onset_after_sec": 62.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 535,
+      "onset_before_sec": 62.73716666666667,
+      "onset_after_sec": 62.844229166666665,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 539,
+      "onset_before_sec": 63.2191875,
+      "onset_after_sec": 63.344229166666665,
+      "interval_ms": 125.04166666666805,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666668049857,
+      "passed": true
+    },
+    {
+      "interval_index": 543,
+      "onset_before_sec": 63.66575,
+      "onset_after_sec": 63.7728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 547,
+      "onset_before_sec": 64.14775,
+      "onset_after_sec": 64.2728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 551,
+      "onset_before_sec": 64.5943125,
+      "onset_after_sec": 64.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 555,
+      "onset_before_sec": 65.07633333333334,
+      "onset_after_sec": 65.201375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 559,
+      "onset_before_sec": 65.522875,
+      "onset_after_sec": 65.6299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 563,
+      "onset_before_sec": 66.00489583333334,
+      "onset_after_sec": 66.1299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 567,
+      "onset_before_sec": 66.45145833333333,
+      "onset_after_sec": 66.55852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 571,
+      "onset_before_sec": 66.93347916666667,
+      "onset_after_sec": 67.05852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 575,
+      "onset_before_sec": 67.38002083333333,
+      "onset_after_sec": 67.48708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 579,
+      "onset_before_sec": 67.86204166666667,
+      "onset_after_sec": 67.98708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 583,
+      "onset_before_sec": 68.30860416666667,
+      "onset_after_sec": 68.41566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 587,
+      "onset_before_sec": 68.79060416666667,
+      "onset_after_sec": 68.91566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 591,
+      "onset_before_sec": 69.23716666666667,
+      "onset_after_sec": 69.34422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 595,
+      "onset_before_sec": 69.7191875,
+      "onset_after_sec": 69.84422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 599,
+      "onset_before_sec": 70.16575,
+      "onset_after_sec": 70.2728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 603,
+      "onset_before_sec": 70.64775,
+      "onset_after_sec": 70.7728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 607,
+      "onset_before_sec": 71.0943125,
+      "onset_after_sec": 71.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 611,
+      "onset_before_sec": 71.57633333333334,
+      "onset_after_sec": 71.701375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 615,
+      "onset_before_sec": 72.022875,
+      "onset_after_sec": 72.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 619,
+      "onset_before_sec": 72.50489583333334,
+      "onset_after_sec": 72.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 623,
+      "onset_before_sec": 72.95145833333333,
+      "onset_after_sec": 73.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 627,
+      "onset_before_sec": 73.43347916666667,
+      "onset_after_sec": 73.55852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 631,
+      "onset_before_sec": 73.88002083333333,
+      "onset_after_sec": 73.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 635,
+      "onset_before_sec": 74.36204166666667,
+      "onset_after_sec": 74.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 639,
+      "onset_before_sec": 74.80860416666667,
+      "onset_after_sec": 74.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 643,
+      "onset_before_sec": 75.29060416666667,
+      "onset_after_sec": 75.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 647,
+      "onset_before_sec": 75.73716666666667,
+      "onset_after_sec": 75.84422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 651,
+      "onset_before_sec": 76.2191875,
+      "onset_after_sec": 76.34422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 655,
+      "onset_before_sec": 76.66575,
+      "onset_after_sec": 76.7728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 659,
+      "onset_before_sec": 77.14775,
+      "onset_after_sec": 77.2728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 663,
+      "onset_before_sec": 77.5943125,
+      "onset_after_sec": 77.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 667,
+      "onset_before_sec": 78.07633333333334,
+      "onset_after_sec": 78.201375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 671,
+      "onset_before_sec": 78.522875,
+      "onset_after_sec": 78.6299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 675,
+      "onset_before_sec": 79.00489583333334,
+      "onset_after_sec": 79.1299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 679,
+      "onset_before_sec": 79.45145833333333,
+      "onset_after_sec": 79.55852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 683,
+      "onset_before_sec": 79.93347916666667,
+      "onset_after_sec": 80.05852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 687,
+      "onset_before_sec": 80.38002083333333,
+      "onset_after_sec": 80.48708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 691,
+      "onset_before_sec": 80.86204166666667,
+      "onset_after_sec": 80.98708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 695,
+      "onset_before_sec": 81.30860416666667,
+      "onset_after_sec": 81.41566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 699,
+      "onset_before_sec": 81.79060416666667,
+      "onset_after_sec": 81.91566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 703,
+      "onset_before_sec": 82.23716666666667,
+      "onset_after_sec": 82.34422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 707,
+      "onset_before_sec": 82.7191875,
+      "onset_after_sec": 82.84422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 711,
+      "onset_before_sec": 83.16575,
+      "onset_after_sec": 83.2728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 715,
+      "onset_before_sec": 83.64775,
+      "onset_after_sec": 83.7728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 719,
+      "onset_before_sec": 84.0943125,
+      "onset_after_sec": 84.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 723,
+      "onset_before_sec": 84.57633333333334,
+      "onset_after_sec": 84.701375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 727,
+      "onset_before_sec": 85.022875,
+      "onset_after_sec": 85.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 731,
+      "onset_before_sec": 85.50489583333334,
+      "onset_after_sec": 85.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 735,
+      "onset_before_sec": 85.95145833333333,
+      "onset_after_sec": 86.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 739,
+      "onset_before_sec": 86.43347916666667,
+      "onset_after_sec": 86.55852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 743,
+      "onset_before_sec": 86.88002083333333,
+      "onset_after_sec": 86.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 747,
+      "onset_before_sec": 87.36204166666667,
+      "onset_after_sec": 87.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 751,
+      "onset_before_sec": 87.80860416666667,
+      "onset_after_sec": 87.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 755,
+      "onset_before_sec": 88.29060416666667,
+      "onset_after_sec": 88.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 759,
+      "onset_before_sec": 88.73716666666667,
+      "onset_after_sec": 88.84422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 763,
+      "onset_before_sec": 89.2191875,
+      "onset_after_sec": 89.34422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 767,
+      "onset_before_sec": 89.66575,
+      "onset_after_sec": 89.7728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 771,
+      "onset_before_sec": 90.14775,
+      "onset_after_sec": 90.2728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 775,
+      "onset_before_sec": 90.5943125,
+      "onset_after_sec": 90.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 779,
+      "onset_before_sec": 91.07633333333334,
+      "onset_after_sec": 91.201375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 783,
+      "onset_before_sec": 91.522875,
+      "onset_after_sec": 91.6299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 787,
+      "onset_before_sec": 92.00489583333334,
+      "onset_after_sec": 92.1299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 791,
+      "onset_before_sec": 92.45145833333333,
+      "onset_after_sec": 92.55852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 795,
+      "onset_before_sec": 92.93347916666667,
+      "onset_after_sec": 93.05852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 799,
+      "onset_before_sec": 93.38002083333333,
+      "onset_after_sec": 93.48708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 803,
+      "onset_before_sec": 93.86204166666667,
+      "onset_after_sec": 93.98708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 807,
+      "onset_before_sec": 94.30860416666667,
+      "onset_after_sec": 94.41566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 811,
+      "onset_before_sec": 94.79060416666667,
+      "onset_after_sec": 94.91566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 815,
+      "onset_before_sec": 95.23716666666667,
+      "onset_after_sec": 95.34422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 819,
+      "onset_before_sec": 95.7191875,
+      "onset_after_sec": 95.84422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 823,
+      "onset_before_sec": 96.16575,
+      "onset_after_sec": 96.2728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 827,
+      "onset_before_sec": 96.64775,
+      "onset_after_sec": 96.7728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 831,
+      "onset_before_sec": 97.0943125,
+      "onset_after_sec": 97.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 835,
+      "onset_before_sec": 97.57633333333334,
+      "onset_after_sec": 97.701375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 839,
+      "onset_before_sec": 98.022875,
+      "onset_after_sec": 98.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 843,
+      "onset_before_sec": 98.50489583333334,
+      "onset_after_sec": 98.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 847,
+      "onset_before_sec": 98.95145833333333,
+      "onset_after_sec": 99.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 851,
+      "onset_before_sec": 99.43347916666667,
+      "onset_after_sec": 99.55852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 855,
+      "onset_before_sec": 99.88002083333333,
+      "onset_after_sec": 99.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 859,
+      "onset_before_sec": 100.36204166666667,
+      "onset_after_sec": 100.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 863,
+      "onset_before_sec": 100.80860416666667,
+      "onset_after_sec": 100.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 867,
+      "onset_before_sec": 101.29060416666667,
+      "onset_after_sec": 101.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 871,
+      "onset_before_sec": 101.73716666666667,
+      "onset_after_sec": 101.84422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 875,
+      "onset_before_sec": 102.2191875,
+      "onset_after_sec": 102.34422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 879,
+      "onset_before_sec": 102.66575,
+      "onset_after_sec": 102.7728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 883,
+      "onset_before_sec": 103.14775,
+      "onset_after_sec": 103.2728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 887,
+      "onset_before_sec": 103.5943125,
+      "onset_after_sec": 103.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 891,
+      "onset_before_sec": 104.07633333333334,
+      "onset_after_sec": 104.201375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 895,
+      "onset_before_sec": 104.522875,
+      "onset_after_sec": 104.6299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 899,
+      "onset_before_sec": 105.00489583333334,
+      "onset_after_sec": 105.1299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 903,
+      "onset_before_sec": 105.45145833333333,
+      "onset_after_sec": 105.55852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 907,
+      "onset_before_sec": 105.93347916666667,
+      "onset_after_sec": 106.05852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 911,
+      "onset_before_sec": 106.38002083333333,
+      "onset_after_sec": 106.48708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 915,
+      "onset_before_sec": 106.86204166666667,
+      "onset_after_sec": 106.98708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 919,
+      "onset_before_sec": 107.30860416666667,
+      "onset_after_sec": 107.41566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 923,
+      "onset_before_sec": 107.79060416666667,
+      "onset_after_sec": 107.91566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 927,
+      "onset_before_sec": 108.23716666666667,
+      "onset_after_sec": 108.34422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 931,
+      "onset_before_sec": 108.7191875,
+      "onset_after_sec": 108.84422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 935,
+      "onset_before_sec": 109.16575,
+      "onset_after_sec": 109.2728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 939,
+      "onset_before_sec": 109.64775,
+      "onset_after_sec": 109.7728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 943,
+      "onset_before_sec": 110.0943125,
+      "onset_after_sec": 110.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 947,
+      "onset_before_sec": 110.57633333333334,
+      "onset_after_sec": 110.701375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 951,
+      "onset_before_sec": 111.022875,
+      "onset_after_sec": 111.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 955,
+      "onset_before_sec": 111.50489583333334,
+      "onset_after_sec": 111.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 959,
+      "onset_before_sec": 111.95145833333333,
+      "onset_after_sec": 112.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 963,
+      "onset_before_sec": 112.43347916666667,
+      "onset_after_sec": 112.55852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 967,
+      "onset_before_sec": 112.88002083333333,
+      "onset_after_sec": 112.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 971,
+      "onset_before_sec": 113.36204166666667,
+      "onset_after_sec": 113.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 975,
+      "onset_before_sec": 113.80860416666667,
+      "onset_after_sec": 113.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 979,
+      "onset_before_sec": 114.29060416666667,
+      "onset_after_sec": 114.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 983,
+      "onset_before_sec": 114.73716666666667,
+      "onset_after_sec": 114.84422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 987,
+      "onset_before_sec": 115.2191875,
+      "onset_after_sec": 115.34422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 991,
+      "onset_before_sec": 115.66575,
+      "onset_after_sec": 115.7728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 995,
+      "onset_before_sec": 116.14775,
+      "onset_after_sec": 116.2728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 999,
+      "onset_before_sec": 116.5943125,
+      "onset_after_sec": 116.701375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1003,
+      "onset_before_sec": 117.07633333333334,
+      "onset_after_sec": 117.201375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1007,
+      "onset_before_sec": 117.522875,
+      "onset_after_sec": 117.6299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1011,
+      "onset_before_sec": 118.00489583333334,
+      "onset_after_sec": 118.1299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1015,
+      "onset_before_sec": 118.45145833333333,
+      "onset_after_sec": 118.55852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1019,
+      "onset_before_sec": 118.93347916666667,
+      "onset_after_sec": 119.05852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1023,
+      "onset_before_sec": 119.38002083333333,
+      "onset_after_sec": 119.48708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1027,
+      "onset_before_sec": 119.86204166666667,
+      "onset_after_sec": 119.98708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1031,
+      "onset_before_sec": 120.30860416666667,
+      "onset_after_sec": 120.41566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1035,
+      "onset_before_sec": 120.79060416666667,
+      "onset_after_sec": 120.91566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 1039,
+      "onset_before_sec": 121.23716666666667,
+      "onset_after_sec": 121.34422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1043,
+      "onset_before_sec": 121.7191875,
+      "onset_after_sec": 121.84422916666666,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1047,
+      "onset_before_sec": 122.16575,
+      "onset_after_sec": 122.2728125,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1051,
+      "onset_before_sec": 122.64775,
+      "onset_after_sec": 122.7728125,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 1055,
+      "onset_before_sec": 123.0943125,
+      "onset_after_sec": 123.201375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1059,
+      "onset_before_sec": 123.57633333333334,
+      "onset_after_sec": 123.701375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1063,
+      "onset_before_sec": 124.022875,
+      "onset_after_sec": 124.1299375,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1067,
+      "onset_before_sec": 124.50489583333334,
+      "onset_after_sec": 124.6299375,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1071,
+      "onset_before_sec": 124.95145833333333,
+      "onset_after_sec": 125.05852083333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1075,
+      "onset_before_sec": 125.43347916666667,
+      "onset_after_sec": 125.55852083333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1079,
+      "onset_before_sec": 125.88002083333333,
+      "onset_after_sec": 125.98708333333333,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1083,
+      "onset_before_sec": 126.36204166666667,
+      "onset_after_sec": 126.48708333333333,
+      "interval_ms": 125.04166666666094,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.04166666666094443,
+      "passed": true
+    },
+    {
+      "interval_index": 1087,
+      "onset_before_sec": 126.80860416666667,
+      "onset_after_sec": 126.91566666666667,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1091,
+      "onset_before_sec": 127.29060416666667,
+      "onset_after_sec": 127.41566666666667,
+      "interval_ms": 125.06249999999852,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06249999999852207,
+      "passed": true
+    },
+    {
+      "interval_index": 1095,
+      "onset_before_sec": 127.73716666666667,
+      "onset_after_sec": 127.84422916666666,
+      "interval_ms": 107.06249999999784,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714285929885,
+      "passed": true
+    },
+    {
+      "interval_index": 1099,
+      "onset_before_sec": 128.2191875,
+      "onset_after_sec": 128.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1103,
+      "onset_before_sec": 128.66575,
+      "onset_after_sec": 128.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1107,
+      "onset_before_sec": 129.14775,
+      "onset_after_sec": 129.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1111,
+      "onset_before_sec": 129.5943125,
+      "onset_after_sec": 129.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1115,
+      "onset_before_sec": 130.07633333333334,
+      "onset_after_sec": 130.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1119,
+      "onset_before_sec": 130.522875,
+      "onset_after_sec": 130.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1123,
+      "onset_before_sec": 131.00489583333334,
+      "onset_after_sec": 131.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1127,
+      "onset_before_sec": 131.45145833333333,
+      "onset_after_sec": 131.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1131,
+      "onset_before_sec": 131.93347916666667,
+      "onset_after_sec": 132.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1135,
+      "onset_before_sec": 132.38002083333333,
+      "onset_after_sec": 132.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1139,
+      "onset_before_sec": 132.86204166666667,
+      "onset_after_sec": 132.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1143,
+      "onset_before_sec": 133.30860416666667,
+      "onset_after_sec": 133.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1147,
+      "onset_before_sec": 133.79060416666667,
+      "onset_after_sec": 133.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1151,
+      "onset_before_sec": 134.23716666666667,
+      "onset_after_sec": 134.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1155,
+      "onset_before_sec": 134.7191875,
+      "onset_after_sec": 134.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1159,
+      "onset_before_sec": 135.16575,
+      "onset_after_sec": 135.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1163,
+      "onset_before_sec": 135.64775,
+      "onset_after_sec": 135.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1167,
+      "onset_before_sec": 136.0943125,
+      "onset_after_sec": 136.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1171,
+      "onset_before_sec": 136.57633333333334,
+      "onset_after_sec": 136.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1175,
+      "onset_before_sec": 137.022875,
+      "onset_after_sec": 137.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1179,
+      "onset_before_sec": 137.50489583333334,
+      "onset_after_sec": 137.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1183,
+      "onset_before_sec": 137.95145833333333,
+      "onset_after_sec": 138.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1187,
+      "onset_before_sec": 138.43347916666667,
+      "onset_after_sec": 138.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1191,
+      "onset_before_sec": 138.88002083333333,
+      "onset_after_sec": 138.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1195,
+      "onset_before_sec": 139.36204166666667,
+      "onset_after_sec": 139.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1199,
+      "onset_before_sec": 139.80860416666667,
+      "onset_after_sec": 139.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1203,
+      "onset_before_sec": 140.29060416666667,
+      "onset_after_sec": 140.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1207,
+      "onset_before_sec": 140.73716666666667,
+      "onset_after_sec": 140.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1211,
+      "onset_before_sec": 141.2191875,
+      "onset_after_sec": 141.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1215,
+      "onset_before_sec": 141.66575,
+      "onset_after_sec": 141.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1219,
+      "onset_before_sec": 142.14775,
+      "onset_after_sec": 142.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1223,
+      "onset_before_sec": 142.5943125,
+      "onset_after_sec": 142.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1227,
+      "onset_before_sec": 143.07633333333334,
+      "onset_after_sec": 143.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1231,
+      "onset_before_sec": 143.522875,
+      "onset_after_sec": 143.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1235,
+      "onset_before_sec": 144.00489583333334,
+      "onset_after_sec": 144.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1239,
+      "onset_before_sec": 144.45145833333333,
+      "onset_after_sec": 144.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1243,
+      "onset_before_sec": 144.93347916666667,
+      "onset_after_sec": 145.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1247,
+      "onset_before_sec": 145.38002083333333,
+      "onset_after_sec": 145.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1251,
+      "onset_before_sec": 145.86204166666667,
+      "onset_after_sec": 145.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1255,
+      "onset_before_sec": 146.30860416666667,
+      "onset_after_sec": 146.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1259,
+      "onset_before_sec": 146.79060416666667,
+      "onset_after_sec": 146.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1263,
+      "onset_before_sec": 147.23716666666667,
+      "onset_after_sec": 147.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1267,
+      "onset_before_sec": 147.7191875,
+      "onset_after_sec": 147.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1271,
+      "onset_before_sec": 148.16575,
+      "onset_after_sec": 148.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1275,
+      "onset_before_sec": 148.64775,
+      "onset_after_sec": 148.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1279,
+      "onset_before_sec": 149.0943125,
+      "onset_after_sec": 149.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1283,
+      "onset_before_sec": 149.57633333333334,
+      "onset_after_sec": 149.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1287,
+      "onset_before_sec": 150.022875,
+      "onset_after_sec": 150.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1291,
+      "onset_before_sec": 150.50489583333334,
+      "onset_after_sec": 150.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1295,
+      "onset_before_sec": 150.95145833333333,
+      "onset_after_sec": 151.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1299,
+      "onset_before_sec": 151.43347916666667,
+      "onset_after_sec": 151.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1303,
+      "onset_before_sec": 151.88002083333333,
+      "onset_after_sec": 151.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1307,
+      "onset_before_sec": 152.36204166666667,
+      "onset_after_sec": 152.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1311,
+      "onset_before_sec": 152.80860416666667,
+      "onset_after_sec": 152.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1315,
+      "onset_before_sec": 153.29060416666667,
+      "onset_after_sec": 153.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1319,
+      "onset_before_sec": 153.73716666666667,
+      "onset_after_sec": 153.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1323,
+      "onset_before_sec": 154.2191875,
+      "onset_after_sec": 154.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1327,
+      "onset_before_sec": 154.66575,
+      "onset_after_sec": 154.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1331,
+      "onset_before_sec": 155.14775,
+      "onset_after_sec": 155.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1335,
+      "onset_before_sec": 155.5943125,
+      "onset_after_sec": 155.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1339,
+      "onset_before_sec": 156.07633333333334,
+      "onset_after_sec": 156.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1343,
+      "onset_before_sec": 156.522875,
+      "onset_after_sec": 156.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1347,
+      "onset_before_sec": 157.00489583333334,
+      "onset_after_sec": 157.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1351,
+      "onset_before_sec": 157.45145833333333,
+      "onset_after_sec": 157.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1355,
+      "onset_before_sec": 157.93347916666667,
+      "onset_after_sec": 158.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1359,
+      "onset_before_sec": 158.38002083333333,
+      "onset_after_sec": 158.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1363,
+      "onset_before_sec": 158.86204166666667,
+      "onset_after_sec": 158.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1367,
+      "onset_before_sec": 159.30860416666667,
+      "onset_after_sec": 159.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1371,
+      "onset_before_sec": 159.79060416666667,
+      "onset_after_sec": 159.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1375,
+      "onset_before_sec": 160.23716666666667,
+      "onset_after_sec": 160.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1379,
+      "onset_before_sec": 160.7191875,
+      "onset_after_sec": 160.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1383,
+      "onset_before_sec": 161.16575,
+      "onset_after_sec": 161.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1387,
+      "onset_before_sec": 161.64775,
+      "onset_after_sec": 161.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1391,
+      "onset_before_sec": 162.0943125,
+      "onset_after_sec": 162.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1395,
+      "onset_before_sec": 162.57633333333334,
+      "onset_after_sec": 162.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1399,
+      "onset_before_sec": 163.022875,
+      "onset_after_sec": 163.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1403,
+      "onset_before_sec": 163.50489583333334,
+      "onset_after_sec": 163.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1407,
+      "onset_before_sec": 163.95145833333333,
+      "onset_after_sec": 164.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1411,
+      "onset_before_sec": 164.43347916666667,
+      "onset_after_sec": 164.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1415,
+      "onset_before_sec": 164.88002083333333,
+      "onset_after_sec": 164.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1419,
+      "onset_before_sec": 165.36204166666667,
+      "onset_after_sec": 165.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1423,
+      "onset_before_sec": 165.80860416666667,
+      "onset_after_sec": 165.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1427,
+      "onset_before_sec": 166.29060416666667,
+      "onset_after_sec": 166.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1431,
+      "onset_before_sec": 166.73716666666667,
+      "onset_after_sec": 166.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1435,
+      "onset_before_sec": 167.2191875,
+      "onset_after_sec": 167.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1439,
+      "onset_before_sec": 167.66575,
+      "onset_after_sec": 167.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1443,
+      "onset_before_sec": 168.14775,
+      "onset_after_sec": 168.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1447,
+      "onset_before_sec": 168.5943125,
+      "onset_after_sec": 168.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1451,
+      "onset_before_sec": 169.07633333333334,
+      "onset_after_sec": 169.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1455,
+      "onset_before_sec": 169.522875,
+      "onset_after_sec": 169.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1459,
+      "onset_before_sec": 170.00489583333334,
+      "onset_after_sec": 170.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1463,
+      "onset_before_sec": 170.45145833333333,
+      "onset_after_sec": 170.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1467,
+      "onset_before_sec": 170.93347916666667,
+      "onset_after_sec": 171.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1471,
+      "onset_before_sec": 171.38002083333333,
+      "onset_after_sec": 171.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1475,
+      "onset_before_sec": 171.86204166666667,
+      "onset_after_sec": 171.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1479,
+      "onset_before_sec": 172.30860416666667,
+      "onset_after_sec": 172.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1483,
+      "onset_before_sec": 172.79060416666667,
+      "onset_after_sec": 172.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1487,
+      "onset_before_sec": 173.23716666666667,
+      "onset_after_sec": 173.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1491,
+      "onset_before_sec": 173.7191875,
+      "onset_after_sec": 173.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1495,
+      "onset_before_sec": 174.16575,
+      "onset_after_sec": 174.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1499,
+      "onset_before_sec": 174.64775,
+      "onset_after_sec": 174.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1503,
+      "onset_before_sec": 175.0943125,
+      "onset_after_sec": 175.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1507,
+      "onset_before_sec": 175.57633333333334,
+      "onset_after_sec": 175.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1511,
+      "onset_before_sec": 176.022875,
+      "onset_after_sec": 176.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1515,
+      "onset_before_sec": 176.50489583333334,
+      "onset_after_sec": 176.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1519,
+      "onset_before_sec": 176.95145833333333,
+      "onset_after_sec": 177.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1523,
+      "onset_before_sec": 177.43347916666667,
+      "onset_after_sec": 177.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1527,
+      "onset_before_sec": 177.88002083333333,
+      "onset_after_sec": 177.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1531,
+      "onset_before_sec": 178.36204166666667,
+      "onset_after_sec": 178.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1535,
+      "onset_before_sec": 178.80860416666667,
+      "onset_after_sec": 178.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1539,
+      "onset_before_sec": 179.29060416666667,
+      "onset_after_sec": 179.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1543,
+      "onset_before_sec": 179.73716666666667,
+      "onset_after_sec": 179.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1547,
+      "onset_before_sec": 180.2191875,
+      "onset_after_sec": 180.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1551,
+      "onset_before_sec": 180.66575,
+      "onset_after_sec": 180.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1555,
+      "onset_before_sec": 181.14775,
+      "onset_after_sec": 181.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1559,
+      "onset_before_sec": 181.5943125,
+      "onset_after_sec": 181.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1563,
+      "onset_before_sec": 182.07633333333334,
+      "onset_after_sec": 182.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1567,
+      "onset_before_sec": 182.522875,
+      "onset_after_sec": 182.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1571,
+      "onset_before_sec": 183.00489583333334,
+      "onset_after_sec": 183.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1575,
+      "onset_before_sec": 183.45145833333333,
+      "onset_after_sec": 183.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1579,
+      "onset_before_sec": 183.93347916666667,
+      "onset_after_sec": 184.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1583,
+      "onset_before_sec": 184.38002083333333,
+      "onset_after_sec": 184.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1587,
+      "onset_before_sec": 184.86204166666667,
+      "onset_after_sec": 184.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1591,
+      "onset_before_sec": 185.30860416666667,
+      "onset_after_sec": 185.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1595,
+      "onset_before_sec": 185.79060416666667,
+      "onset_after_sec": 185.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1599,
+      "onset_before_sec": 186.23716666666667,
+      "onset_after_sec": 186.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1603,
+      "onset_before_sec": 186.7191875,
+      "onset_after_sec": 186.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1607,
+      "onset_before_sec": 187.16575,
+      "onset_after_sec": 187.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1611,
+      "onset_before_sec": 187.64775,
+      "onset_after_sec": 187.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1615,
+      "onset_before_sec": 188.0943125,
+      "onset_after_sec": 188.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1619,
+      "onset_before_sec": 188.57633333333334,
+      "onset_after_sec": 188.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1623,
+      "onset_before_sec": 189.022875,
+      "onset_after_sec": 189.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1627,
+      "onset_before_sec": 189.50489583333334,
+      "onset_after_sec": 189.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1631,
+      "onset_before_sec": 189.95145833333333,
+      "onset_after_sec": 190.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1635,
+      "onset_before_sec": 190.43347916666667,
+      "onset_after_sec": 190.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1639,
+      "onset_before_sec": 190.88002083333333,
+      "onset_after_sec": 190.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1643,
+      "onset_before_sec": 191.36204166666667,
+      "onset_after_sec": 191.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1647,
+      "onset_before_sec": 191.80860416666667,
+      "onset_after_sec": 191.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1651,
+      "onset_before_sec": 192.29060416666667,
+      "onset_after_sec": 192.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1655,
+      "onset_before_sec": 192.73716666666667,
+      "onset_after_sec": 192.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1659,
+      "onset_before_sec": 193.2191875,
+      "onset_after_sec": 193.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1663,
+      "onset_before_sec": 193.66575,
+      "onset_after_sec": 193.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1667,
+      "onset_before_sec": 194.14775,
+      "onset_after_sec": 194.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1671,
+      "onset_before_sec": 194.5943125,
+      "onset_after_sec": 194.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1675,
+      "onset_before_sec": 195.07633333333334,
+      "onset_after_sec": 195.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1679,
+      "onset_before_sec": 195.522875,
+      "onset_after_sec": 195.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1683,
+      "onset_before_sec": 196.00489583333334,
+      "onset_after_sec": 196.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1687,
+      "onset_before_sec": 196.45145833333333,
+      "onset_after_sec": 196.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1691,
+      "onset_before_sec": 196.93347916666667,
+      "onset_after_sec": 197.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1695,
+      "onset_before_sec": 197.38002083333333,
+      "onset_after_sec": 197.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1699,
+      "onset_before_sec": 197.86204166666667,
+      "onset_after_sec": 197.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1703,
+      "onset_before_sec": 198.30860416666667,
+      "onset_after_sec": 198.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1707,
+      "onset_before_sec": 198.79060416666667,
+      "onset_after_sec": 198.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1711,
+      "onset_before_sec": 199.23716666666667,
+      "onset_after_sec": 199.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1715,
+      "onset_before_sec": 199.7191875,
+      "onset_after_sec": 199.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1719,
+      "onset_before_sec": 200.16575,
+      "onset_after_sec": 200.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1723,
+      "onset_before_sec": 200.64775,
+      "onset_after_sec": 200.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1727,
+      "onset_before_sec": 201.0943125,
+      "onset_after_sec": 201.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1731,
+      "onset_before_sec": 201.57633333333334,
+      "onset_after_sec": 201.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1735,
+      "onset_before_sec": 202.022875,
+      "onset_after_sec": 202.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1739,
+      "onset_before_sec": 202.50489583333334,
+      "onset_after_sec": 202.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1743,
+      "onset_before_sec": 202.95145833333333,
+      "onset_after_sec": 203.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1747,
+      "onset_before_sec": 203.43347916666667,
+      "onset_after_sec": 203.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1751,
+      "onset_before_sec": 203.88002083333333,
+      "onset_after_sec": 203.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1755,
+      "onset_before_sec": 204.36204166666667,
+      "onset_after_sec": 204.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1759,
+      "onset_before_sec": 204.80860416666667,
+      "onset_after_sec": 204.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1763,
+      "onset_before_sec": 205.29060416666667,
+      "onset_after_sec": 205.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1767,
+      "onset_before_sec": 205.73716666666667,
+      "onset_after_sec": 205.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1771,
+      "onset_before_sec": 206.2191875,
+      "onset_after_sec": 206.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1775,
+      "onset_before_sec": 206.66575,
+      "onset_after_sec": 206.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1779,
+      "onset_before_sec": 207.14775,
+      "onset_after_sec": 207.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1783,
+      "onset_before_sec": 207.5943125,
+      "onset_after_sec": 207.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1787,
+      "onset_before_sec": 208.07633333333334,
+      "onset_after_sec": 208.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1791,
+      "onset_before_sec": 208.522875,
+      "onset_after_sec": 208.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1795,
+      "onset_before_sec": 209.00489583333334,
+      "onset_after_sec": 209.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1799,
+      "onset_before_sec": 209.45145833333333,
+      "onset_after_sec": 209.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1803,
+      "onset_before_sec": 209.93347916666667,
+      "onset_after_sec": 210.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1807,
+      "onset_before_sec": 210.38002083333333,
+      "onset_after_sec": 210.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1811,
+      "onset_before_sec": 210.86204166666667,
+      "onset_after_sec": 210.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1815,
+      "onset_before_sec": 211.30860416666667,
+      "onset_after_sec": 211.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1819,
+      "onset_before_sec": 211.79060416666667,
+      "onset_after_sec": 211.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1823,
+      "onset_before_sec": 212.23716666666667,
+      "onset_after_sec": 212.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1827,
+      "onset_before_sec": 212.7191875,
+      "onset_after_sec": 212.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1831,
+      "onset_before_sec": 213.16575,
+      "onset_after_sec": 213.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1835,
+      "onset_before_sec": 213.64775,
+      "onset_after_sec": 213.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1839,
+      "onset_before_sec": 214.0943125,
+      "onset_after_sec": 214.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1843,
+      "onset_before_sec": 214.57633333333334,
+      "onset_after_sec": 214.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1847,
+      "onset_before_sec": 215.022875,
+      "onset_after_sec": 215.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1851,
+      "onset_before_sec": 215.50489583333334,
+      "onset_after_sec": 215.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1855,
+      "onset_before_sec": 215.95145833333333,
+      "onset_after_sec": 216.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1859,
+      "onset_before_sec": 216.43347916666667,
+      "onset_after_sec": 216.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1863,
+      "onset_before_sec": 216.88002083333333,
+      "onset_after_sec": 216.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1867,
+      "onset_before_sec": 217.36204166666667,
+      "onset_after_sec": 217.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1871,
+      "onset_before_sec": 217.80860416666667,
+      "onset_after_sec": 217.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1875,
+      "onset_before_sec": 218.29060416666667,
+      "onset_after_sec": 218.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1879,
+      "onset_before_sec": 218.73716666666667,
+      "onset_after_sec": 218.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1883,
+      "onset_before_sec": 219.2191875,
+      "onset_after_sec": 219.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1887,
+      "onset_before_sec": 219.66575,
+      "onset_after_sec": 219.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1891,
+      "onset_before_sec": 220.14775,
+      "onset_after_sec": 220.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1895,
+      "onset_before_sec": 220.5943125,
+      "onset_after_sec": 220.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1899,
+      "onset_before_sec": 221.07633333333334,
+      "onset_after_sec": 221.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1903,
+      "onset_before_sec": 221.522875,
+      "onset_after_sec": 221.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1907,
+      "onset_before_sec": 222.00489583333334,
+      "onset_after_sec": 222.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1911,
+      "onset_before_sec": 222.45145833333333,
+      "onset_after_sec": 222.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1915,
+      "onset_before_sec": 222.93347916666667,
+      "onset_after_sec": 223.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1919,
+      "onset_before_sec": 223.38002083333333,
+      "onset_after_sec": 223.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1923,
+      "onset_before_sec": 223.86204166666667,
+      "onset_after_sec": 223.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1927,
+      "onset_before_sec": 224.30860416666667,
+      "onset_after_sec": 224.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1931,
+      "onset_before_sec": 224.79060416666667,
+      "onset_after_sec": 224.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1935,
+      "onset_before_sec": 225.23716666666667,
+      "onset_after_sec": 225.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1939,
+      "onset_before_sec": 225.7191875,
+      "onset_after_sec": 225.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1943,
+      "onset_before_sec": 226.16575,
+      "onset_after_sec": 226.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 1947,
+      "onset_before_sec": 226.64775,
+      "onset_after_sec": 226.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 1951,
+      "onset_before_sec": 227.0943125,
+      "onset_after_sec": 227.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1955,
+      "onset_before_sec": 227.57633333333334,
+      "onset_after_sec": 227.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1959,
+      "onset_before_sec": 228.022875,
+      "onset_after_sec": 228.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1963,
+      "onset_before_sec": 228.50489583333334,
+      "onset_after_sec": 228.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1967,
+      "onset_before_sec": 228.95145833333333,
+      "onset_after_sec": 229.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1971,
+      "onset_before_sec": 229.43347916666667,
+      "onset_after_sec": 229.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1975,
+      "onset_before_sec": 229.88002083333333,
+      "onset_after_sec": 229.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1979,
+      "onset_before_sec": 230.36204166666667,
+      "onset_after_sec": 230.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1983,
+      "onset_before_sec": 230.80860416666667,
+      "onset_after_sec": 230.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1987,
+      "onset_before_sec": 231.29060416666667,
+      "onset_after_sec": 231.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 1991,
+      "onset_before_sec": 231.73716666666667,
+      "onset_after_sec": 231.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 1995,
+      "onset_before_sec": 232.2191875,
+      "onset_after_sec": 232.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 1999,
+      "onset_before_sec": 232.66575,
+      "onset_after_sec": 232.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2003,
+      "onset_before_sec": 233.14775,
+      "onset_after_sec": 233.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 2007,
+      "onset_before_sec": 233.5943125,
+      "onset_after_sec": 233.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2011,
+      "onset_before_sec": 234.07633333333334,
+      "onset_after_sec": 234.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2015,
+      "onset_before_sec": 234.522875,
+      "onset_after_sec": 234.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2019,
+      "onset_before_sec": 235.00489583333334,
+      "onset_after_sec": 235.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2023,
+      "onset_before_sec": 235.45145833333333,
+      "onset_after_sec": 235.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2027,
+      "onset_before_sec": 235.93347916666667,
+      "onset_after_sec": 236.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2031,
+      "onset_before_sec": 236.38002083333333,
+      "onset_after_sec": 236.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2035,
+      "onset_before_sec": 236.86204166666667,
+      "onset_after_sec": 236.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2039,
+      "onset_before_sec": 237.30860416666667,
+      "onset_after_sec": 237.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2043,
+      "onset_before_sec": 237.79060416666667,
+      "onset_after_sec": 237.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2047,
+      "onset_before_sec": 238.23716666666667,
+      "onset_after_sec": 238.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2051,
+      "onset_before_sec": 238.7191875,
+      "onset_after_sec": 238.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2055,
+      "onset_before_sec": 239.16575,
+      "onset_after_sec": 239.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2059,
+      "onset_before_sec": 239.64775,
+      "onset_after_sec": 239.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 2063,
+      "onset_before_sec": 240.0943125,
+      "onset_after_sec": 240.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2067,
+      "onset_before_sec": 240.57633333333334,
+      "onset_after_sec": 240.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2071,
+      "onset_before_sec": 241.022875,
+      "onset_after_sec": 241.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2075,
+      "onset_before_sec": 241.50489583333334,
+      "onset_after_sec": 241.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2079,
+      "onset_before_sec": 241.95145833333333,
+      "onset_after_sec": 242.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2083,
+      "onset_before_sec": 242.43347916666667,
+      "onset_after_sec": 242.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2087,
+      "onset_before_sec": 242.88002083333333,
+      "onset_after_sec": 242.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2091,
+      "onset_before_sec": 243.36204166666667,
+      "onset_after_sec": 243.48708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2095,
+      "onset_before_sec": 243.80860416666667,
+      "onset_after_sec": 243.91566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2099,
+      "onset_before_sec": 244.29060416666667,
+      "onset_after_sec": 244.41566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2103,
+      "onset_before_sec": 244.73716666666667,
+      "onset_after_sec": 244.84422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2107,
+      "onset_before_sec": 245.2191875,
+      "onset_after_sec": 245.34422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2111,
+      "onset_before_sec": 245.66575,
+      "onset_after_sec": 245.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2115,
+      "onset_before_sec": 246.14775,
+      "onset_after_sec": 246.2728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 2119,
+      "onset_before_sec": 246.5943125,
+      "onset_after_sec": 246.701375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2123,
+      "onset_before_sec": 247.07633333333334,
+      "onset_after_sec": 247.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2127,
+      "onset_before_sec": 247.522875,
+      "onset_after_sec": 247.6299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2131,
+      "onset_before_sec": 248.00489583333334,
+      "onset_after_sec": 248.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2135,
+      "onset_before_sec": 248.45145833333333,
+      "onset_after_sec": 248.55852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2139,
+      "onset_before_sec": 248.93347916666667,
+      "onset_after_sec": 249.05852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2143,
+      "onset_before_sec": 249.38002083333333,
+      "onset_after_sec": 249.48708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2147,
+      "onset_before_sec": 249.86204166666667,
+      "onset_after_sec": 249.98708333333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2151,
+      "onset_before_sec": 250.30860416666667,
+      "onset_after_sec": 250.41566666666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2155,
+      "onset_before_sec": 250.79060416666667,
+      "onset_after_sec": 250.91566666666668,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2159,
+      "onset_before_sec": 251.23716666666667,
+      "onset_after_sec": 251.34422916666668,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2163,
+      "onset_before_sec": 251.7191875,
+      "onset_after_sec": 251.84422916666668,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2167,
+      "onset_before_sec": 252.16575,
+      "onset_after_sec": 252.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2171,
+      "onset_before_sec": 252.64775,
+      "onset_after_sec": 252.7728125,
+      "interval_ms": 125.06249999998431,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.062499999984311216,
+      "passed": true
+    },
+    {
+      "interval_index": 2175,
+      "onset_before_sec": 253.0943125,
+      "onset_after_sec": 253.201375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2179,
+      "onset_before_sec": 253.57633333333334,
+      "onset_after_sec": 253.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2183,
+      "onset_before_sec": 254.022875,
+      "onset_after_sec": 254.1299375,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2187,
+      "onset_before_sec": 254.50489583333334,
+      "onset_after_sec": 254.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2191,
+      "onset_before_sec": 254.95145833333333,
+      "onset_after_sec": 255.05852083333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2195,
+      "onset_before_sec": 255.43347916666667,
+      "onset_after_sec": 255.55852083333335,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2199,
+      "onset_before_sec": 255.88002083333333,
+      "onset_after_sec": 255.98708333333335,
+      "interval_ms": 107.06250000001205,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.08035714284508799,
+      "passed": true
+    },
+    {
+      "interval_index": 2203,
+      "onset_before_sec": 256.36204166666664,
+      "onset_after_sec": 256.4870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2207,
+      "onset_before_sec": 256.80860416666667,
+      "onset_after_sec": 256.91566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2211,
+      "onset_before_sec": 257.29060416666664,
+      "onset_after_sec": 257.41566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2215,
+      "onset_before_sec": 257.73716666666667,
+      "onset_after_sec": 257.84422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2219,
+      "onset_before_sec": 258.2191875,
+      "onset_after_sec": 258.34422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2223,
+      "onset_before_sec": 258.66575,
+      "onset_after_sec": 258.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2227,
+      "onset_before_sec": 259.14775,
+      "onset_after_sec": 259.2728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2231,
+      "onset_before_sec": 259.5943125,
+      "onset_after_sec": 259.701375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2235,
+      "onset_before_sec": 260.0763333333333,
+      "onset_after_sec": 260.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2239,
+      "onset_before_sec": 260.522875,
+      "onset_after_sec": 260.6299375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2243,
+      "onset_before_sec": 261.0048958333333,
+      "onset_after_sec": 261.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2247,
+      "onset_before_sec": 261.45145833333333,
+      "onset_after_sec": 261.5585208333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2251,
+      "onset_before_sec": 261.93347916666664,
+      "onset_after_sec": 262.0585208333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2255,
+      "onset_before_sec": 262.38002083333333,
+      "onset_after_sec": 262.4870833333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2259,
+      "onset_before_sec": 262.86204166666664,
+      "onset_after_sec": 262.9870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2263,
+      "onset_before_sec": 263.30860416666667,
+      "onset_after_sec": 263.41566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2267,
+      "onset_before_sec": 263.79060416666664,
+      "onset_after_sec": 263.91566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2271,
+      "onset_before_sec": 264.23716666666667,
+      "onset_after_sec": 264.34422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2275,
+      "onset_before_sec": 264.7191875,
+      "onset_after_sec": 264.84422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2279,
+      "onset_before_sec": 265.16575,
+      "onset_after_sec": 265.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2283,
+      "onset_before_sec": 265.64775,
+      "onset_after_sec": 265.7728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2287,
+      "onset_before_sec": 266.0943125,
+      "onset_after_sec": 266.201375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2291,
+      "onset_before_sec": 266.5763333333333,
+      "onset_after_sec": 266.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2295,
+      "onset_before_sec": 267.022875,
+      "onset_after_sec": 267.1299375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2299,
+      "onset_before_sec": 267.5048958333333,
+      "onset_after_sec": 267.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2303,
+      "onset_before_sec": 267.95145833333333,
+      "onset_after_sec": 268.0585208333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2307,
+      "onset_before_sec": 268.43347916666664,
+      "onset_after_sec": 268.5585208333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2311,
+      "onset_before_sec": 268.88002083333333,
+      "onset_after_sec": 268.9870833333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2315,
+      "onset_before_sec": 269.36204166666664,
+      "onset_after_sec": 269.4870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2319,
+      "onset_before_sec": 269.80860416666667,
+      "onset_after_sec": 269.91566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2323,
+      "onset_before_sec": 270.29060416666664,
+      "onset_after_sec": 270.41566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2327,
+      "onset_before_sec": 270.73716666666667,
+      "onset_after_sec": 270.84422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2331,
+      "onset_before_sec": 271.2191875,
+      "onset_after_sec": 271.34422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2335,
+      "onset_before_sec": 271.66575,
+      "onset_after_sec": 271.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2339,
+      "onset_before_sec": 272.14775,
+      "onset_after_sec": 272.2728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2343,
+      "onset_before_sec": 272.5943125,
+      "onset_after_sec": 272.701375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2347,
+      "onset_before_sec": 273.0763333333333,
+      "onset_after_sec": 273.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2351,
+      "onset_before_sec": 273.522875,
+      "onset_after_sec": 273.6299375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2355,
+      "onset_before_sec": 274.0048958333333,
+      "onset_after_sec": 274.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2359,
+      "onset_before_sec": 274.45145833333333,
+      "onset_after_sec": 274.5585208333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2363,
+      "onset_before_sec": 274.93347916666664,
+      "onset_after_sec": 275.0585208333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2367,
+      "onset_before_sec": 275.38002083333333,
+      "onset_after_sec": 275.4870833333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2371,
+      "onset_before_sec": 275.86204166666664,
+      "onset_after_sec": 275.9870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2375,
+      "onset_before_sec": 276.30860416666667,
+      "onset_after_sec": 276.41566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2379,
+      "onset_before_sec": 276.79060416666664,
+      "onset_after_sec": 276.91566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2383,
+      "onset_before_sec": 277.23716666666667,
+      "onset_after_sec": 277.34422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2387,
+      "onset_before_sec": 277.7191875,
+      "onset_after_sec": 277.84422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2391,
+      "onset_before_sec": 278.16575,
+      "onset_after_sec": 278.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2395,
+      "onset_before_sec": 278.64775,
+      "onset_after_sec": 278.7728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2399,
+      "onset_before_sec": 279.0943125,
+      "onset_after_sec": 279.201375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2403,
+      "onset_before_sec": 279.5763333333333,
+      "onset_after_sec": 279.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2407,
+      "onset_before_sec": 280.022875,
+      "onset_after_sec": 280.1299375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2411,
+      "onset_before_sec": 280.5048958333333,
+      "onset_after_sec": 280.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2415,
+      "onset_before_sec": 280.95145833333333,
+      "onset_after_sec": 281.0585208333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2419,
+      "onset_before_sec": 281.43347916666664,
+      "onset_after_sec": 281.5585208333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2423,
+      "onset_before_sec": 281.88002083333333,
+      "onset_after_sec": 281.9870833333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2427,
+      "onset_before_sec": 282.36204166666664,
+      "onset_after_sec": 282.4870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2431,
+      "onset_before_sec": 282.80860416666667,
+      "onset_after_sec": 282.91566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2435,
+      "onset_before_sec": 283.29060416666664,
+      "onset_after_sec": 283.41566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2439,
+      "onset_before_sec": 283.73716666666667,
+      "onset_after_sec": 283.84422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2443,
+      "onset_before_sec": 284.2191875,
+      "onset_after_sec": 284.34422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2447,
+      "onset_before_sec": 284.66575,
+      "onset_after_sec": 284.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2451,
+      "onset_before_sec": 285.14775,
+      "onset_after_sec": 285.2728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2455,
+      "onset_before_sec": 285.5943125,
+      "onset_after_sec": 285.701375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2459,
+      "onset_before_sec": 286.0763333333333,
+      "onset_after_sec": 286.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2463,
+      "onset_before_sec": 286.522875,
+      "onset_after_sec": 286.6299375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2467,
+      "onset_before_sec": 287.0048958333333,
+      "onset_after_sec": 287.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2471,
+      "onset_before_sec": 287.45145833333333,
+      "onset_after_sec": 287.5585208333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2475,
+      "onset_before_sec": 287.93347916666664,
+      "onset_after_sec": 288.0585208333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2479,
+      "onset_before_sec": 288.38002083333333,
+      "onset_after_sec": 288.4870833333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2483,
+      "onset_before_sec": 288.86204166666664,
+      "onset_after_sec": 288.9870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2487,
+      "onset_before_sec": 289.30860416666667,
+      "onset_after_sec": 289.41566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2491,
+      "onset_before_sec": 289.79060416666664,
+      "onset_after_sec": 289.91566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2495,
+      "onset_before_sec": 290.23716666666667,
+      "onset_after_sec": 290.34422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2499,
+      "onset_before_sec": 290.7191875,
+      "onset_after_sec": 290.84422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2503,
+      "onset_before_sec": 291.16575,
+      "onset_after_sec": 291.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2507,
+      "onset_before_sec": 291.64775,
+      "onset_after_sec": 291.7728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2511,
+      "onset_before_sec": 292.0943125,
+      "onset_after_sec": 292.201375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2515,
+      "onset_before_sec": 292.5763333333333,
+      "onset_after_sec": 292.701375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2519,
+      "onset_before_sec": 293.022875,
+      "onset_after_sec": 293.1299375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2523,
+      "onset_before_sec": 293.5048958333333,
+      "onset_after_sec": 293.6299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2527,
+      "onset_before_sec": 293.95145833333333,
+      "onset_after_sec": 294.0585208333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2531,
+      "onset_before_sec": 294.43347916666664,
+      "onset_after_sec": 294.5585208333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2535,
+      "onset_before_sec": 294.88002083333333,
+      "onset_after_sec": 294.9870833333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2539,
+      "onset_before_sec": 295.36204166666664,
+      "onset_after_sec": 295.4870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2543,
+      "onset_before_sec": 295.80860416666667,
+      "onset_after_sec": 295.91566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2547,
+      "onset_before_sec": 296.29060416666664,
+      "onset_after_sec": 296.41566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2551,
+      "onset_before_sec": 296.73716666666667,
+      "onset_after_sec": 296.84422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2555,
+      "onset_before_sec": 297.2191875,
+      "onset_after_sec": 297.34422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2559,
+      "onset_before_sec": 297.66575,
+      "onset_after_sec": 297.7728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2563,
+      "onset_before_sec": 298.14775,
+      "onset_after_sec": 298.2728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2567,
+      "onset_before_sec": 298.5943125,
+      "onset_after_sec": 298.701375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2571,
+      "onset_before_sec": 299.0763333333333,
+      "onset_after_sec": 299.201375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2575,
+      "onset_before_sec": 299.522875,
+      "onset_after_sec": 299.6299375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2579,
+      "onset_before_sec": 300.0048958333333,
+      "onset_after_sec": 300.1299375,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2583,
+      "onset_before_sec": 300.45145833333333,
+      "onset_after_sec": 300.5585208333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2587,
+      "onset_before_sec": 300.93347916666664,
+      "onset_after_sec": 301.0585208333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2591,
+      "onset_before_sec": 301.38002083333333,
+      "onset_after_sec": 301.4870833333333,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2595,
+      "onset_before_sec": 301.86204166666664,
+      "onset_after_sec": 301.9870833333333,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2599,
+      "onset_before_sec": 302.30860416666667,
+      "onset_after_sec": 302.41566666666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2603,
+      "onset_before_sec": 302.79060416666664,
+      "onset_after_sec": 302.91566666666665,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2607,
+      "onset_before_sec": 303.23716666666667,
+      "onset_after_sec": 303.34422916666665,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2611,
+      "onset_before_sec": 303.7191875,
+      "onset_after_sec": 303.84422916666665,
+      "interval_ms": 125.04166666667516,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.041666666675155284,
+      "passed": true
+    },
+    {
+      "interval_index": 2615,
+      "onset_before_sec": 304.16575,
+      "onset_after_sec": 304.2728125,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    },
+    {
+      "interval_index": 2619,
+      "onset_before_sec": 304.64775,
+      "onset_after_sec": 304.7728125,
+      "interval_ms": 125.06250000001273,
+      "nominal_ms": 125.0,
+      "deviation_ms": 0.06250000001273293,
+      "passed": true
+    },
+    {
+      "interval_index": 2623,
+      "onset_before_sec": 305.0943125,
+      "onset_after_sec": 305.201375,
+      "interval_ms": 107.06249999998363,
+      "nominal_ms": 107.14285714285714,
+      "deviation_ms": 0.0803571428735097,
+      "passed": true
+    }
+  ],
+  "max_transition_dev_ms": 0.0803571428735097,
+  "passed_sequence_transitions": true
+}

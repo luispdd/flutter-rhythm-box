@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/metronome_settings.dart';
 import '../domain/pattern.dart';
+import '../domain/sequence.dart';
 import '../domain/tempo.dart';
 import 'settings_store.dart';
 
@@ -20,6 +21,12 @@ class SharedPreferencesSettingsStore implements SettingsStore {
 
   /// Storage key for persisted working pattern JSON string.
   static const String workingPatternKey = 'working_pattern';
+
+  /// Storage key for persisted pattern library JSON string.
+  static const String patternLibraryKey = 'pattern_library';
+
+  /// Storage key for persisted sequence library JSON string.
+  static const String sequenceLibraryKey = 'sequence_library';
 
   final SharedPreferences _prefs;
 
@@ -114,12 +121,12 @@ class SharedPreferencesSettingsStore implements SettingsStore {
   Future<void> savePatternLibrary(List<Pattern> patterns) async {
     final jsonList = patterns.map((p) => p.toJson()).toList();
     final jsonString = jsonEncode(jsonList);
-    await _prefs.setString('pattern_library', jsonString);
+    await _prefs.setString(patternLibraryKey, jsonString);
   }
 
   @override
   Future<List<Pattern>> loadPatternLibrary() async {
-    final raw = _prefs.getString('pattern_library');
+    final raw = _prefs.getString(patternLibraryKey);
     if (raw == null || raw.trim().isEmpty) {
       return [];
     }
@@ -128,6 +135,32 @@ class SharedPreferencesSettingsStore implements SettingsStore {
       if (decoded is List) {
         return decoded
             .map((e) => Pattern.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList();
+      }
+      return [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  @override
+  Future<void> saveSequenceLibrary(List<Sequence> sequences) async {
+    final jsonList = sequences.map((s) => s.toJson()).toList();
+    final jsonString = jsonEncode(jsonList);
+    await _prefs.setString(sequenceLibraryKey, jsonString);
+  }
+
+  @override
+  Future<List<Sequence>> loadSequenceLibrary() async {
+    final raw = _prefs.getString(sequenceLibraryKey);
+    if (raw == null || raw.trim().isEmpty) {
+      return [];
+    }
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is List) {
+        return decoded
+            .map((e) => Sequence.fromJson(Map<String, dynamic>.from(e as Map)))
             .toList();
       }
       return [];
@@ -150,5 +183,7 @@ class SharedPreferencesSettingsStore implements SettingsStore {
     await _prefs.remove(metronomeSettingsKey);
     await _prefs.remove(tempoKey);
     await _prefs.remove(workingPatternKey);
+    await _prefs.remove(patternLibraryKey);
+    await _prefs.remove(sequenceLibraryKey);
   }
 }

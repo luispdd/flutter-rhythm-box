@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rhythm_box/ui/metronome_screen.dart';
 import 'package:rhythm_box/ui/sequencer_screen.dart';
+import 'package:rhythm_box/ui/sequences_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const MetronomeScreen(),
     const SequencerScreen(),
+    const SequencesScreen(),
   ];
 
   @override
@@ -39,6 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_on),
             label: 'Sequencer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.queue_music),
+            label: 'Sequences',
           ),
         ],
       ),

@@ -26,7 +26,9 @@ from analyze_timing import (
     THRESH_SWAP_DEV_MS,
     check_swap_boundary,
     compute_metrics,
+    compute_sequence_metrics,
     detect_onsets,
+    generate_synthetic_sequence_wav,
     generate_synthetic_wav,
     load_wav,
 )
@@ -240,6 +242,41 @@ class TestTimingAnalyzer(unittest.TestCase):
         )
         self.assertFalse(metrics.passed_swap)
         self.assertFalse(metrics.overall_passed)
+
+    def test_sequence_timing_clean(self):
+        """Verify sequence timing analysis across multiple tempos (120:4, 140:4)."""
+        wav_file = str(self.temp_path / "sequence_clean.wav")
+        duration_sec = 6.0
+        seq_spec = "120:4,140:4"
+        sr = 44100
+
+        ground_truth = generate_synthetic_sequence_wav(
+            output_path=wav_file,
+            duration_sec=duration_sec,
+            sequence_spec=seq_spec,
+            sample_rate=sr,
+        )
+
+        audio, sample_rate = load_wav(wav_file)
+        self.assertEqual(sample_rate, sr)
+
+        onsets = detect_onsets(audio, sample_rate)
+        self.assertEqual(len(onsets), len(ground_truth))
+
+        metrics = compute_sequence_metrics(
+            onset_times_sec=onsets,
+            sequence_spec=seq_spec,
+            sample_rate=sample_rate,
+            total_samples=len(audio),
+        )
+
+        self.assertLess(metrics.max_dev_from_nominal_ms, 0.05)
+        self.assertLess(abs(metrics.cumulative_drift_ms), 0.05)
+        self.assertLess(metrics.max_transition_dev_ms, 0.05)
+        self.assertTrue(metrics.passed_max_dev)
+        self.assertTrue(metrics.passed_drift)
+        self.assertTrue(metrics.passed_sequence_transitions)
+        self.assertTrue(metrics.overall_passed)
 
 
 def run_all_tests() -> bool:

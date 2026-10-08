@@ -1,6 +1,7 @@
 import 'package:rhythm_box/domain/metronome_settings.dart';
-import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/domain/pattern.dart';
+import 'package:rhythm_box/domain/sequence.dart';
+import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
 
 /// In-memory fake implementation of [SettingsStore] for unit testing.
@@ -59,6 +60,7 @@ class FakeSettingsStore implements SettingsStore {
     savedTempo = null;
     savedPattern = null;
     savedPatternLibrary = [];
+    savedSequenceLibrary = [];
   }
 
   List<Pattern> savedPatternLibrary = [];
@@ -75,6 +77,22 @@ class FakeSettingsStore implements SettingsStore {
   Future<List<Pattern>> loadPatternLibrary() async {
     loadPatternLibraryCalls++;
     return List.from(savedPatternLibrary);
+  }
+
+  List<Sequence> savedSequenceLibrary = [];
+  int saveSequenceLibraryCalls = 0;
+  int loadSequenceLibraryCalls = 0;
+
+  @override
+  Future<void> saveSequenceLibrary(List<Sequence> sequences) async {
+    saveSequenceLibraryCalls++;
+    savedSequenceLibrary = List.from(sequences);
+  }
+
+  @override
+  Future<List<Sequence>> loadSequenceLibrary() async {
+    loadSequenceLibraryCalls++;
+    return List.from(savedSequenceLibrary);
   }
 
   @override

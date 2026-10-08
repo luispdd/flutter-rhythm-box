@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rhythm_box/ui/pattern_library_notifier.dart';
+import 'package:rhythm_box/ui/sequence_library_notifier.dart';
 import 'package:rhythm_box/ui/sequencer_controller.dart';
 import 'package:rhythm_box/ui/tempo_controller.dart';
 
@@ -48,11 +49,23 @@ class PatternLibraryScreen extends ConsumerWidget {
   }
 
   Future<void> _showDeleteDialog(BuildContext context, WidgetRef ref, String id, String name) async {
+    final referencingSeqs =
+        ref.read(sequenceLibraryProvider.notifier).sequencesReferencingPattern(id);
+
+    final String contentText;
+    if (referencingSeqs.isNotEmpty) {
+      final names = referencingSeqs.map((s) => s.name).join(', ');
+      contentText =
+          'Are you sure you want to delete "$name"?\n\nWarning: This pattern is referenced by the following sequence(s): $names. Deleting it will remove references from those sequences.';
+    } else {
+      contentText = 'Are you sure you want to delete "$name"?';
+    }
+
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Pattern'),
-        content: Text('Are you sure you want to delete "$name"?'),
+        content: Text(contentText),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),

@@ -62,6 +62,10 @@ class TimingMetrics:
     passed_drift: bool
     passed_swap: Optional[bool]
     overall_passed: bool
+    sequence_spec: Optional[str] = None
+    sequence_transitions: Optional[List[dict]] = None
+    max_transition_dev_ms: Optional[float] = None
+    passed_sequence_transitions: Optional[bool] = None
 
 
 def load_wav(file_path: str) -> Tuple[np.ndarray, int]:
@@ -345,6 +349,183 @@ def generate_synthetic_wav(
     return ground_truth_times
 
 
+def parse_sequence_spec(spec_str: str, steps_per_beat: int = 4) -> Tuple[List[float], List[int]]:
+    """Parse sequence spec string like '120:4,140:4' into cycle intervals and transition indices.
+
+    Each item is 'BPM:STEPS'.
+    Returns:
+        (cycle_intervals_ms, transition_indices)
+        where transition_indices are 0-based indices of intervals corresponding to entry transitions.
+    """
+    entries = []
+    for part in spec_str.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        bpm_str, steps_str = part.split(":")
+        bpm = float(bpm_str)
+        steps = int(steps_str)
+        entries.append((bpm, steps))
+
+    cycle_intervals: List[float] = []
+    transition_indices: List[int] = []
+    current_idx = 0
+    for bpm, steps in entries:
+        nominal_step_ms = (60.0 / bpm / steps_per_beat) * 1000.0
+        for _ in range(steps):
+            cycle_intervals.append(nominal_step_ms)
+        current_idx += steps
+        transition_indices.append(current_idx - 1)
+
+    return cycle_intervals, transition_indices
+
+
+def compute_sequence_metrics(
+    onset_times_sec: np.ndarray,
+    sequence_spec: str,
+    sample_rate: int,
+    total_samples: int,
+    steps_per_beat: int = 4,
+) -> TimingMetrics:
+    """Compute timing statistics across a sequence of patterns with different tempos."""
+    n = len(onset_times_sec)
+    duration_sec = total_samples / sample_rate
+    if n < 2:
+        raise ValueError(f"Need at least 2 onsets to compute sequence timing metrics, found {n}")
+
+    cycle_intervals, transition_indices = parse_sequence_spec(sequence_spec, steps_per_beat)
+    k = len(cycle_intervals)
+    iois_ms = np.diff(onset_times_sec) * 1000.0
+
+    # Determine best starting phase
+    check_len = min(len(iois_ms), 64)
+    best_phase = 0
+    best_err = float("inf")
+    for p in range(k):
+        err = float(np.sum([abs(iois_ms[i] - cycle_intervals[(p + i) % k]) for i in range(check_len)]))
+        if err < best_err:
+            best_err = err
+            best_phase = p
+
+    nominal_iois_ms = np.array([cycle_intervals[(best_phase + i) % k] for i in range(len(iois_ms))], dtype=np.float64)
+    deviations_ms = np.abs(iois_ms - nominal_iois_ms)
+    max_dev = float(np.max(deviations_ms))
+
+    # Transitions
+    transition_devs: List[float] = []
+    transitions_data: List[dict] = []
+    for i in range(len(iois_ms)):
+        phase_in_cycle = (best_phase + i) % k
+        if phase_in_cycle in transition_indices:
+            dev = float(deviations_ms[i])
+            transition_devs.append(dev)
+            transitions_data.append({
+                "interval_index": i,
+                "onset_before_sec": float(onset_times_sec[i]),
+                "onset_after_sec": float(onset_times_sec[i + 1]),
+                "interval_ms": float(iois_ms[i]),
+                "nominal_ms": float(nominal_iois_ms[i]),
+                "deviation_ms": dev,
+                "passed": dev < THRESH_MAX_DEV_MS,
+            })
+
+    max_trans_dev = float(np.max(transition_devs)) if transition_devs else 0.0
+
+    # Cumulative drift timeline
+    expected_timeline = np.zeros(n, dtype=np.float64)
+    expected_timeline[0] = onset_times_sec[0]
+    for i in range(len(nominal_iois_ms)):
+        expected_timeline[i + 1] = expected_timeline[i] + (nominal_iois_ms[i] / 1000.0)
+
+    drifts_ms = (onset_times_sec - expected_timeline) * 1000.0
+    cumulative_drift = float(drifts_ms[-1])
+    max_drift = float(np.max(np.abs(drifts_ms)))
+
+    ioi_mean = float(np.mean(iois_ms))
+    ioi_std = float(np.std(deviations_ms, ddof=1)) if len(deviations_ms) > 1 else 0.0
+
+    passed_std = ioi_std < THRESH_STD_MS
+    passed_max_dev = max_dev < THRESH_MAX_DEV_MS
+    passed_drift = abs(cumulative_drift) < THRESH_DRIFT_MS
+    passed_transitions = max_trans_dev < THRESH_MAX_DEV_MS
+    overall = passed_max_dev and passed_drift and passed_transitions
+
+    return TimingMetrics(
+        total_samples=total_samples,
+        sample_rate=sample_rate,
+        duration_sec=duration_sec,
+        onset_count=n,
+        nominal_ioi_ms=float(np.mean(cycle_intervals)),
+        ioi_mean_ms=ioi_mean,
+        ioi_std_ms=ioi_std,
+        ioi_min_ms=float(np.min(iois_ms)),
+        ioi_max_ms=float(np.max(iois_ms)),
+        max_dev_from_nominal_ms=max_dev,
+        cumulative_drift_ms=cumulative_drift,
+        max_drift_ms=max_drift,
+        swap_result=None,
+        passed_std=passed_std,
+        passed_max_dev=passed_max_dev,
+        passed_drift=passed_drift,
+        passed_swap=None,
+        overall_passed=overall,
+        sequence_spec=sequence_spec,
+        sequence_transitions=transitions_data,
+        max_transition_dev_ms=max_trans_dev,
+        passed_sequence_transitions=passed_transitions,
+    )
+
+
+def generate_synthetic_sequence_wav(
+    output_path: str,
+    duration_sec: float,
+    sequence_spec: str,
+    sample_rate: int = 44100,
+    steps_per_beat: int = 4,
+    jitter_ms: float = 0.0,
+    seed: int = 42,
+) -> List[float]:
+    """Generate a synthetic WAV click track for a looping sequence with multiple tempos."""
+    rng = np.random.default_rng(seed)
+    total_samples = int(duration_sec * sample_rate)
+    audio = np.zeros(total_samples, dtype=np.float64)
+
+    cycle_intervals, _ = parse_sequence_spec(sequence_spec, steps_per_beat)
+    k = len(cycle_intervals)
+
+    click_dur_samples = max(2, int(sample_rate * 0.002))
+    t_click = np.arange(click_dur_samples) / sample_rate
+    click_kernel = np.sin(2 * np.pi * 2000.0 * t_click) * np.exp(-t_click / 0.0005)
+
+    current_t = 0.050
+    ground_truth_times: List[float] = []
+    step_idx = 0
+
+    while current_t < duration_sec - 0.050:
+        t_actual = current_t
+        if jitter_ms > 0:
+            jitter_sec = rng.uniform(-jitter_ms / 2000.0, jitter_ms / 2000.0)
+            t_actual += jitter_sec
+
+        sample_idx = int(round(t_actual * sample_rate))
+        if 0 <= sample_idx < total_samples - click_dur_samples:
+            ground_truth_times.append(t_actual)
+            audio[sample_idx : sample_idx + click_dur_samples] += click_kernel
+
+        next_interval_sec = cycle_intervals[step_idx % k] / 1000.0
+        current_t += next_interval_sec
+        step_idx += 1
+
+    max_val = np.max(np.abs(audio))
+    if max_val > 0:
+        audio = (audio / max_val) * 0.95
+
+    int_audio = (audio * 32767).astype(np.int16)
+    wavfile.write(output_path, sample_rate, int_audio)
+
+    return ground_truth_times
+
+
 def print_report(metrics: TimingMetrics, wav_path: str):
     """Print human-readable measurement report to stdout."""
     print("=" * 68)
@@ -380,6 +561,14 @@ def print_report(metrics: TimingMetrics, wav_path: str):
         print(f"  Onset after:      {sr.onset_after_sec:.3f} s")
         print(f"  Boundary IOI:     {sr.boundary_interval_ms:.3f} ms (Nominal: {sr.nominal_interval_ms:.3f} ms)")
         print(f"  Boundary dev:     {sr.deviation_ms:.3f} ms  (Target: < {THRESH_SWAP_DEV_MS:.1f} ms)  [{swap_pass_str}]")
+
+    if metrics.sequence_spec is not None:
+        trans_pass_str = "PASS" if metrics.passed_sequence_transitions else "FAIL"
+        print("-" * 68)
+        print("SEQUENCE TRANSITIONS CHECK:")
+        print(f"  Sequence spec:       {metrics.sequence_spec}")
+        print(f"  Total transitions:   {len(metrics.sequence_transitions or [])}")
+        print(f"  Max transition dev:  {metrics.max_transition_dev_ms:10.3f} ms  (Target: < {THRESH_MAX_DEV_MS:.1f} ms)  [{trans_pass_str}]")
 
     print("=" * 68)
     verdict = "PASSED" if metrics.overall_passed else "FAILED"
@@ -427,6 +616,18 @@ def parse_args():
         help="Nominal interval after swap in ms if different from before.",
     )
     parser.add_argument(
+        "--sequence",
+        type=str,
+        default=None,
+        help="Sequence specification string, e.g. '120:4,140:4' (BPM:steps for each pattern entry in loop).",
+    )
+    parser.add_argument(
+        "--min-distance-ms",
+        type=float,
+        default=None,
+        help="Minimum refractory period between onsets in ms (default: auto derived from sequence/tempo).",
+    )
+    parser.add_argument(
         "--rel-threshold",
         type=float,
         default=0.25,
@@ -466,17 +667,34 @@ def main():
         # Default: 120 BPM with 4 steps per beat = 125 ms
         nominal_ms = 125.0
 
-    audio, sr = load_wav(args.wav_file)
-    onsets = detect_onsets(audio, sr, rel_threshold=args.rel_threshold)
+    if args.min_distance_ms is not None:
+        min_dist = args.min_distance_ms
+    elif args.sequence:
+        cycle_intervals, _ = parse_sequence_spec(args.sequence, args.steps_per_beat)
+        min_dist = max(40.0, min(cycle_intervals) * 0.6)
+    else:
+        min_dist = 40.0
 
-    metrics = compute_metrics(
-        onset_times_sec=onsets,
-        nominal_ioi_ms=nominal_ms,
-        sample_rate=sr,
-        total_samples=len(audio),
-        swap_time_sec=args.swap_time,
-        swap_nominal_ms=args.swap_nominal_ms,
-    )
+    audio, sr = load_wav(args.wav_file)
+    onsets = detect_onsets(audio, sr, rel_threshold=args.rel_threshold, min_distance_ms=min_dist)
+
+    if args.sequence:
+        metrics = compute_sequence_metrics(
+            onset_times_sec=onsets,
+            sequence_spec=args.sequence,
+            sample_rate=sr,
+            total_samples=len(audio),
+            steps_per_beat=args.steps_per_beat,
+        )
+    else:
+        metrics = compute_metrics(
+            onset_times_sec=onsets,
+            nominal_ioi_ms=nominal_ms,
+            sample_rate=sr,
+            total_samples=len(audio),
+            swap_time_sec=args.swap_time,
+            swap_nominal_ms=args.swap_nominal_ms,
+        )
 
     if args.json:
         data = asdict(metrics)

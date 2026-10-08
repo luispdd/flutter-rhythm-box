@@ -91,9 +91,10 @@ class SoLoudAudioEngine implements AudioEngine {
   }
 
   @override
-  Future<void> startLoop(AudioBuffer buffer) => _enqueueOperation(() => _startLoopInternal(buffer));
+  Future<void> startLoop(AudioBuffer buffer, {bool looping = true}) =>
+      _enqueueOperation(() => _startLoopInternal(buffer, looping: looping));
 
-  Future<void> _startLoopInternal(AudioBuffer buffer) async {
+  Future<void> _startLoopInternal(AudioBuffer buffer, {bool looping = true}) async {
     await _initInternal();
 
     if (_isPlaying) {
@@ -105,7 +106,7 @@ class SoLoudAudioEngine implements AudioEngine {
 
     // Anchor start to engine clock with a small lead margin (20 ms)
     final startTime = _soloud.getEngineTime() + const Duration(milliseconds: 20);
-    final handle = _soloud.playScheduled(source, startTime, looping: true);
+    final handle = _soloud.playScheduled(source, startTime, looping: looping);
 
     _audibleAnchorTime = startTime;
     _audibleSource = source;
@@ -257,6 +258,10 @@ class SoLoudAudioEngine implements AudioEngine {
       unawaited(_promotePendingIfBoundaryPassed());
       final handle = _audibleHandle;
       if (handle == null) return;
+      if (!_soloud.getIsValidVoiceHandle(handle)) {
+        unawaited(stop());
+        return;
+      }
       try {
         final pos = _soloud.getPosition(handle);
         if (!_positionStreamController.isClosed) {

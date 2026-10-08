@@ -7,6 +7,7 @@ import '../persistence/settings_store.dart';
 import '../synth/pattern_renderer.dart';
 import 'metronome_controller.dart';
 import 'playback_controller.dart';
+import 'sequence_controller.dart';
 
 /// Immutable state describing the active sequencer pattern and playback status.
 @immutable
@@ -97,6 +98,7 @@ class SequencerController extends Notifier<SequencerState> {
     if (state.isPlaying) return;
 
     ref.read(metronomeControllerProvider.notifier).onExternalStop();
+    ref.read(sequenceControllerProvider.notifier).onExternalStop();
 
     final bpm = ref.read(tempoProvider).toDouble();
     final buffer = _renderer.renderBuffer(state.pattern, bpm: bpm);
