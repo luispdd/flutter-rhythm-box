@@ -229,5 +229,37 @@ void main() {
 
       expect(container.read(sequenceControllerProvider).isPlaying, isFalse);
     });
+
+    test('setKit updates sequence kitId and triggers swapLoopAtBoundary if playing', () async {
+      await container.read(patternLibraryProvider.notifier).loadFromStore();
+
+      final seqController = container.read(sequenceControllerProvider.notifier);
+      seqController.setSequence(
+        Sequence(
+          id: 's1',
+          name: 'Kit Test',
+          loop: true,
+          entries: [
+            SequenceEntry(patternId: 'pat-a', repeats: 1),
+          ],
+        ),
+      );
+
+      expect(container.read(sequenceControllerProvider).sequence.kitId, equals('classic-synth'));
+
+      // Change kit while stopped
+      await seqController.setKit('retro-8bit');
+      expect(container.read(sequenceControllerProvider).sequence.kitId, equals('retro-8bit'));
+      expect(fakeEngine.swapLoopCalls, equals(0));
+
+      // Start playback
+      await seqController.start();
+      expect(container.read(sequenceControllerProvider).isPlaying, isTrue);
+
+      // Change kit while playing
+      await seqController.setKit('classic-synth');
+      expect(container.read(sequenceControllerProvider).sequence.kitId, equals('classic-synth'));
+      expect(fakeEngine.swapLoopCalls, equals(1));
+    });
   });
 }

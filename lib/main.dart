@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'audio/soloud_audio_engine.dart';
 import 'domain/metronome_settings.dart';
 import 'domain/sequence.dart';
+import 'persistence/kit_repository.dart';
 import 'persistence/settings_store.dart';
 import 'persistence/shared_preferences_settings_store.dart';
 import 'synth/metronome_renderer.dart';
@@ -104,11 +105,14 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final settingsStore = SharedPreferencesSettingsStore(prefs);
+  final kitRepository = AssetKitRepository();
+  await kitRepository.loadKits();
 
   runApp(
     ProviderScope(
       overrides: [
         settingsStoreProvider.overrideWithValue(settingsStore),
+        kitRepositoryProvider.overrideWithValue(kitRepository),
       ],
       child: const RhythmBoxApp(),
     ),

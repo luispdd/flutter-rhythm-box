@@ -1,10 +1,13 @@
-# sequences Specification
+## ADDED Requirements
 
-## Purpose
+### Requirement: Sequence kit fallback
+If a sequence specifies an unknown or missing `kitId`, sequence playback and editing SHALL silently fall back to `classic-synth`.
 
-Provides a way to chain patterns together sequentially to form longer compositions or songs.
+#### Scenario: Fallback on unknown sequence kit
+- **WHEN** a sequence configured with a missing or unregistered `kitId` is loaded or played
+- **THEN** the sequence renders using `classic-synth` without throwing an error
 
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Sequence Data Model
 The system SHALL support sequences as an ordered list of pattern references configured with a single sound kit identifier.
@@ -16,13 +19,6 @@ The system SHALL support sequences as an ordered list of pattern references conf
 #### Scenario: Backward compatibility with missing kitId
 - **WHEN** an older sequence JSON without a `kitId` field is deserialized
 - **THEN** it successfully loads with `kitId` defaulting to `'classic-synth'`
-
-### Requirement: Independent Playback Control
-The system SHALL provide a dedicated play/stop control for sequences.
-
-#### Scenario: Start Sequence
-- **WHEN** the user starts sequence playback
-- **THEN** it automatically stops the metronome or pattern sequencer if they are playing.
 
 ### Requirement: Sequence Editor
 The system SHALL provide an interface to manage sequence entries and sound kit selection.
@@ -37,17 +33,3 @@ The system SHALL render sequence entries consecutively using their individual pa
 #### Scenario: Render Entries
 - **WHEN** a sequence is played
 - **THEN** each entry plays sequentially, applying its referenced pattern's unique tempo, step count, and step data, but using the sequence's sound kit for all rendered voices, overriding any `kitId` stored within individual patterns.
-
-### Requirement: Graceful Missing References
-The system SHALL handle missing pattern references gracefully.
-
-#### Scenario: Load Sequence With Missing Pattern
-- **WHEN** the user loads a sequence that references a pattern which has been deleted from the library
-- **THEN** the system ignores the missing entry and loads the sequence with the remaining valid entries without crashing.
-
-### Requirement: Sequence kit fallback
-If a sequence specifies an unknown or missing `kitId`, sequence playback and editing SHALL silently fall back to `classic-synth`.
-
-#### Scenario: Fallback on unknown sequence kit
-- **WHEN** a sequence configured with a missing or unregistered `kitId` is loaded or played
-- **THEN** the sequence renders using `classic-synth` without throwing an error

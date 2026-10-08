@@ -8,6 +8,7 @@ import 'package:rhythm_box/ui/tempo_controller.dart';
 import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/ui/hold_timer_icon_button.dart';
 
+import 'package:rhythm_box/persistence/kit_repository.dart';
 import 'package:rhythm_box/ui/pattern_library_notifier.dart';
 import 'package:rhythm_box/ui/pattern_library_screen.dart';
 
@@ -95,11 +96,37 @@ class SequencerScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(sequencerControllerProvider);
     final tempo = ref.watch(tempoProvider);
+    final kitRepo = ref.watch(kitRepositoryProvider);
+    final availableKits = kitRepo.availableKits;
+    final currentKitId = state.pattern.kitId;
+    final selectedKitId = availableKits.any((k) => k.id == currentKitId)
+        ? currentKitId
+        : kitRepo.defaultKit.id;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sequencer'),
         actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                key: const Key('sequencerKitSelector'),
+                value: selectedKitId,
+                onChanged: (newKitId) {
+                  if (newKitId != null) {
+                    ref.read(sequencerControllerProvider.notifier).setKit(newKitId);
+                  }
+                },
+                items: availableKits.map((kit) {
+                  return DropdownMenuItem<String>(
+                    value: kit.id,
+                    child: Text(kit.name, style: const TextStyle(fontSize: 14)),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.library_music),
             tooltip: 'Pattern Library',

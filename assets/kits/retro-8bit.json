@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "id": "retro-8bit",
+  "name": "Retro 8-bit",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Kick",
+      "waveform": "triangle",
+      "startFreqHz": 150.0,
+      "endFreqHz": 45.0,
+      "decayMs": 140.0,
+      "gain": 0.9,
+      "bitDepth": 4
+    },
+    {
+      "label": "Low tom",
+      "waveform": "pulse",
+      "dutyCycle": 0.25,
+      "startFreqHz": 180.0,
+      "endFreqHz": 70.0,
+      "decayMs": 160.0,
+      "gain": 0.5
+    },
+    {
+      "label": "Laser",
+      "waveform": "pulse",
+      "dutyCycle": 0.125,
+      "startFreqHz": 900.0,
+      "endFreqHz": 120.0,
+      "decayMs": 120.0,
+      "gain": 0.4
+    },
+    {
+      "label": "Snare",
+      "waveform": "lfsrNoise",
+      "lfsrShort": false,
+      "lfsrClockHz": 16000.0,
+      "highpassHz": 800.0,
+      "decayMs": 120.0,
+      "gain": 0.6
+    },
+    {
+      "label": "Coin",
+      "waveform": "pulse",
+      "dutyCycle": 0.5,
+      "startFreqHz": 988.0,
+      "endFreqHz": 988.0,
+      "pitchSteps": {
+        "semitones": [0, 5],
+        "stepMs": 60.0
+      },
+      "decayMs": 280.0,
+      "gain": 0.35
+    },
+    {
+      "label": "Power-up",
+      "waveform": "pulse",
+      "dutyCycle": 0.25,
+      "startFreqHz": 523.0,
+      "endFreqHz": 523.0,
+      "pitchSteps": {
+        "semitones": [0, 4, 7, 12],
+        "stepMs": 45.0
+      },
+      "decayMs": 220.0,
+      "gain": 0.3
+    },
+    {
+      "label": "Closed hat",
+      "waveform": "lfsrNoise",
+      "lfsrShort": true,
+      "lfsrClockHz": 32000.0,
+      "highpassHz": 3000.0,
+      "decayMs": 35.0,
+      "gain": 0.4
+    },
+    {
+      "label": "Open hat",
+      "waveform": "lfsrNoise",
+      "lfsrShort": true,
+      "lfsrClockHz": 32000.0,
+      "highpassHz": 5000.0,
+      "bitDepth": 6,
+      "decayMs": 160.0,
+      "gain": 0.35
+    }
+  ]
+}

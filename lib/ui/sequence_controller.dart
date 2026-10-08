@@ -8,7 +8,9 @@ import '../audio/background_audio_service.dart';
 import '../domain/audio_buffer.dart';
 import '../domain/pattern.dart';
 import '../domain/sequence.dart';
+import '../persistence/kit_repository.dart';
 import '../synth/pattern_renderer.dart';
+
 import '../synth/synth_timing.dart';
 import 'app_error.dart';
 import 'metronome_controller.dart';
@@ -89,6 +91,7 @@ class SequenceController extends Notifier<SequenceState> {
   AudioEngine get _engine => ref.read(audioEngineProvider);
   BackgroundAudioService get _backgroundService =>
       ref.read(backgroundAudioServiceProvider);
+  KitRepository get _kitRepository => ref.read(kitRepositoryProvider);
 
   /// Loads [sequence] into the active editor/controller.
   void setSequence(Sequence sequence) {
@@ -96,6 +99,27 @@ class SequenceController extends Notifier<SequenceState> {
       stop();
     }
     state = state.copyWith(sequence: sequence, currentEntryIndex: -1);
+  }
+
+  /// Sets the sound kit for the active sequence and updates playback if playing.
+  Future<void> setKit(String kitId) async {
+    state = state.copyWith(
+      sequence: state.sequence.copyWith(kitId: kitId),
+    );
+    if (state.isPlaying) {
+      final patterns = ref.read(patternLibraryProvider);
+      final patternMap = {for (final p in patterns) p.id: p};
+      final kit = _kitRepository.getKit(kitId);
+      final buffer = await PatternRenderer.renderSequenceBufferCompute(
+        sequence: state.sequence,
+        patterns: patternMap,
+        kit: kit,
+      );
+      if (state.isPlaying && buffer.totalSamples > 0) {
+        await _engine.swapLoopAtBoundary(buffer);
+        state = state.copyWith(currentBuffer: buffer);
+      }
+    }
   }
 
   /// Updates the name of the active sequence.
@@ -177,12 +201,15 @@ class SequenceController extends Notifier<SequenceState> {
 
     final patterns = ref.read(patternLibraryProvider);
     final patternMap = {for (final p in patterns) p.id: p};
+    final kit = _kitRepository.getKit(state.sequence.kitId);
 
     try {
       final buffer = await PatternRenderer.renderSequenceBufferCompute(
         sequence: state.sequence,
         patterns: patternMap,
+        kit: kit,
       );
+
 
       if (buffer.totalSamples == 0) {
         state = state.copyWith(isLoading: false);

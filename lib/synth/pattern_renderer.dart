@@ -228,8 +228,9 @@ class PatternRenderer {
     int? maxSamples,
   }) {
     final effectiveVoices = kit?.voices ?? voices ?? defaultVoices;
-    final effectiveKitId = kit?.id ?? kitId;
+    final effectiveKitId = kit?.id ?? kitId ?? sequence.kitId;
     final patternMap = resolvePatternMap(patterns);
+
     final limit = maxSamples ?? (sampleRate * maxSequenceDurationSeconds);
 
     final cachedRenders = <String, Float32List>{};

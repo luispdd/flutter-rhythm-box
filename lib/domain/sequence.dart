@@ -91,6 +91,10 @@ class SequenceEntry {
 /// An ordered sequence of pattern references and playback configuration.
 @immutable
 class Sequence {
+  /// Default kit ID for new sequences.
+  static const String defaultKitId = 'classic-synth';
+
+
   /// Unique identifier for this sequence.
   final String id;
 
@@ -99,6 +103,9 @@ class Sequence {
 
   /// Whether playback loops indefinitely or stops after one full run.
   final bool loop;
+
+  /// Sound kit identifier applied to all patterns in this sequence.
+  final String kitId;
 
   /// Default schema version for serialized sequences.
   static const int defaultSchemaVersion = 1;
@@ -114,6 +121,7 @@ class Sequence {
     this.id = '',
     this.name = '',
     this.loop = true,
+    this.kitId = defaultKitId,
     this.schemaVersion = defaultSchemaVersion,
     List<SequenceEntry>? entries,
   }) : entries = List<SequenceEntry>.unmodifiable(entries ?? const []);
@@ -123,12 +131,14 @@ class Sequence {
     String id = '',
     String name = 'New Sequence',
     bool loop = true,
+    String kitId = defaultKitId,
     int schemaVersion = defaultSchemaVersion,
   }) {
     return Sequence(
       id: id,
       name: name,
       loop: loop,
+      kitId: kitId,
       schemaVersion: schemaVersion,
       entries: const [],
     );
@@ -142,6 +152,7 @@ class Sequence {
     String? id,
     String? name,
     bool? loop,
+    String? kitId,
     int? schemaVersion,
     List<SequenceEntry>? entries,
   }) {
@@ -149,6 +160,7 @@ class Sequence {
       id: id ?? this.id,
       name: name ?? this.name,
       loop: loop ?? this.loop,
+      kitId: kitId ?? this.kitId,
       schemaVersion: schemaVersion ?? this.schemaVersion,
       entries: entries ?? this.entries,
     );
@@ -160,6 +172,7 @@ class Sequence {
         'id': id,
         'name': name,
         'loop': loop,
+        'kitId': kitId,
         'entries': entries.map((e) => e.toJson()).toList(),
       };
 
@@ -209,10 +222,13 @@ class Sequence {
     final schemaVersion =
         schemaVersionRaw is num ? schemaVersionRaw.toInt() : defaultSchemaVersion;
 
+    final kitId = json['kitId'] as String? ?? defaultKitId;
+
     return Sequence(
       id: idRaw,
       name: nameRaw,
       loop: loopRaw,
+      kitId: kitId,
       schemaVersion: schemaVersion,
       entries: parsedEntries,
     );
@@ -226,6 +242,7 @@ class Sequence {
           id == other.id &&
           name == other.name &&
           loop == other.loop &&
+          kitId == other.kitId &&
           schemaVersion == other.schemaVersion &&
           listEquals(entries, other.entries);
 
@@ -234,11 +251,13 @@ class Sequence {
         id,
         name,
         loop,
+        kitId,
         schemaVersion,
         Object.hashAll(entries),
       );
 
   @override
   String toString() =>
-      'Sequence(id: $id, name: $name, loop: $loop, schemaVersion: $schemaVersion, entries: $entries)';
+      'Sequence(id: $id, name: $name, loop: $loop, kitId: "$kitId", schemaVersion: $schemaVersion, entries: $entries)';
 }
+

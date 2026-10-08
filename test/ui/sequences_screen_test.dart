@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rhythm_box/domain/kit.dart';
 import 'package:rhythm_box/domain/pattern.dart';
 import 'package:rhythm_box/domain/sequence.dart';
+import 'package:rhythm_box/persistence/kit_repository.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
 import 'package:rhythm_box/ui/home_screen.dart';
 import 'package:rhythm_box/ui/pattern_library_notifier.dart';
@@ -258,5 +260,46 @@ void main() {
 
     expect(find.text('No sequences yet'), findsOneWidget);
     expect(container.read(sequenceLibraryProvider), isEmpty);
+  });
+
+  testWidgets('SequencesScreen AppBar includes kit selector and updates sequence kitId', (tester) async {
+    final fakeRetroKit = Kit(
+      id: 'retro-8bit',
+      name: 'Retro 8-bit',
+      voices: Kit.classicSynth.voices,
+    );
+    final kitRepo = InMemoryKitRepository(
+      kits: [Kit.classicSynth, fakeRetroKit],
+    );
+
+    final container = ProviderContainer(
+      overrides: [
+        audioEngineProvider.overrideWithValue(fakeEngine),
+        settingsStoreProvider.overrideWithValue(fakeStore),
+        kitRepositoryProvider.overrideWithValue(kitRepo),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    await tester.pumpWidget(buildTestableWidget(const SequencesScreen(), container));
+    await tester.pumpAndSettle();
+
+    // Verify kit selector is present
+    final selectorFinder = find.byKey(const Key('sequencesKitSelector'));
+    expect(selectorFinder, findsOneWidget);
+    expect(find.text('Classic synth'), findsWidgets);
+
+    // Initial sequence kit is classic-synth
+    expect(container.read(sequenceControllerProvider).sequence.kitId, equals('classic-synth'));
+
+    // Open dropdown and select Retro 8-bit
+    await tester.tap(selectorFinder);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Retro 8-bit').last);
+    await tester.pumpAndSettle();
+
+    // Verify sequence kit updated
+    expect(container.read(sequenceControllerProvider).sequence.kitId, equals('retro-8bit'));
   });
 }

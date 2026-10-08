@@ -6,8 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../audio/audio_engine.dart';
 import '../audio/background_audio_service.dart';
 import '../domain/pattern.dart';
+import '../persistence/kit_repository.dart';
 import '../persistence/settings_store.dart';
 import '../synth/pattern_renderer.dart';
+
 import 'app_error.dart';
 import 'metronome_controller.dart';
 import 'playback_controller.dart';
@@ -101,6 +103,7 @@ class SequencerController extends Notifier<SequencerState> {
   BackgroundAudioService get _backgroundService =>
       ref.read(backgroundAudioServiceProvider);
   PatternRenderer get _renderer => ref.read(patternRendererProvider);
+  KitRepository get _kitRepository => ref.read(kitRepositoryProvider);
 
   /// Starts sequencer looped playback.
   Future<void> start() async {
@@ -110,7 +113,8 @@ class SequencerController extends Notifier<SequencerState> {
     ref.read(sequenceControllerProvider.notifier).onExternalStop();
 
     final bpm = ref.read(tempoProvider).toDouble();
-    final buffer = _renderer.renderBuffer(state.pattern, bpm: bpm);
+    final kit = _kitRepository.getKit(state.pattern.kitId);
+    final buffer = _renderer.renderBuffer(state.pattern, kit: kit, bpm: bpm);
 
     try {
       if (_engine.isPlaying) {
@@ -152,10 +156,18 @@ class SequencerController extends Notifier<SequencerState> {
 
     final effectiveBpm = bpm ?? ref.read(tempoProvider).toDouble();
     final effectivePattern = pattern ?? state.pattern;
-    final buffer = _renderer.renderBuffer(effectivePattern, bpm: effectiveBpm);
+    final kit = _kitRepository.getKit(effectivePattern.kitId);
+    final buffer = _renderer.renderBuffer(effectivePattern, kit: kit, bpm: effectiveBpm);
 
     await _engine.swapLoopAtBoundary(buffer);
   }
+
+  /// Changes the active sound kit and restarts playback if currently playing.
+  Future<void> setKit(String kitId) async {
+    final updated = state.pattern.copyWith(kitId: kitId);
+    await _updatePattern(updated);
+  }
+
 
   /// Toggles the step at [trackIndex] and [stepIndex].
   Future<void> toggleStep(int trackIndex, int stepIndex) async {

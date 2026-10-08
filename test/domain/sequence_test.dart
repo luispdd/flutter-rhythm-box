@@ -129,6 +129,7 @@ void main() {
         'id': 'seq-123',
         'name': 'Full Song',
         'loop': false,
+        'kitId': 'classic-synth',
         'entries': [
           {'patternId': 'pat-intro', 'repeats': 2},
           {'patternId': 'pat-verse', 'repeats': 4},
@@ -145,6 +146,33 @@ void main() {
       json.remove('schemaVersion');
       final restored = Sequence.fromJson(json);
       expect(restored.schemaVersion, equals(1));
+    });
+
+    test('kitId defaults to classic-synth and round-trips correctly', () {
+      final defaultSeq = Sequence();
+      expect(defaultSeq.kitId, equals('classic-synth'));
+
+      final retroSeq = Sequence(id: 's-retro', kitId: 'retro-8bit');
+      expect(retroSeq.kitId, equals('retro-8bit'));
+
+      final json = retroSeq.toJson();
+      expect(json['kitId'], equals('retro-8bit'));
+
+      final restored = Sequence.fromJson(json);
+      expect(restored.kitId, equals('retro-8bit'));
+      expect(restored, equals(retroSeq));
+
+      final updated = retroSeq.copyWith(kitId: 'classic-synth');
+      expect(updated.kitId, equals('classic-synth'));
+    });
+
+    test('backward compatibility: missing kitId in JSON defaults to classic-synth', () {
+      final json = Sequence(id: 'seq-legacy', name: 'Legacy').toJson();
+      json.remove('kitId');
+      expect(json.containsKey('kitId'), isFalse);
+
+      final restored = Sequence.fromJson(json);
+      expect(restored.kitId, equals('classic-synth'));
     });
 
     test('fromJson validates properties and handles invalid inputs', () {
@@ -167,3 +195,4 @@ void main() {
     });
   });
 }
+

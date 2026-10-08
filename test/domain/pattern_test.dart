@@ -343,7 +343,7 @@ void main() {
       final pattern = Pattern(id: 'p1', name: 'Test', tempoBpm: 125, stepCount: 8);
       expect(
         pattern.toString(),
-        equals('Pattern(id: p1, name: "Test", tempoBpm: 125, stepCount: 8, schemaVersion: 1)'),
+        equals('Pattern(id: p1, name: "Test", tempoBpm: 125, stepCount: 8, kitId: "classic-synth", schemaVersion: 1)'),
       );
     });
 
@@ -353,5 +353,33 @@ void main() {
       final restored = Pattern.fromJson(json);
       expect(restored.schemaVersion, equals(1));
     });
+
+    test('kitId defaults to classic-synth and round-trips correctly', () {
+      final defaultPattern = Pattern();
+      expect(defaultPattern.kitId, equals('classic-synth'));
+
+      final retroPattern = Pattern(id: 'p-retro', kitId: 'retro-8bit');
+      expect(retroPattern.kitId, equals('retro-8bit'));
+
+      final json = retroPattern.toJson();
+      expect(json['kitId'], equals('retro-8bit'));
+
+      final restored = Pattern.fromJson(json);
+      expect(restored.kitId, equals('retro-8bit'));
+      expect(restored, equals(retroPattern));
+
+      final updated = retroPattern.copyWith(kitId: 'classic-synth');
+      expect(updated.kitId, equals('classic-synth'));
+    });
+
+    test('backward compatibility: missing kitId in JSON defaults to classic-synth', () {
+      final json = Pattern(id: 'pat-legacy', name: 'Legacy').toJson();
+      json.remove('kitId');
+      expect(json.containsKey('kitId'), isFalse);
+
+      final restored = Pattern.fromJson(json);
+      expect(restored.kitId, equals('classic-synth'));
+    });
   });
 }
+

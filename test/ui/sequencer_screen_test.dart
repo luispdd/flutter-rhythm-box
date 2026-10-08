@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rhythm_box/domain/kit.dart';
+import 'package:rhythm_box/persistence/kit_repository.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
 import 'package:rhythm_box/ui/pattern_library_screen.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
@@ -96,6 +98,63 @@ void main() {
 
       // Pattern should now be cleared
       expect(container.read(sequencerControllerProvider).pattern.tracks[0][0], isFalse);
+    });
+
+    testWidgets('SequencerScreen AppBar includes kit selector and updates kit and voice labels',
+        (tester) async {
+      final fakeStore = FakeSettingsStore();
+      final fakeEngine = FakeAudioEngine();
+      final fakeRetroKit = Kit(
+        id: 'retro-8bit',
+        name: 'Retro 8-bit',
+        voices: Kit.classicSynth.voices
+            .map((v) => v.copyWith(label: '8Bit ${v.label}'))
+            .toList(),
+      );
+      final kitRepo = InMemoryKitRepository(
+        kits: [Kit.classicSynth, fakeRetroKit],
+      );
+
+      final container = ProviderContainer(
+        overrides: [
+          settingsStoreProvider.overrideWithValue(fakeStore),
+          audioEngineProvider.overrideWithValue(fakeEngine),
+          kitRepositoryProvider.overrideWithValue(kitRepo),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            home: SequencerScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Find kit dropdown selector
+      final selectorFinder = find.byKey(const Key('sequencerKitSelector'));
+      expect(selectorFinder, findsOneWidget);
+      expect(find.text('Classic synth'), findsWidgets);
+
+      // Verify initial classic voice label is visible in step grid (e.g. Kick)
+      expect(find.text(Kit.classicSynth.voices[0].label!), findsOneWidget);
+
+      // Tap dropdown to open options
+      await tester.tap(selectorFinder);
+      await tester.pumpAndSettle();
+
+      // Tap the Retro 8-bit item
+      await tester.tap(find.text('Retro 8-bit').last);
+      await tester.pumpAndSettle();
+
+      // Verify controller state changed kitId
+      expect(container.read(sequencerControllerProvider).pattern.kitId, equals('retro-8bit'));
+
+      // Verify step grid labels updated to retro kit voice labels
+      expect(find.text('8Bit ${Kit.classicSynth.voices[0].label!}'), findsOneWidget);
     });
   });
 }

@@ -142,5 +142,26 @@ void main() {
       expect(engine.startLoopCalls, equals(0));
       expect(engine.swapLoopCalls, equals(0));
     });
+
+    test('setKit updates kitId, persists to store, and swaps loop if playing', () async {
+      final controller = container.read(sequencerControllerProvider.notifier);
+
+      // Stopped: updates state and store, no swap
+      await controller.setKit('retro-8bit');
+      expect(container.read(sequencerControllerProvider).pattern.kitId, equals('retro-8bit'));
+      final saved = await store.loadWorkingPattern();
+      expect(saved!.kitId, equals('retro-8bit'));
+      expect(engine.swapLoopCalls, equals(0));
+
+      // Start playing
+      await controller.togglePlay();
+      expect(engine.startLoopCalls, equals(1));
+
+      // While playing: setKit triggers boundary swap
+      await controller.setKit('classic-synth');
+      expect(container.read(sequencerControllerProvider).pattern.kitId, equals('classic-synth'));
+      expect(engine.swapLoopCalls, equals(1));
+    });
   });
 }
+

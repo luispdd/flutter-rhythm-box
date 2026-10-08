@@ -38,6 +38,8 @@
 - Asynchronous platform channel calls during playback state transitions: do NOT `await` external platform calls (such as native foreground service `start()` or `stop()`) before mutating controller playback state (`isPlaying`) or subscribing to engine streams; otherwise unhandled channel delays or microtask turns block UI updates and position streams. Dispatch platform calls via `unawaited(_service.start())` / `unawaited(_service.stop())`.
 - Audio DSP discrete clock step floating-point precision: calculating discrete clock steps via `(t * clockHz).floor()` where `t = n / sampleRate` introduces 64-bit float roundoff jitter (e.g. `(240 / 44100.0) * 44100.0 = 239.99999999999997`), delaying LFSR or downsampling steps by 1 sample. Calculate steps directly using the integer sample index with an epsilon: `((n * clockHz) / sampleRate + 1e-9).floor()`.
 - AssetBundle loading in headless unit tests: calling `rootBundle.loadString()` in pure unit tests throws an error unless Flutter widget bindings are initialized. Keep repository loaders abstracted behind an interface (e.g., `KitRepository`), accept an injectable `AssetBundle`, and provide an in-memory implementation (`InMemoryKitRepository`) so domain/DSP tests run headlessly without `TestWidgetsFlutterBinding`.
+- Dart wildcard parameter lint `unnecessary_underscores`: with Dart 3+ wildcard parameters enabled, multiple unused callback arguments must be specified as `(_, _) {}` rather than `(_, __) {}`; using `__` triggers `unnecessary_underscores` lint failures.
+- Step grid track row ordering vs track indices: track 0 represents the lowest voice rendered at the bottom row (row 7 = track 0, row 0 = track 7); dynamic track labels indexed by track index (0..7) must be resolved as `trackLabels[trackIndex]` so the lowest voice appears at the bottom.
 
 
 ## Verification Commands
@@ -46,7 +48,7 @@
 - Static check: `flutter analyze`
 - Unit and widget tests: `flutter test`
 - Linux build: `flutter build linux --debug`; binary: `build/linux/x64/debug/bundle/rhythm_box`
-- Linux CLI playback checks: `<binary> sequencer <sec>`, `<binary> metronome <sec>`, or `<binary> swap <swapSec> <totalSec>`
+- Linux CLI playback checks: `<binary> sequencer <sec>`, `<binary> metronome <sec>`, `<binary> sequence <sec>`, or `<binary> swap <swapSec> <totalSec>`
 - Android debug build: `flutter build apk --debug`; APK: `build/app/outputs/flutter-apk/app-debug.apk`
 - Android release build: `flutter build apk --release`; APK: `build/app/outputs/flutter-apk/app-release.apk`
 - Android Kotlin compile check: `./gradlew compileDebugKotlin` in `android/`

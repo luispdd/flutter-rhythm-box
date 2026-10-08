@@ -28,6 +28,9 @@ class Pattern {
   /// Default tempo in BPM for new patterns.
   static const int defaultTempoBpm = Tempo.defaultBpm;
 
+  /// Default kit ID for new patterns.
+  static const String defaultKitId = 'classic-synth';
+
   /// Unique identifier for this pattern.
   final String id;
 
@@ -39,6 +42,9 @@ class Pattern {
 
   /// Active step count for the loop, clamped between 4 and 16.
   final int stepCount;
+
+  /// Sound kit identifier associated with this pattern.
+  final String kitId;
 
   /// 8 tracks of 16 boolean steps each.
   final List<List<bool>> tracks;
@@ -58,6 +64,7 @@ class Pattern {
     this.name = '',
     int tempoBpm = defaultTempoBpm,
     int stepCount = defaultStepCount,
+    this.kitId = defaultKitId,
     this.schemaVersion = defaultSchemaVersion,
     List<List<bool>>? tracks,
   })  : tempoBpm = Tempo.clampBpm(tempoBpm),
@@ -70,6 +77,7 @@ class Pattern {
     String name = 'New Pattern',
     int tempoBpm = defaultTempoBpm,
     int stepCount = defaultStepCount,
+    String kitId = defaultKitId,
     int schemaVersion = defaultSchemaVersion,
   }) {
     return Pattern(
@@ -77,9 +85,11 @@ class Pattern {
       name: name,
       tempoBpm: tempoBpm,
       stepCount: stepCount,
+      kitId: kitId,
       schemaVersion: schemaVersion,
     );
   }
+
 
   /// Clamps an integer step count to the valid range [4, 16].
   static int clampStepCount(int value) => value.clamp(minStepCount, maxStepCount);
@@ -172,6 +182,7 @@ class Pattern {
     String? name,
     int? tempoBpm,
     int? stepCount,
+    String? kitId,
     int? schemaVersion,
     List<List<bool>>? tracks,
   }) {
@@ -180,6 +191,7 @@ class Pattern {
       name: name ?? this.name,
       tempoBpm: tempoBpm ?? this.tempoBpm,
       stepCount: stepCount ?? this.stepCount,
+      kitId: kitId ?? this.kitId,
       schemaVersion: schemaVersion ?? this.schemaVersion,
       tracks: tracks ?? this.tracks,
     );
@@ -192,6 +204,7 @@ class Pattern {
         'name': name,
         'tempoBpm': tempoBpm,
         'stepCount': stepCount,
+        'kitId': kitId,
         'tracks': tracks.map((track) => List<bool>.from(track)).toList(),
       };
 
@@ -289,11 +302,14 @@ class Pattern {
     final schemaVersion =
         schemaVersionRaw is num ? schemaVersionRaw.toInt() : defaultSchemaVersion;
 
+    final kitId = json['kitId'] as String? ?? defaultKitId;
+
     return Pattern(
       id: idRaw,
       name: nameRaw,
       tempoBpm: tempoRaw.toInt(),
       stepCount: stepCountRaw.toInt(),
+      kitId: kitId,
       schemaVersion: schemaVersion,
       tracks: parsedTracks,
     );
@@ -307,6 +323,7 @@ class Pattern {
         other.name != name ||
         other.tempoBpm != tempoBpm ||
         other.stepCount != stepCount ||
+        other.kitId != kitId ||
         other.schemaVersion != schemaVersion) {
       return false;
     }
@@ -324,10 +341,11 @@ class Pattern {
     for (final track in tracks) {
       tracksHash = Object.hash(tracksHash, Object.hashAll(track));
     }
-    return Object.hash(id, name, tempoBpm, stepCount, schemaVersion, tracksHash);
+    return Object.hash(id, name, tempoBpm, stepCount, kitId, schemaVersion, tracksHash);
   }
 
   @override
   String toString() =>
-      'Pattern(id: $id, name: "$name", tempoBpm: $tempoBpm, stepCount: $stepCount, schemaVersion: $schemaVersion)';
+      'Pattern(id: $id, name: "$name", tempoBpm: $tempoBpm, stepCount: $stepCount, kitId: "$kitId", schemaVersion: $schemaVersion)';
 }
+

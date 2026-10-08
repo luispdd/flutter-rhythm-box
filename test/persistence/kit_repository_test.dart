@@ -32,18 +32,28 @@ void main() {
 
     test('AssetKitRepository loads valid kit JSON from AssetBundle', () async {
       final fakeClassicJson = jsonEncode(Kit.classicSynth.toJson());
+      final fakeRetroJson = jsonEncode({
+        'schemaVersion': 1,
+        'id': 'retro-8bit',
+        'name': 'Retro 8-bit',
+        'builtIn': true,
+        'voices': Kit.classicSynth.voices.map((v) => v.toJson()).toList(),
+      });
       final bundle = FakeAssetBundle({
         AssetKitRepository.classicSynthPath: fakeClassicJson,
+        AssetKitRepository.retro8BitPath: fakeRetroJson,
       });
 
       final repo = AssetKitRepository(bundle: bundle);
       final kits = await repo.loadKits();
 
-      expect(kits.length, equals(1));
-      expect(kits.first.id, equals('classic-synth'));
+      expect(kits.length, equals(2));
+      expect(kits.map((k) => k.id), containsAll(['classic-synth', 'retro-8bit']));
       expect(repo.getKit('classic-synth').name, equals('Classic synth'));
+      expect(repo.getKit('retro-8bit').name, equals('Retro 8-bit'));
       expect(repo.getKit('unknown-id').id, equals('classic-synth'));
     });
+
 
     test('AssetKitRepository safely ignores invalid or corrupted kit assets', () async {
       final bundle = FakeAssetBundle({

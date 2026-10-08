@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/sequence.dart';
+import '../persistence/kit_repository.dart';
 import 'sequence_controller.dart';
 import 'sequence_editor.dart';
 import 'sequence_library_notifier.dart';
@@ -73,10 +74,37 @@ class SequencesScreen extends ConsumerWidget {
     final isPlaying = sequenceState.isPlaying;
     final isLoading = sequenceState.isLoading;
 
+    final kitRepo = ref.watch(kitRepositoryProvider);
+    final availableKits = kitRepo.availableKits;
+    final currentKitId = sequence.kitId;
+    final selectedKitId = availableKits.any((k) => k.id == currentKitId)
+        ? currentKitId
+        : kitRepo.defaultKit.id;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(sequence.name.isNotEmpty ? sequence.name : 'Sequences'),
         actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                key: const Key('sequencesKitSelector'),
+                value: selectedKitId,
+                onChanged: (newKitId) {
+                  if (newKitId != null) {
+                    ref.read(sequenceControllerProvider.notifier).setKit(newKitId);
+                  }
+                },
+                items: availableKits.map((kit) {
+                  return DropdownMenuItem<String>(
+                    value: kit.id,
+                    child: Text(kit.name, style: const TextStyle(fontSize: 14)),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.add_box_outlined),
             tooltip: 'New Sequence',

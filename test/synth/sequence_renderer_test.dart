@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rhythm_box/domain/kit.dart';
 import 'package:rhythm_box/domain/pattern.dart';
 import 'package:rhythm_box/domain/sequence.dart';
+import 'package:rhythm_box/domain/voice.dart';
 import 'package:rhythm_box/synth/synth_renderer.dart';
 import 'package:rhythm_box/synth/synth_timing.dart';
 
@@ -174,6 +176,54 @@ void main() {
 
       expect(computeAudioBuffer.totalSamples, equals(direct.length));
       expect(computeAudioBuffer.pcmSamples.length, equals(direct.length));
+    });
+
+    test('renders sequence applying sequence kit override to all patterns', () {
+      final patternA = Pattern(
+        id: 'pat-a',
+        name: 'Pattern A',
+        tempoBpm: 120,
+        stepCount: 8,
+        kitId: 'classic-synth',
+      ).toggleStep(0, 0);
+
+      final patternB = Pattern(
+        id: 'pat-b',
+        name: 'Pattern B',
+        tempoBpm: 120,
+        stepCount: 8,
+        kitId: 'classic-synth',
+      ).toggleStep(0, 0);
+
+      final seqClassic = Sequence(
+        id: 'seq-classic',
+        name: 'Classic Seq',
+        kitId: 'classic-synth',
+        entries: [
+          SequenceEntry(patternId: 'pat-a', repeats: 1),
+          SequenceEntry(patternId: 'pat-b', repeats: 1),
+        ],
+      );
+
+      final modifiedVoice0 = Kit.classicSynth.voices[0].copyWith(
+        startFreqHz: 440.0,
+        endFreqHz: 220.0,
+      );
+      final modifiedVoices = List<Voice>.from(Kit.classicSynth.voices);
+      modifiedVoices[0] = modifiedVoice0;
+      final modifiedKit = Kit(
+        id: 'custom-kit',
+        name: 'Custom Kit',
+        voices: modifiedVoices,
+      );
+
+      final seqCustom = seqClassic.copyWith(id: 'seq-custom', kitId: 'custom-kit');
+
+      final bufClassic = renderer.renderSequence(seqClassic, [patternA, patternB], kit: Kit.classicSynth);
+      final bufCustom = renderer.renderSequence(seqCustom, [patternA, patternB], kit: modifiedKit);
+
+      expect(bufClassic.length, equals(bufCustom.length));
+      expect(bufClassic, isNot(equals(bufCustom)));
     });
   });
 }

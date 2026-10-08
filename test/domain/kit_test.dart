@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rhythm_box/domain/kit.dart';
 import 'package:rhythm_box/domain/voice.dart';
+
 
 void main() {
   group('Kit Domain Model', () {
@@ -80,6 +84,33 @@ void main() {
       );
     });
 
+    test('loads and validates retro-8bit.json asset', () {
+      final file = File('assets/kits/retro-8bit.json');
+      expect(file.existsSync(), isTrue);
+      final json = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+      final kit = Kit.fromJson(json);
+
+      expect(kit.id, equals('retro-8bit'));
+      expect(kit.name, equals('Retro 8-bit'));
+      expect(kit.builtIn, isTrue);
+      expect(kit.voices.length, equals(8));
+      expect(kit.voices[0].label, equals('Kick'));
+      expect(kit.voices[0].waveform, equals(Waveform.triangle));
+      expect(kit.voices[0].bitDepth, equals(4));
+      expect(kit.voices[1].label, equals('Low tom'));
+      expect(kit.voices[1].waveform, equals(Waveform.pulse));
+      expect(kit.voices[1].dutyCycle, equals(0.25));
+      expect(kit.voices[3].label, equals('Snare'));
+      expect(kit.voices[3].waveform, equals(Waveform.lfsrNoise));
+      expect(kit.voices[3].lfsrShort, isFalse);
+      expect(kit.voices[4].label, equals('Coin'));
+      expect(kit.voices[4].pitchSteps?.semitones, equals([0, 5]));
+      expect(kit.voices[6].label, equals('Closed hat'));
+      expect(kit.voices[6].lfsrShort, isTrue);
+      expect(kit.voices[7].label, equals('Open hat'));
+      expect(kit.voices[7].bitDepth, equals(6));
+    });
+
     test('copyWith creates updated Kit', () {
       final kit = Kit.classicSynth;
       final updated = kit.copyWith(name: 'Updated Name', builtIn: false);
@@ -90,3 +121,4 @@ void main() {
     });
   });
 }
+

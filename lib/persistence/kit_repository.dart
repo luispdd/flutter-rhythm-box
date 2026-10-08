@@ -52,6 +52,7 @@ class InMemoryKitRepository implements KitRepository {
 /// Asset-backed [KitRepository] loading bundled kit JSON files from `assets/kits/`.
 class AssetKitRepository implements KitRepository {
   static const String classicSynthPath = 'assets/kits/classic-synth.json';
+  static const String retro8BitPath = 'assets/kits/retro-8bit.json';
 
   final AssetBundle _bundle;
   final List<String> _assetPaths;
@@ -65,10 +66,11 @@ class AssetKitRepository implements KitRepository {
     List<String>? assetPaths,
     Kit? defaultKit,
   })  : _bundle = bundle ?? rootBundle,
-        _assetPaths = assetPaths ?? [classicSynthPath],
+        _assetPaths = assetPaths ?? [classicSynthPath, retro8BitPath],
         defaultKit = defaultKit ?? Kit.classicSynth {
     _loadedKits[this.defaultKit.id] = this.defaultKit;
   }
+
 
   @override
   List<Kit> get availableKits => List.unmodifiable(_loadedKits.values);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rhythm_box/persistence/kit_repository.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
 import 'package:rhythm_box/ui/sequencer_controller.dart';
 import 'package:rhythm_box/ui/step_grid.dart';
@@ -12,8 +13,17 @@ class StepPlayhead extends ConsumerWidget {
     final engine = ref.watch(audioEngineProvider);
     final tempo = ref.watch(tempoProvider);
     final state = ref.watch(sequencerControllerProvider);
+    final kitRepo = ref.watch(kitRepositoryProvider);
     final isPlaying = state.isPlaying;
     final stepCount = state.pattern.stepCount;
+
+    final kit = kitRepo.getKit(state.pattern.kitId);
+    final trackLabels = kit.voices.asMap().entries.map((entry) {
+      final voice = entry.value;
+      return (voice.label != null && voice.label!.trim().isNotEmpty)
+          ? voice.label!
+          : 'Trk ${entry.key + 1}';
+    }).toList();
 
     return StreamBuilder<Duration>(
       stream: engine.positionStream,
@@ -32,7 +42,7 @@ class StepPlayhead extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const SizedBox(width: 40),
+                const SizedBox(width: StepGrid.labelWidth),
                 Expanded(
                   child: Row(
                     children: List.generate(stepCount, (index) {
@@ -57,6 +67,7 @@ class StepPlayhead extends ConsumerWidget {
               child: StepGrid(
                 stepCount: stepCount,
                 tracks: state.pattern.tracks,
+                trackLabels: trackLabels,
                 onStepToggled: (trackIndex, stepIndex) {
                   ref.read(sequencerControllerProvider.notifier).toggleStep(trackIndex, stepIndex);
                 },
