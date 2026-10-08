@@ -5,6 +5,7 @@ import '../audio/audio_engine.dart';
 import '../domain/pattern.dart';
 import '../persistence/settings_store.dart';
 import '../synth/pattern_renderer.dart';
+import 'app_error.dart';
 import 'metronome_controller.dart';
 import 'playback_controller.dart';
 import 'sequence_controller.dart';
@@ -82,8 +83,11 @@ class SequencerController extends Notifier<SequencerState> {
     try {
       final store = ref.read(settingsStoreProvider);
       await store.saveWorkingPattern(newPattern);
-    } catch (_) {
-      // Store may not be overridden or persistence failed.
+    } catch (e) {
+      if (!isStoreUnimplemented(e)) {
+        ref.read(appErrorProvider.notifier).setError('Failed to save working pattern: $e');
+        showAppSnackBar('Failed to save working pattern');
+      }
     }
     if (state.isPlaying) {
       await _restartPlayback(pattern: newPattern);
@@ -103,13 +107,20 @@ class SequencerController extends Notifier<SequencerState> {
     final bpm = ref.read(tempoProvider).toDouble();
     final buffer = _renderer.renderBuffer(state.pattern, bpm: bpm);
 
-    if (_engine.isPlaying) {
-      await _engine.swapLoopAtBoundary(buffer);
-    } else {
-      await _engine.startLoop(buffer);
+    try {
+      if (_engine.isPlaying) {
+        await _engine.swapLoopAtBoundary(buffer);
+      } else {
+        await _engine.startLoop(buffer);
+      }
+      state = state.copyWith(isPlaying: true);
+      ref.read(audioErrorProvider.notifier).clear();
+    } catch (e) {
+      state = state.copyWith(isPlaying: false);
+      final msg = 'Audio playback failed: $e';
+      ref.read(audioErrorProvider.notifier).setError(msg);
+      showAppSnackBar(msg);
     }
-
-    state = state.copyWith(isPlaying: true);
   }
 
   /// Ceases sequencer playback immediately.

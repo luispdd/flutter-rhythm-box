@@ -119,6 +119,7 @@ void main() {
 
       final json = original.toJson();
       expect(json, equals({
+        'schemaVersion': 1,
         'beatsPerBar': 7,
         'accent': false,
         'waveform': 'square',
@@ -219,8 +220,15 @@ void main() {
       final settings = MetronomeSettings();
       expect(
         settings.toString(),
-        equals('MetronomeSettings(beatsPerBar: 4, accent: true, waveform: sine, pitch: 1000.0Hz, decay: 40.0ms)'),
+        equals('MetronomeSettings(schemaVersion: 1, beatsPerBar: 4, accent: true, waveform: sine, pitch: 1000.0Hz, decay: 40.0ms)'),
       );
+    });
+
+    test('missing schemaVersion defaults to 1 when deserializing from JSON', () {
+      final json = MetronomeSettings().toJson();
+      json.remove('schemaVersion');
+      final restored = MetronomeSettings.fromJson(json);
+      expect(restored.schemaVersion, equals(1));
     });
   });
 }

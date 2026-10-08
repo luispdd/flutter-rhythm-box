@@ -106,4 +106,23 @@ class FakeSettingsStore implements SettingsStore {
     loadWorkingPatternCalls++;
     return savedPattern;
   }
+
+  int? savedTabIndex;
+  int saveSelectedTabIndexCalls = 0;
+  int loadSelectedTabIndexCalls = 0;
+
+  @override
+  Future<void> saveSelectedTabIndex(int index) async {
+    saveSelectedTabIndexCalls++;
+    savedTabIndex = index;
+  }
+
+  @override
+  Future<int?> loadSelectedTabIndex() async {
+    loadSelectedTabIndexCalls++;
+    return savedTabIndex;
+  }
+
+  @override
+  String? lastError;
 }

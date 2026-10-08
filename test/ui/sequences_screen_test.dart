@@ -256,7 +256,7 @@ void main() {
     await tester.tap(find.text('Delete'));
     await tester.pumpAndSettle();
 
-    expect(find.text('No saved sequences.'), findsOneWidget);
+    expect(find.text('No sequences yet'), findsOneWidget);
     expect(container.read(sequenceLibraryProvider), isEmpty);
   });
 }

@@ -52,6 +52,16 @@ abstract interface class SettingsStore {
   /// if no tempo has been saved yet.
   Future<int?> loadTempoBpm();
 
+  /// Persists the last selected tab index.
+  Future<void> saveSelectedTabIndex(int index);
+
+  /// Loads the persisted last selected tab index, or returns `null`
+  /// if no tab index has been saved yet.
+  Future<int?> loadSelectedTabIndex();
+
+  /// Returns the most recent storage error message, or `null` if none.
+  String? get lastError;
+
   /// Clears all persisted settings.
   Future<void> clear();
 }

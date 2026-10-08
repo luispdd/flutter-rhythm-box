@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/metronome_settings.dart';
@@ -28,10 +29,17 @@ class SharedPreferencesSettingsStore implements SettingsStore {
   /// Storage key for persisted sequence library JSON string.
   static const String sequenceLibraryKey = 'sequence_library';
 
+  /// Storage key for persisted selected tab index.
+  static const String selectedTabIndexKey = 'selected_tab_index';
+
   final SharedPreferences _prefs;
+  String? _lastError;
 
   /// Creates a [SharedPreferencesSettingsStore] backed by [_prefs].
-  const SharedPreferencesSettingsStore(this._prefs);
+  SharedPreferencesSettingsStore(this._prefs);
+
+  @override
+  String? get lastError => _lastError;
 
   /// Initializes a new [SharedPreferencesSettingsStore] instance by fetching
   /// the underlying [SharedPreferences] singleton.
@@ -42,8 +50,18 @@ class SharedPreferencesSettingsStore implements SettingsStore {
 
   @override
   Future<void> saveMetronomeSettings(MetronomeSettings settings) async {
-    final jsonString = jsonEncode(settings.toJson());
-    await _prefs.setString(metronomeSettingsKey, jsonString);
+    try {
+      final jsonString = jsonEncode(settings.toJson());
+      final ok = await _prefs.setString(metronomeSettingsKey, jsonString);
+      if (!ok) {
+        throw StateError('Failed to write metronome settings to storage');
+      }
+      _lastError = null;
+    } catch (e, st) {
+      _lastError = 'Error saving metronome settings: $e';
+      debugPrint('$_lastError\n$st');
+      rethrow;
+    }
   }
 
   @override
@@ -60,15 +78,26 @@ class SharedPreferencesSettingsStore implements SettingsStore {
         return MetronomeSettings.fromJson(Map<String, dynamic>.from(decoded));
       }
       return null;
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('Error decoding metronome settings: $e\n$st');
       return null;
     }
   }
 
   @override
   Future<void> saveTempo(Tempo tempo) async {
-    final jsonString = jsonEncode(tempo.toJson());
-    await _prefs.setString(tempoKey, jsonString);
+    try {
+      final jsonString = jsonEncode(tempo.toJson());
+      final ok = await _prefs.setString(tempoKey, jsonString);
+      if (!ok) {
+        throw StateError('Failed to write tempo to storage');
+      }
+      _lastError = null;
+    } catch (e, st) {
+      _lastError = 'Error saving tempo: $e';
+      debugPrint('$_lastError\n$st');
+      rethrow;
+    }
   }
 
   @override
@@ -87,15 +116,26 @@ class SharedPreferencesSettingsStore implements SettingsStore {
         return Tempo(decoded.toInt());
       }
       return null;
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('Error decoding tempo: $e\n$st');
       return null;
     }
   }
 
   @override
   Future<void> saveWorkingPattern(Pattern pattern) async {
-    final jsonString = jsonEncode(pattern.toJson());
-    await _prefs.setString(workingPatternKey, jsonString);
+    try {
+      final jsonString = jsonEncode(pattern.toJson());
+      final ok = await _prefs.setString(workingPatternKey, jsonString);
+      if (!ok) {
+        throw StateError('Failed to write working pattern to storage');
+      }
+      _lastError = null;
+    } catch (e, st) {
+      _lastError = 'Error saving working pattern: $e';
+      debugPrint('$_lastError\n$st');
+      rethrow;
+    }
   }
 
   @override
@@ -112,16 +152,27 @@ class SharedPreferencesSettingsStore implements SettingsStore {
         return Pattern.fromJson(Map<String, dynamic>.from(decoded));
       }
       return null;
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('Error decoding working pattern: $e\n$st');
       return null;
     }
   }
 
   @override
   Future<void> savePatternLibrary(List<Pattern> patterns) async {
-    final jsonList = patterns.map((p) => p.toJson()).toList();
-    final jsonString = jsonEncode(jsonList);
-    await _prefs.setString(patternLibraryKey, jsonString);
+    try {
+      final jsonList = patterns.map((p) => p.toJson()).toList();
+      final jsonString = jsonEncode(jsonList);
+      final ok = await _prefs.setString(patternLibraryKey, jsonString);
+      if (!ok) {
+        throw StateError('Failed to write pattern library to storage');
+      }
+      _lastError = null;
+    } catch (e, st) {
+      _lastError = 'Error saving pattern library: $e';
+      debugPrint('$_lastError\n$st');
+      rethrow;
+    }
   }
 
   @override
@@ -133,21 +184,40 @@ class SharedPreferencesSettingsStore implements SettingsStore {
     try {
       final decoded = jsonDecode(raw);
       if (decoded is List) {
-        return decoded
-            .map((e) => Pattern.fromJson(Map<String, dynamic>.from(e as Map)))
-            .toList();
+        final list = <Pattern>[];
+        for (final item in decoded) {
+          try {
+            if (item is Map) {
+              list.add(Pattern.fromJson(Map<String, dynamic>.from(item)));
+            }
+          } catch (itemError) {
+            debugPrint('Error decoding individual pattern in library: $itemError');
+          }
+        }
+        return list;
       }
       return [];
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('Error decoding pattern library: $e\n$st');
       return [];
     }
   }
 
   @override
   Future<void> saveSequenceLibrary(List<Sequence> sequences) async {
-    final jsonList = sequences.map((s) => s.toJson()).toList();
-    final jsonString = jsonEncode(jsonList);
-    await _prefs.setString(sequenceLibraryKey, jsonString);
+    try {
+      final jsonList = sequences.map((s) => s.toJson()).toList();
+      final jsonString = jsonEncode(jsonList);
+      final ok = await _prefs.setString(sequenceLibraryKey, jsonString);
+      if (!ok) {
+        throw StateError('Failed to write sequence library to storage');
+      }
+      _lastError = null;
+    } catch (e, st) {
+      _lastError = 'Error saving sequence library: $e';
+      debugPrint('$_lastError\n$st');
+      rethrow;
+    }
   }
 
   @override
@@ -159,13 +229,48 @@ class SharedPreferencesSettingsStore implements SettingsStore {
     try {
       final decoded = jsonDecode(raw);
       if (decoded is List) {
-        return decoded
-            .map((e) => Sequence.fromJson(Map<String, dynamic>.from(e as Map)))
-            .toList();
+        final list = <Sequence>[];
+        for (final item in decoded) {
+          try {
+            if (item is Map) {
+              list.add(Sequence.fromJson(Map<String, dynamic>.from(item)));
+            }
+          } catch (itemError) {
+            debugPrint('Error decoding individual sequence in library: $itemError');
+          }
+        }
+        return list;
       }
       return [];
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('Error decoding sequence library: $e\n$st');
       return [];
+    }
+  }
+
+  @override
+  Future<void> saveSelectedTabIndex(int index) async {
+    try {
+      final ok = await _prefs.setInt(selectedTabIndexKey, index);
+      if (!ok) {
+        throw StateError('Failed to write selected tab index to storage');
+      }
+      _lastError = null;
+    } catch (e, st) {
+      _lastError = 'Error saving selected tab index: $e';
+      debugPrint('$_lastError\n$st');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<int?> loadSelectedTabIndex() async {
+    try {
+      return _prefs.getInt(selectedTabIndexKey);
+    } catch (e, st) {
+      _lastError = 'Error loading selected tab index: $e';
+      debugPrint('$_lastError\n$st');
+      return null;
     }
   }
 
@@ -185,5 +290,7 @@ class SharedPreferencesSettingsStore implements SettingsStore {
     await _prefs.remove(workingPatternKey);
     await _prefs.remove(patternLibraryKey);
     await _prefs.remove(sequenceLibraryKey);
+    await _prefs.remove(selectedTabIndexKey);
+    _lastError = null;
   }
 }

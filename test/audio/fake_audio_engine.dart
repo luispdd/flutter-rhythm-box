@@ -56,9 +56,13 @@ class FakeAudioEngine implements AudioEngine {
   }
 
   bool lastLooping = true;
+  bool shouldFailStart = false;
 
   @override
   Future<void> startLoop(AudioBuffer buffer, {bool looping = true}) async {
+    if (shouldFailStart) {
+      throw Exception('Engine failure: Device disconnected');
+    }
     await init();
     if (_isPlaying) {
       await stop();

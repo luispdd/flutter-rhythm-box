@@ -343,8 +343,15 @@ void main() {
       final pattern = Pattern(id: 'p1', name: 'Test', tempoBpm: 125, stepCount: 8);
       expect(
         pattern.toString(),
-        equals('Pattern(id: p1, name: "Test", tempoBpm: 125, stepCount: 8)'),
+        equals('Pattern(id: p1, name: "Test", tempoBpm: 125, stepCount: 8, schemaVersion: 1)'),
       );
+    });
+
+    test('missing schemaVersion defaults to 1 when deserializing from JSON', () {
+      final json = Pattern(id: 'pat-1', name: 'Test').toJson();
+      json.remove('schemaVersion');
+      final restored = Pattern.fromJson(json);
+      expect(restored.schemaVersion, equals(1));
     });
   });
 }

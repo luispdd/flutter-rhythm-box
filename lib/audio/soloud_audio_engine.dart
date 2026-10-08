@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_soloud/flutter_soloud.dart';
 
 import '../domain/audio_buffer.dart';
@@ -71,10 +72,16 @@ class SoLoudAudioEngine implements AudioEngine {
 
   Future<void> _initInternal() async {
     if (_isInitialized) return;
-    if (!_soloud.isInitialized) {
-      await _soloud.init();
+    try {
+      if (!_soloud.isInitialized) {
+        await _soloud.init();
+      }
+      _isInitialized = true;
+    } catch (e, st) {
+      _isInitialized = false;
+      debugPrint('Error initializing SoLoud engine: $e\n$st');
+      rethrow;
     }
-    _isInitialized = true;
   }
 
   @override

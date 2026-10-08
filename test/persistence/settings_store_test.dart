@@ -189,6 +189,19 @@ void main() {
         final result = await store.loadPatternLibrary();
         expect(result, isEmpty);
       });
+
+      test('skips corrupted pattern items while preserving valid patterns', () async {
+        final validPattern = Pattern.empty(id: 'valid', name: 'Valid Beat');
+        final mixedJson = jsonEncode([
+          validPattern.toJson(),
+          {'invalid': 'data'},
+        ]);
+        await prefs.setString('pattern_library', mixedJson);
+
+        final result = await store.loadPatternLibrary();
+        expect(result.length, equals(1));
+        expect(result[0].id, equals('valid'));
+      });
     });
 
     group('Sequence Library', () {
@@ -243,6 +256,22 @@ void main() {
         final result = await store.loadSequenceLibrary();
         expect(result, isEmpty);
       });
+
+      test('skips corrupted sequence items while preserving valid sequences', () async {
+        final validSeq = Sequence(id: 'valid-seq', name: 'Valid Seq');
+        final mixedJson = jsonEncode([
+          validSeq.toJson(),
+          {'corrupted': true},
+        ]);
+        await prefs.setString(
+          SharedPreferencesSettingsStore.sequenceLibraryKey,
+          mixedJson,
+        );
+
+        final result = await store.loadSequenceLibrary();
+        expect(result.length, equals(1));
+        expect(result[0].id, equals('valid-seq'));
+      });
     });
 
     group('clear', () {
@@ -267,6 +296,25 @@ void main() {
         expect(await store.loadWorkingPattern(), isNull);
         expect(await store.loadPatternLibrary(), isEmpty);
         expect(await store.loadSequenceLibrary(), isEmpty);
+      });
+    });
+
+    group('Selected Tab Index', () {
+      test('loadSelectedTabIndex returns null when empty', () async {
+        final result = await store.loadSelectedTabIndex();
+        expect(result, isNull);
+      });
+
+      test('round-trips selected tab index correctly', () async {
+        await store.saveSelectedTabIndex(2);
+        final loaded = await store.loadSelectedTabIndex();
+        expect(loaded, equals(2));
+      });
+    });
+
+    group('lastError', () {
+      test('starts as null', () {
+        expect(store.lastError, isNull);
       });
     });
 

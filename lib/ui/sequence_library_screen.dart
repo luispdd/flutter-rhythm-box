@@ -97,7 +97,24 @@ class SequenceLibraryScreen extends ConsumerWidget {
         title: const Text('Sequence Library'),
       ),
       body: sequences.isEmpty
-          ? const Center(child: Text('No saved sequences.'))
+          ? const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.queue_music_outlined, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'No sequences yet',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Arrange and save pattern sequences to view them here.',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            )
           : ListView.builder(
               itemCount: sequences.length,
               itemBuilder: (context, index) {

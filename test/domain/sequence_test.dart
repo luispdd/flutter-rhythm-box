@@ -125,6 +125,7 @@ void main() {
 
       final json = seq.toJson();
       expect(json, equals({
+        'schemaVersion': 1,
         'id': 'seq-123',
         'name': 'Full Song',
         'loop': false,
@@ -137,6 +138,13 @@ void main() {
 
       final restored = Sequence.fromJson(json);
       expect(restored, equals(seq));
+    });
+
+    test('missing schemaVersion defaults to 1 when deserializing from JSON', () {
+      final json = Sequence(id: 's1', name: 'Seq').toJson();
+      json.remove('schemaVersion');
+      final restored = Sequence.fromJson(json);
+      expect(restored.schemaVersion, equals(1));
     });
 
     test('fromJson validates properties and handles invalid inputs', () {

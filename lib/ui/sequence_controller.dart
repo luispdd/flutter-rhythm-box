@@ -9,6 +9,7 @@ import '../domain/pattern.dart';
 import '../domain/sequence.dart';
 import '../synth/pattern_renderer.dart';
 import '../synth/synth_timing.dart';
+import 'app_error.dart';
 import 'metronome_controller.dart';
 import 'pattern_library_notifier.dart';
 import 'playback_controller.dart';
@@ -194,9 +195,13 @@ class SequenceController extends Notifier<SequenceState> {
         currentEntryIndex: 0,
       );
 
+      ref.read(audioErrorProvider.notifier).clear();
       _subscribeToPositionStream(buffer, patternMap);
-    } catch (_) {
+    } catch (e) {
       state = state.copyWith(isLoading: false, isPlaying: false);
+      final msg = 'Audio playback failed: $e';
+      ref.read(audioErrorProvider.notifier).setError(msg);
+      showAppSnackBar(msg);
     }
   }
 

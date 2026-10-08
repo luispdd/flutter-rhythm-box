@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/tempo.dart';
 import '../persistence/settings_store.dart';
+import 'app_error.dart';
 
 /// Riverpod [Notifier] managing the global tempo in whole beats per minute (BPM).
 ///
@@ -57,8 +58,11 @@ class TempoNotifier extends Notifier<int> {
     try {
       final store = ref.read(settingsStoreProvider);
       await store.saveTempoBpm(bpm);
-    } catch (_) {
-      // Store not overridden or storage unavailable.
+    } catch (e) {
+      if (!isStoreUnimplemented(e)) {
+        ref.read(appErrorProvider.notifier).setError('Failed to save tempo: $e');
+        showAppSnackBar('Failed to save tempo');
+      }
     }
   }
 }

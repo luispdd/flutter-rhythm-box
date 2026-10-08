@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/pattern.dart';
 import '../persistence/settings_store.dart';
+import 'app_error.dart';
 import 'sequence_library_notifier.dart';
 
 /// Riverpod [Notifier] managing the library of saved [Pattern]s.
@@ -74,8 +75,11 @@ class PatternLibraryNotifier extends Notifier<List<Pattern>> {
     try {
       final store = ref.read(settingsStoreProvider);
       await store.savePatternLibrary(patterns);
-    } catch (_) {
-      // Store not overridden or storage unavailable.
+    } catch (e) {
+      if (!isStoreUnimplemented(e)) {
+        ref.read(appErrorProvider.notifier).setError('Failed to save pattern library: $e');
+        showAppSnackBar('Failed to save pattern library');
+      }
     }
   }
 }

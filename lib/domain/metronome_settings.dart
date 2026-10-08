@@ -44,6 +44,12 @@ class MetronomeSettings {
   /// Default synthesis waveform for the click tone.
   static const Waveform defaultWaveform = Waveform.sine;
 
+  /// Default schema version for serialized metronome settings.
+  static const int defaultSchemaVersion = 1;
+
+  /// Schema version for serialization compatibility.
+  final int schemaVersion;
+
   /// Number of beats per bar (clamped to 2..9).
   final int beatsPerBar;
 
@@ -64,6 +70,7 @@ class MetronomeSettings {
   /// Throws an [ArgumentError] if [waveform] is [Waveform.noise], as noise
   /// is not a tonal click waveform.
   MetronomeSettings({
+    this.schemaVersion = defaultSchemaVersion,
     int beatsPerBar = defaultBeatsPerBar,
     bool? accent,
     bool? accentOnBeat1,
@@ -115,6 +122,7 @@ class MetronomeSettings {
 
   /// Returns a copy of these settings with specified fields updated.
   MetronomeSettings copyWith({
+    int? schemaVersion,
     int? beatsPerBar,
     bool? accent,
     bool? accentOnBeat1,
@@ -125,6 +133,7 @@ class MetronomeSettings {
     double? decay,
   }) {
     return MetronomeSettings(
+      schemaVersion: schemaVersion ?? this.schemaVersion,
       beatsPerBar: beatsPerBar ?? this.beatsPerBar,
       accent: accentOnBeat1 ?? accent ?? this.accent,
       waveform: waveform ?? this.waveform,
@@ -135,6 +144,7 @@ class MetronomeSettings {
 
   /// Serializes these settings to a JSON-compatible map.
   Map<String, dynamic> toJson() => {
+        'schemaVersion': schemaVersion,
         'beatsPerBar': beatsPerBar,
         'accent': accent,
         'waveform': waveform.name,
@@ -147,6 +157,10 @@ class MetronomeSettings {
   /// Missing or omitted fields fall back to their default values.
   /// Throws [ArgumentError] if [waveform] is [Waveform.noise] or an unknown waveform.
   factory MetronomeSettings.fromJson(Map<String, dynamic> json) {
+    final schemaVersionRaw = json['schemaVersion'];
+    final schemaVersion =
+        schemaVersionRaw is num ? schemaVersionRaw.toInt() : defaultSchemaVersion;
+
     final beatsRaw = json['beatsPerBar'] ?? json['beats'];
     final beatsPerBar =
         beatsRaw is num ? beatsRaw.toInt() : defaultBeatsPerBar;
@@ -169,6 +183,7 @@ class MetronomeSettings {
         decayRaw is num ? decayRaw.toDouble() : defaultDecayMs;
 
     return MetronomeSettings(
+      schemaVersion: schemaVersion,
       beatsPerBar: beatsPerBar,
       accent: accent,
       waveform: waveform,
@@ -182,6 +197,7 @@ class MetronomeSettings {
       identical(this, other) ||
       other is MetronomeSettings &&
           runtimeType == other.runtimeType &&
+          other.schemaVersion == schemaVersion &&
           other.beatsPerBar == beatsPerBar &&
           other.accent == accent &&
           other.waveform == waveform &&
@@ -190,6 +206,7 @@ class MetronomeSettings {
 
   @override
   int get hashCode => Object.hash(
+        schemaVersion,
         beatsPerBar,
         accent,
         waveform,
@@ -199,6 +216,6 @@ class MetronomeSettings {
 
   @override
   String toString() =>
-      'MetronomeSettings(beatsPerBar: $beatsPerBar, accent: $accent, '
+      'MetronomeSettings(schemaVersion: $schemaVersion, beatsPerBar: $beatsPerBar, accent: $accent, '
       'waveform: ${waveform.name}, pitch: ${pitchHz}Hz, decay: ${decayMs}ms)';
 }

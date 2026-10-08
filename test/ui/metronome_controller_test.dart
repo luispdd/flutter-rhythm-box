@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rhythm_box/domain/metronome_settings.dart';
 import 'package:rhythm_box/domain/voice.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
+import 'package:rhythm_box/ui/app_error.dart';
 import 'package:rhythm_box/ui/metronome_controller.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
 
@@ -240,6 +241,16 @@ void main() {
 
         expect(fakeEngine.startLoopCalls, equals(0));
         expect(fakeEngine.swapLoopCalls, equals(0));
+      });
+
+      test('playback failure stops cleanly and sets audioErrorProvider', () async {
+        fakeEngine.shouldFailStart = true;
+        final notifier = container.read(metronomeControllerProvider.notifier);
+        await notifier.start();
+
+        final state = container.read(metronomeControllerProvider);
+        expect(state.isPlaying, isFalse);
+        expect(container.read(audioErrorProvider), contains('Engine failure'));
       });
     });
   });

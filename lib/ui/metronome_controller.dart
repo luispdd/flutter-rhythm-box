@@ -6,6 +6,7 @@ import '../domain/metronome_settings.dart';
 import '../domain/voice.dart';
 import '../persistence/settings_store.dart';
 import '../synth/metronome_renderer.dart';
+import 'app_error.dart';
 import 'playback_controller.dart';
 import 'sequence_controller.dart';
 import 'sequencer_controller.dart';
@@ -131,13 +132,20 @@ class MetronomeController extends Notifier<MetronomeState> {
     final bpm = ref.read(tempoProvider).toDouble();
     final buffer = _renderer.renderBuffer(settings: state.settings, bpm: bpm);
 
-    if (_engine.isPlaying) {
-      await _engine.swapLoopAtBoundary(buffer);
-    } else {
-      await _engine.startLoop(buffer);
+    try {
+      if (_engine.isPlaying) {
+        await _engine.swapLoopAtBoundary(buffer);
+      } else {
+        await _engine.startLoop(buffer);
+      }
+      state = state.copyWith(isPlaying: true);
+      ref.read(audioErrorProvider.notifier).clear();
+    } catch (e) {
+      state = state.copyWith(isPlaying: false);
+      final msg = 'Audio playback failed: $e';
+      ref.read(audioErrorProvider.notifier).setError(msg);
+      showAppSnackBar(msg);
     }
-
-    state = state.copyWith(isPlaying: true);
   }
 
   /// Ceases metronome playback immediately.
@@ -174,8 +182,11 @@ class MetronomeController extends Notifier<MetronomeState> {
     try {
       final store = ref.read(settingsStoreProvider);
       await store.saveMetronomeSettings(settings);
-    } catch (_) {
-      // Store may not be overridden or persistence failed.
+    } catch (e) {
+      if (!isStoreUnimplemented(e)) {
+        ref.read(appErrorProvider.notifier).setError('Failed to save metronome settings: $e');
+        showAppSnackBar('Failed to save metronome settings');
+      }
     }
   }
 

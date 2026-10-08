@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/sequence.dart';
 import '../persistence/settings_store.dart';
+import 'app_error.dart';
 
 /// Riverpod [Notifier] managing the library of saved [Sequence]s.
 ///
@@ -96,8 +97,11 @@ class SequenceLibraryNotifier extends Notifier<List<Sequence>> {
     try {
       final store = ref.read(settingsStoreProvider);
       await store.saveSequenceLibrary(sequences);
-    } catch (_) {
-      // Store not overridden or storage unavailable.
+    } catch (e) {
+      if (!isStoreUnimplemented(e)) {
+        ref.read(appErrorProvider.notifier).setError('Failed to save sequence library: $e');
+        showAppSnackBar('Failed to save sequence library');
+      }
     }
   }
 }

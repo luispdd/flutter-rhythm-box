@@ -43,6 +43,12 @@ class Pattern {
   /// 8 tracks of 16 boolean steps each.
   final List<List<bool>> tracks;
 
+  /// Default schema version for serialized patterns.
+  static const int defaultSchemaVersion = 1;
+
+  /// Schema version for serialization compatibility.
+  final int schemaVersion;
+
   /// Creates a [Pattern] instance.
   ///
   /// If [tracks] is omitted, an empty grid of 8 tracks with 16 steps set to `false` is created.
@@ -52,6 +58,7 @@ class Pattern {
     this.name = '',
     int tempoBpm = defaultTempoBpm,
     int stepCount = defaultStepCount,
+    this.schemaVersion = defaultSchemaVersion,
     List<List<bool>>? tracks,
   })  : tempoBpm = Tempo.clampBpm(tempoBpm),
         stepCount = clampStepCount(stepCount),
@@ -63,12 +70,14 @@ class Pattern {
     String name = 'New Pattern',
     int tempoBpm = defaultTempoBpm,
     int stepCount = defaultStepCount,
+    int schemaVersion = defaultSchemaVersion,
   }) {
     return Pattern(
       id: id,
       name: name,
       tempoBpm: tempoBpm,
       stepCount: stepCount,
+      schemaVersion: schemaVersion,
     );
   }
 
@@ -163,6 +172,7 @@ class Pattern {
     String? name,
     int? tempoBpm,
     int? stepCount,
+    int? schemaVersion,
     List<List<bool>>? tracks,
   }) {
     return Pattern(
@@ -170,12 +180,14 @@ class Pattern {
       name: name ?? this.name,
       tempoBpm: tempoBpm ?? this.tempoBpm,
       stepCount: stepCount ?? this.stepCount,
+      schemaVersion: schemaVersion ?? this.schemaVersion,
       tracks: tracks ?? this.tracks,
     );
   }
 
   /// Serializes this [Pattern] to a JSON-compatible map.
   Map<String, dynamic> toJson() => {
+        'schemaVersion': schemaVersion,
         'id': id,
         'name': name,
         'tempoBpm': tempoBpm,
@@ -273,11 +285,16 @@ class Pattern {
       parsedTracks.add(steps);
     }
 
+    final schemaVersionRaw = json['schemaVersion'];
+    final schemaVersion =
+        schemaVersionRaw is num ? schemaVersionRaw.toInt() : defaultSchemaVersion;
+
     return Pattern(
       id: idRaw,
       name: nameRaw,
       tempoBpm: tempoRaw.toInt(),
       stepCount: stepCountRaw.toInt(),
+      schemaVersion: schemaVersion,
       tracks: parsedTracks,
     );
   }
@@ -289,7 +306,8 @@ class Pattern {
     if (other.id != id ||
         other.name != name ||
         other.tempoBpm != tempoBpm ||
-        other.stepCount != stepCount) {
+        other.stepCount != stepCount ||
+        other.schemaVersion != schemaVersion) {
       return false;
     }
     for (int t = 0; t < trackCount; t++) {
@@ -306,10 +324,10 @@ class Pattern {
     for (final track in tracks) {
       tracksHash = Object.hash(tracksHash, Object.hashAll(track));
     }
-    return Object.hash(id, name, tempoBpm, stepCount, tracksHash);
+    return Object.hash(id, name, tempoBpm, stepCount, schemaVersion, tracksHash);
   }
 
   @override
   String toString() =>
-      'Pattern(id: $id, name: "$name", tempoBpm: $tempoBpm, stepCount: $stepCount)';
+      'Pattern(id: $id, name: "$name", tempoBpm: $tempoBpm, stepCount: $stepCount, schemaVersion: $schemaVersion)';
 }

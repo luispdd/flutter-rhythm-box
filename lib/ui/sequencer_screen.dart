@@ -65,6 +65,32 @@ class SequencerScreen extends ConsumerWidget {
     }
   }
 
+  Future<void> _showClearConfirmationDialog(BuildContext context, WidgetRef ref) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Clear Pattern'),
+        content: const Text(
+          'Are you sure you want to clear the working pattern? All active steps will be reset.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Clear', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      ref.read(sequencerControllerProvider.notifier).clearPattern();
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(sequencerControllerProvider);
@@ -134,9 +160,7 @@ class SequencerScreen extends ConsumerWidget {
             onStepCountChanged: (val) {
               ref.read(sequencerControllerProvider.notifier).setStepCount(val);
             },
-            onClearPattern: () {
-              ref.read(sequencerControllerProvider.notifier).clearPattern();
-            },
+            onClearPattern: () => _showClearConfirmationDialog(context, ref),
             onSavePattern: () => _showSaveDialog(context, ref),
           ),
           const Expanded(

@@ -12,6 +12,8 @@ import 'persistence/settings_store.dart';
 import 'persistence/shared_preferences_settings_store.dart';
 import 'synth/metronome_renderer.dart';
 import 'synth/pattern_renderer.dart';
+import 'ui/app_error.dart';
+import 'ui/lifecycle_manager.dart';
 import 'ui/playback_controller.dart';
 import 'ui/theme.dart';
 import 'ui/home_screen.dart';
@@ -119,12 +121,15 @@ class RhythmBoxApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Rhythm Box',
+      scaffoldMessengerKey: rootScaffoldMessengerKey,
+      title: 'Rhythm amigo',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       darkTheme: buildAppTheme(),
       themeMode: ThemeMode.dark,
-      home: const HomeScreen(),
+      home: const AppLifecycleManager(
+        child: HomeScreen(),
+      ),
     );
   }
 }

@@ -93,7 +93,24 @@ class PatternLibraryScreen extends ConsumerWidget {
         title: const Text('Pattern Library'),
       ),
       body: patterns.isEmpty
-          ? const Center(child: Text('No saved patterns.'))
+          ? const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.library_music_outlined, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'No patterns yet',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Create and save patterns in the Sequencer to view them here.',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+            )
           : ListView.builder(
               itemCount: patterns.length,
               itemBuilder: (context, index) {
