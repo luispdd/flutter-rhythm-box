@@ -72,4 +72,63 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Stop'), findsOneWidget);
   });
+
+  testWidgets('modifying settings during playback keeps playback running', (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1200, 1600);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    final fakeEngine = FakeAudioEngine();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          audioEngineProvider.overrideWithValue(fakeEngine),
+          settingsStoreProvider.overrideWithValue(FakeSettingsStore()),
+        ],
+        child: const MaterialApp(
+          home: MetronomeScreen(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Start playback
+    await tester.tap(find.byKey(const Key('play_stop_button')));
+    await tester.pumpAndSettle();
+    expect(find.text('Stop'), findsOneWidget);
+    expect(fakeEngine.isPlaying, isTrue);
+
+    // Toggle accent during playback
+    await tester.tap(find.byKey(const Key('accent_toggle')));
+    await tester.pumpAndSettle();
+    expect(find.text('Stop'), findsOneWidget);
+    expect(fakeEngine.isPlaying, isTrue);
+
+    // Change waveform during playback
+    await tester.tap(find.text('Square'));
+    await tester.pumpAndSettle();
+    expect(find.text('Stop'), findsOneWidget);
+    expect(fakeEngine.isPlaying, isTrue);
+
+    // Modify pitch slider during playback
+    final pitchSlider = find.byKey(const Key('pitch_slider'));
+    await tester.drag(pitchSlider, const Offset(50.0, 0.0));
+    await tester.pumpAndSettle();
+    expect(find.text('Stop'), findsOneWidget);
+    expect(fakeEngine.isPlaying, isTrue);
+
+    // Modify decay slider during playback
+    final decaySlider = find.byKey(const Key('decay_slider'));
+    await tester.drag(decaySlider, const Offset(-30.0, 0.0));
+    await tester.pumpAndSettle();
+    expect(find.text('Stop'), findsOneWidget);
+    expect(fakeEngine.isPlaying, isTrue);
+
+    // Verify swapLoopAtBoundary was triggered repeatedly without ever calling stop
+    expect(fakeEngine.swapLoopCalls, greaterThanOrEqualTo(4));
+    expect(fakeEngine.stopCalls, equals(0));
+  });
 }
