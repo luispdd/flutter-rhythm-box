@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rhythm_box/domain/metronome_settings.dart';
+import 'package:rhythm_box/domain/pattern.dart';
 import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/domain/voice.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
@@ -109,19 +110,59 @@ void main() {
       });
     });
 
+    group('Working Pattern', () {
+      test('loadWorkingPattern returns null when empty', () async {
+        final result = await store.loadWorkingPattern();
+        expect(result, isNull);
+      });
+
+      test('round-trips custom Pattern correctly', () async {
+        var pattern = Pattern.empty();
+        pattern = pattern.toggle(0, 0); // track 0, step 0
+        pattern = pattern.setStepCount(8);
+
+        await store.saveWorkingPattern(pattern);
+        final loaded = await store.loadWorkingPattern();
+
+        expect(loaded, isNotNull);
+        expect(loaded, equals(pattern));
+        expect(loaded!.stepCount, equals(8));
+        expect(loaded.isStepOn(0, 0), isTrue);
+
+        // Verify stored value in SharedPreferences is valid JSON string
+        final raw = prefs.getString(SharedPreferencesSettingsStore.workingPatternKey);
+        expect(raw, isNotNull);
+        final decoded = jsonDecode(raw!) as Map<String, dynamic>;
+        expect(decoded['stepCount'], equals(8));
+      });
+
+      test('returns null gracefully when stored JSON is invalid or corrupted', () async {
+        await prefs.setString(
+          SharedPreferencesSettingsStore.workingPatternKey,
+          'not valid json {[[',
+        );
+
+        final result = await store.loadWorkingPattern();
+        expect(result, isNull);
+      });
+    });
+
     group('clear', () {
       test('removes all saved settings from storage', () async {
         final settings = MetronomeSettings(beatsPerBar: 5);
         await store.saveMetronomeSettings(settings);
         await store.saveTempo(const Tempo(90));
+        await store.saveWorkingPattern(Pattern.empty());
 
         expect(await store.loadMetronomeSettings(), isNotNull);
         expect(await store.loadTempo(), isNotNull);
+        expect(await store.loadWorkingPattern(), isNotNull);
 
         await store.clear();
 
         expect(await store.loadMetronomeSettings(), isNull);
         expect(await store.loadTempo(), isNull);
+        expect(await store.loadWorkingPattern(), isNull);
       });
     });
 

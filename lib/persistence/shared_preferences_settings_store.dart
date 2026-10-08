@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/metronome_settings.dart';
+import '../domain/pattern.dart';
 import '../domain/tempo.dart';
 import 'settings_store.dart';
 
@@ -16,6 +17,9 @@ class SharedPreferencesSettingsStore implements SettingsStore {
 
   /// Storage key for persisted global tempo JSON string.
   static const String tempoKey = 'global_tempo';
+
+  /// Storage key for persisted working pattern JSON string.
+  static const String workingPatternKey = 'working_pattern';
 
   final SharedPreferences _prefs;
 
@@ -82,6 +86,31 @@ class SharedPreferencesSettingsStore implements SettingsStore {
   }
 
   @override
+  Future<void> saveWorkingPattern(Pattern pattern) async {
+    final jsonString = jsonEncode(pattern.toJson());
+    await _prefs.setString(workingPatternKey, jsonString);
+  }
+
+  @override
+  Future<Pattern?> loadWorkingPattern() async {
+    final raw = _prefs.getString(workingPatternKey);
+    if (raw == null || raw.trim().isEmpty) {
+      return null;
+    }
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is Map<String, dynamic>) {
+        return Pattern.fromJson(decoded);
+      } else if (decoded is Map) {
+        return Pattern.fromJson(Map<String, dynamic>.from(decoded));
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
   Future<void> saveTempoBpm(int bpm) => saveTempo(Tempo(bpm));
 
   @override
@@ -94,5 +123,6 @@ class SharedPreferencesSettingsStore implements SettingsStore {
   Future<void> clear() async {
     await _prefs.remove(metronomeSettingsKey);
     await _prefs.remove(tempoKey);
+    await _prefs.remove(workingPatternKey);
   }
 }

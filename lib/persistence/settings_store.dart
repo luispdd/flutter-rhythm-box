@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../domain/metronome_settings.dart';
+import '../domain/pattern.dart';
 import '../domain/tempo.dart';
 
 /// Abstract storage interface for persisting application settings.
@@ -21,6 +22,13 @@ abstract interface class SettingsStore {
   /// Loads the persisted [Tempo] from storage, or returns `null`
   /// if no tempo has been saved yet or if deserialization fails.
   Future<Tempo?> loadTempo();
+
+  /// Persists the given working [Pattern] to storage.
+  Future<void> saveWorkingPattern(Pattern pattern);
+
+  /// Loads the persisted working [Pattern] from storage, or returns `null`
+  /// if no pattern has been saved yet or if deserialization fails.
+  Future<Pattern?> loadWorkingPattern();
 
   /// Convenience method to save tempo by integer BPM.
   Future<void> saveTempoBpm(int bpm);
