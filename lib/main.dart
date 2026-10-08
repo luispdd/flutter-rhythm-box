@@ -11,10 +11,9 @@ import 'persistence/settings_store.dart';
 import 'persistence/shared_preferences_settings_store.dart';
 import 'synth/metronome_renderer.dart';
 import 'synth/pattern_renderer.dart';
-import 'ui/metronome_screen.dart';
 import 'ui/playback_controller.dart';
-import 'ui/spike_screen.dart';
 import 'ui/theme.dart';
+import 'ui/home_screen.dart';
 
 void main(List<String> args) async {
   if (args.isNotEmpty) {
@@ -94,7 +93,7 @@ class RhythmBoxApp extends StatelessWidget {
       theme: buildAppTheme(),
       darkTheme: buildAppTheme(),
       themeMode: ThemeMode.dark,
-      home: const MetronomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

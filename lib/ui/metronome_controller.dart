@@ -7,6 +7,7 @@ import '../domain/voice.dart';
 import '../persistence/settings_store.dart';
 import '../synth/metronome_renderer.dart';
 import 'playback_controller.dart';
+import 'sequencer_controller.dart';
 
 /// Immutable state describing the active metronome configuration and playback status.
 @immutable
@@ -123,6 +124,8 @@ class MetronomeController extends Notifier<MetronomeState> {
   Future<void> start() async {
     if (state.isPlaying) return;
 
+    ref.read(sequencerControllerProvider.notifier).onExternalStop();
+
     final bpm = ref.read(tempoProvider).toDouble();
     final buffer = _renderer.renderBuffer(settings: state.settings, bpm: bpm);
 
@@ -162,7 +165,7 @@ class MetronomeController extends Notifier<MetronomeState> {
       bpm: effectiveBpm,
     );
 
-    await _engine.startLoop(buffer);
+    await _engine.swapLoopAtBoundary(buffer);
   }
 
   Future<void> _saveSettingsToStore(MetronomeSettings settings) async {

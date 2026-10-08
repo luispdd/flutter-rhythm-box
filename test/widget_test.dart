@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rhythm_box/main.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
+import 'package:rhythm_box/ui/spike_screen.dart';
 import 'audio/fake_audio_engine.dart';
 
 void main() {
@@ -23,7 +23,7 @@ void main() {
         overrides: [
           audioEngineProvider.overrideWithValue(fakeEngine),
         ],
-        child: const RhythmBoxApp(),
+        child: const MaterialApp(home: SpikeScreen()),
       ),
     );
     await tester.pumpAndSettle();

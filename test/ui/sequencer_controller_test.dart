@@ -3,11 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rhythm_box/domain/pattern.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
 import 'package:rhythm_box/ui/sequencer_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../audio/fake_audio_engine.dart';
 import '../persistence/fake_settings_store.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
-import 'package:rhythm_box/audio/audio_engine.dart';
 
 void main() {
   group('SequencerController', () {
@@ -32,7 +30,6 @@ void main() {
     });
 
     test('initializes with default empty pattern and not playing', () async {
-      final controller = container.read(sequencerControllerProvider.notifier);
       final state = container.read(sequencerControllerProvider);
 
       expect(state.isPlaying, isFalse);

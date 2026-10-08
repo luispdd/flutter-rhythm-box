@@ -1,8 +1,10 @@
+# sequencer Specification
+
 ## Purpose
 
 Provides a sequencer interface allowing users to compose, edit, and play an 8-track drum pattern.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Sequencer Playback Control
 The system SHALL provide an independent start and stop control for the sequencer.
@@ -46,3 +48,26 @@ The system SHALL remember the user's current pattern edits across application re
 #### Scenario: Restore Working Pattern
 - **WHEN** the application starts
 - **THEN** the sequencer restores the exact pattern grid and step count that was present when the application was last closed.
+
+### Requirement: Improved UX and Controls (Added post-integration)
+The system SHALL provide enhanced visual and interactive controls for the sequencer and shared components.
+
+#### Scenario: Playhead Visualization
+- **WHEN** the sequencer is playing
+- **THEN** the current active step is indicated by a horizontal rectangular bullet displayed above the respective column, without altering the step cell background colors.
+
+#### Scenario: Step Count Slider
+- **WHEN** adjusting the sequence length
+- **THEN** the step count is adjusted via a slider control rather than a dropdown menu.
+
+#### Scenario: Track Identifiers
+- **WHEN** viewing the step grid
+- **THEN** each track row has a visible identifier (e.g., "Trk 1") displayed on the left side.
+
+#### Scenario: Long-Press Value Adjustment
+- **WHEN** the user long-presses the `+` or `-` buttons next to the tempo slider (or other future controls)
+- **THEN** the underlying value continuously increments or decrements at a constant pace for the duration of the press.
+
+#### Scenario: Mutually Exclusive Playback
+- **WHEN** the user starts the sequencer while the metronome is already playing
+- **THEN** the metronome stops automatically to prevent overlapping audio loops, and vice-versa.

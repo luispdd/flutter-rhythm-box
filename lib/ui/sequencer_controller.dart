@@ -5,6 +5,7 @@ import '../audio/audio_engine.dart';
 import '../domain/pattern.dart';
 import '../persistence/settings_store.dart';
 import '../synth/pattern_renderer.dart';
+import 'metronome_controller.dart';
 import 'playback_controller.dart';
 
 /// Immutable state describing the active sequencer pattern and playback status.
@@ -95,6 +96,8 @@ class SequencerController extends Notifier<SequencerState> {
   Future<void> start() async {
     if (state.isPlaying) return;
 
+    ref.read(metronomeControllerProvider.notifier).onExternalStop();
+
     final bpm = ref.read(tempoProvider).toDouble();
     final buffer = _renderer.renderBuffer(state.pattern, bpm: bpm);
 
@@ -150,6 +153,13 @@ class SequencerController extends Notifier<SequencerState> {
   Future<void> clearPattern() async {
     final updated = state.pattern.clear();
     await _updatePattern(updated);
+  }
+
+  /// Invoked when external playback (such as the metronome) starts.
+  void onExternalStop() {
+    if (state.isPlaying) {
+      state = state.copyWith(isPlaying: false);
+    }
   }
 }
 

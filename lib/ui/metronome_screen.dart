@@ -5,7 +5,7 @@ import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/domain/voice.dart';
 import 'package:rhythm_box/ui/metronome_controller.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
-import 'package:rhythm_box/ui/tempo_controller.dart';
+import 'package:rhythm_box/ui/hold_timer_icon_button.dart';
 
 class MetronomeScreen extends ConsumerWidget {
   const MetronomeScreen({super.key});
@@ -61,9 +61,9 @@ class MetronomeScreen extends ConsumerWidget {
             ),
             Row(
               children: [
-                IconButton(
+                HoldTimerIconButton(
                   key: const Key('tempo_decrement_button'),
-                  icon: const Icon(Icons.remove),
+                  icon: Icons.remove,
                   onPressed: () => ref.read(tempoProvider.notifier).decrement(),
                 ),
                 Expanded(
@@ -76,9 +76,9 @@ class MetronomeScreen extends ConsumerWidget {
                         ref.read(tempoProvider.notifier).setBpm(value.toInt()),
                   ),
                 ),
-                IconButton(
+                HoldTimerIconButton(
                   key: const Key('tempo_increment_button'),
-                  icon: const Icon(Icons.add),
+                  icon: Icons.add,
                   onPressed: () => ref.read(tempoProvider.notifier).increment(),
                 ),
               ],
