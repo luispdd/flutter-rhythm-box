@@ -185,5 +185,146 @@ void main() {
       expect(VoiceRenderer.softLimit(100.0), equals(1.0));
       expect(VoiceRenderer.softLimit(-100.0), equals(-1.0));
     });
+
+    test('pulse waveform duty cycle and click-free attack', () {
+      const pulseVoice = Voice(
+        waveform: Waveform.pulse,
+        startFreqHz: 440.0,
+        endFreqHz: 440.0,
+        decayMs: 200.0,
+        dutyCycle: 0.25,
+      );
+
+      final samples = renderer.renderVoice(pulseVoice, durationSec: 0.1);
+      expect(samples[0], equals(0.0), reason: 'Pulse onset must be click-free at 0');
+
+      // Sample after attack time (e.g. between 10ms and 50ms)
+      var positiveSamples = 0;
+      var totalAnalyzed = 0;
+      final startIdx = (0.01 * 44100).round();
+      final endIdx = (0.05 * 44100).round();
+
+      for (var i = startIdx; i < endIdx; i++) {
+        if (samples[i] > 0.0) positiveSamples++;
+        totalAnalyzed++;
+      }
+
+      final dutyRatio = positiveSamples / totalAnalyzed;
+      expect(dutyRatio, closeTo(0.25, 0.03));
+    });
+
+    test('lfsrNoise short mode repeats with 93-step period and is deterministic', () {
+      const lfsrVoiceShort = Voice(
+        waveform: Waveform.lfsrNoise,
+        decayMs: 300.0,
+        lfsrClockHz: 44100.0,
+        lfsrShort: true,
+      );
+
+      final run1 = renderer.renderVoice(lfsrVoiceShort, durationSec: 0.05);
+      final run2 = renderer.renderVoice(lfsrVoiceShort, durationSec: 0.05);
+
+      // Deterministic
+      expect(run1, equals(run2));
+
+      // With lfsrClockHz = 44100, each audio sample is 1 LFSR clock cycle.
+      // After attack envelope reaches plateau (e.g. at sample 100),
+      // the raw sequence repeats every 93 clock steps.
+      // Account for envelope decay by comparing sign of samples:
+      for (var i = 100; i < 100 + 93; i++) {
+        final sign1 = run1[i] >= 0;
+        final signNext = run1[i + 93] >= 0;
+        expect(signNext, equals(sign1),
+            reason: 'Sample $i and ${i + 93} should match periodic sign pattern');
+      }
+    });
+
+    test('pitchSteps shifts frequency and clamps to final semitone', () {
+      const stepVoice = Voice(
+        waveform: Waveform.square,
+        startFreqHz: 440.0,
+        decayMs: 250.0,
+        pitchSteps: PitchSteps(semitones: [0, 5], stepMs: 60.0),
+      );
+
+      final samples = renderer.renderVoice(stepVoice, durationSec: 0.2);
+
+      // Window 1: 10ms to 50ms (first step: 440 Hz)
+      var zeroCrossingsStep1 = 0;
+      final s1Start = (0.01 * 44100).round();
+      final s1End = (0.05 * 44100).round();
+      for (var i = s1Start; i < s1End; i++) {
+        if ((samples[i] >= 0 && samples[i + 1] < 0) || (samples[i] < 0 && samples[i + 1] >= 0)) {
+          zeroCrossingsStep1++;
+        }
+      }
+      final freqStep1 = (zeroCrossingsStep1 / 2.0) / 0.04;
+      expect(freqStep1, closeTo(440.0, 30.0));
+
+      // Window 2: 70ms to 110ms (second step: 440 * 2^(5/12) ≈ 587.33 Hz)
+      var zeroCrossingsStep2 = 0;
+      final s2Start = (0.07 * 44100).round();
+      final s2End = (0.11 * 44100).round();
+      for (var i = s2Start; i < s2End; i++) {
+        if ((samples[i] >= 0 && samples[i + 1] < 0) || (samples[i] < 0 && samples[i + 1] >= 0)) {
+          zeroCrossingsStep2++;
+        }
+      }
+      final freqStep2 = (zeroCrossingsStep2 / 2.0) / 0.04;
+      expect(freqStep2, closeTo(587.33, 40.0));
+    });
+
+    test('bitDepth quantizes and highpass filter removes low-frequency quantization noise', () {
+      const crushedHpHat = Voice(
+        waveform: Waveform.noise,
+        decayMs: 150.0,
+        bitDepth: 4,
+        highpassHz: 5000.0,
+      );
+
+      final samples = renderer.renderVoice(crushedHpHat, durationSec: 0.1);
+
+      // Measure spectral energy distribution via DFT below 1000 Hz vs above 5000 Hz
+      final nSamples = math.min(samples.length, 2048);
+      var energyBelow1000 = 0.0;
+      var energyAbove5000 = 0.0;
+
+      for (var bin = 1; bin < 800; bin++) {
+        final freq = bin * (44100.0 / nSamples);
+        var real = 0.0;
+        var imag = 0.0;
+        final omega = 2.0 * math.pi * bin / nSamples;
+        for (var n = 0; n < nSamples; n++) {
+          real += samples[n] * math.cos(omega * n);
+          imag -= samples[n] * math.sin(omega * n);
+        }
+        final magSq = real * real + imag * imag;
+        if (freq < 1000.0) {
+          energyBelow1000 += magSq;
+        } else if (freq > 5000.0 && freq < 15000.0) {
+          energyAbove5000 += magSq;
+        }
+      }
+
+      final ratioDb = 10.0 * (math.log(energyBelow1000 / energyAbove5000) / math.ln10);
+      expect(ratioDb, lessThanOrEqualTo(-18.0),
+          reason: 'Highpass filter must suppress bit-crushed quantization noise below cutoff');
+    });
+
+    test('deterministic noise seeding by kit ID', () {
+      const noiseVoice = Voice(
+        waveform: Waveform.noise,
+        decayMs: 80.0,
+      );
+
+      final classic1 = renderer.renderVoice(noiseVoice, kitId: 'classic-synth', trackIndex: 6);
+      final classicDefault = renderer.renderVoice(noiseVoice, trackIndex: 6);
+      expect(classic1, equals(classicDefault));
+
+      final kitA = renderer.renderVoice(noiseVoice, kitId: 'retro-8bit', trackIndex: 6);
+      final kitB = renderer.renderVoice(noiseVoice, kitId: 'custom-kit', trackIndex: 6);
+      expect(kitA, isNot(equals(classic1)));
+      expect(kitA, isNot(equals(kitB)));
+    });
   });
 }

@@ -32,6 +32,12 @@
 - `SharedPreferences` write failure detection: `prefs.setString()`, `setInt()`, and `setBool()` return `Future<bool>` instead of throwing on storage failures; check `if (!ok) throw StateError(...)` to ensure persistence errors propagate to reactive error notifiers.
 - Riverpod `NotifierProvider` test overrides: `provider.overrideWith(...)` expects a factory returning the notifier subclass (`NotifierType Function()`), not the state type. To supply test data, override the underlying dependency (e.g. `settingsStoreProvider.overrideWithValue(...)`) rather than overriding the NotifierProvider directly.
 - Scheduled loop boundary swap handle expiration: when scheduling a swap at a boundary, SoLoud stops the retiring voice handle at the boundary. Polling timers inspecting `getIsValidVoiceHandle(handle)` must NOT trigger `stop()` when looping is active (`_isLooping`) or a swap is pending (`_pendingHandle != null`), otherwise the timer detects the retired handle at the boundary transition and prematurely kills playback. Always promote pending handles synchronously when the boundary arrives.
+- `MethodChannel` binary messenger requirement in headless unit tests: calling `MethodChannel.setMethodCallHandler` before `WidgetsFlutterBinding` or `TestWidgetsFlutterBinding.ensureInitialized()` throws an assertion failure (`Cannot set the method call handler before the binary messenger has been initialized`). In service constructors managing incoming native channels, wrap handler registration and cleanup in `try/catch` so headless logic tests can run without initializing widget bindings.
+- Android 14 receiver export flag requirement: `Context.registerReceiver` on API 33+ (Android 13/14) throws `SecurityException` if neither `RECEIVER_EXPORTED` nor `RECEIVER_NOT_EXPORTED` is specified. Guard with `if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)` to prevent runtime crashes.
+- Riverpod `ConsumerStatefulWidget.dispose()` vs `ref.read`: calling `ref.read(...)` directly inside `State.dispose()` throws `ConsumerStatefulElement._assertNotDisposed` / element unmounted exception. Cache provider instances in `initState()` (e.g. `_service = ref.read(serviceProvider)`) and use the cached instance to unsubscribe listeners in `dispose()`.
+- Asynchronous platform channel calls during playback state transitions: do NOT `await` external platform calls (such as native foreground service `start()` or `stop()`) before mutating controller playback state (`isPlaying`) or subscribing to engine streams; otherwise unhandled channel delays or microtask turns block UI updates and position streams. Dispatch platform calls via `unawaited(_service.start())` / `unawaited(_service.stop())`.
+- Audio DSP discrete clock step floating-point precision: calculating discrete clock steps via `(t * clockHz).floor()` where `t = n / sampleRate` introduces 64-bit float roundoff jitter (e.g. `(240 / 44100.0) * 44100.0 = 239.99999999999997`), delaying LFSR or downsampling steps by 1 sample. Calculate steps directly using the integer sample index with an epsilon: `((n * clockHz) / sampleRate + 1e-9).floor()`.
+- AssetBundle loading in headless unit tests: calling `rootBundle.loadString()` in pure unit tests throws an error unless Flutter widget bindings are initialized. Keep repository loaders abstracted behind an interface (e.g., `KitRepository`), accept an injectable `AssetBundle`, and provide an in-memory implementation (`InMemoryKitRepository`) so domain/DSP tests run headlessly without `TestWidgetsFlutterBinding`.
 
 
 ## Verification Commands
@@ -41,7 +47,9 @@
 - Unit and widget tests: `flutter test`
 - Linux build: `flutter build linux --debug`; binary: `build/linux/x64/debug/bundle/rhythm_box`
 - Linux CLI playback checks: `<binary> sequencer <sec>`, `<binary> metronome <sec>`, or `<binary> swap <swapSec> <totalSec>`
+- Android debug build: `flutter build apk --debug`; APK: `build/app/outputs/flutter-apk/app-debug.apk`
 - Android release build: `flutter build apk --release`; APK: `build/app/outputs/flutter-apk/app-release.apk`
+- Android Kotlin compile check: `./gradlew compileDebugKotlin` in `android/`
 - Full Linux 5-minute benchmark: `python3 tools/run_full_benchmarks_linux.py`; outputs to `recordings/`
 - Android swap benchmark on emulator: `python3 tools/run_swap_benchmark_android.py`; outputs to `recordings/`
 - Headless launch check: `timeout 8 <binary>`; exit 124 = ran until killed (OK).

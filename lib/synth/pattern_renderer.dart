@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 
 import '../domain/audio_buffer.dart';
+import '../domain/kit.dart';
 import '../domain/pattern.dart';
 import '../domain/sequence.dart';
 import '../domain/voice.dart';
@@ -17,12 +18,14 @@ class SequenceRenderParams {
   final Map<String, Pattern> patterns;
   final int sampleRate;
   final List<Voice> voices;
+  final String? kitId;
 
   const SequenceRenderParams({
     required this.sequence,
     required this.patterns,
     this.sampleRate = SynthTiming.defaultSampleRate,
     this.voices = defaultVoices,
+    this.kitId,
   });
 }
 
@@ -32,6 +35,7 @@ Float32List _computeRenderSequence(SequenceRenderParams params) {
     params.sequence,
     params.patterns,
     voices: params.voices,
+    kitId: params.kitId,
   );
 }
 
@@ -41,6 +45,7 @@ AudioBuffer _computeRenderSequenceBuffer(SequenceRenderParams params) {
     params.sequence,
     params.patterns,
     voices: params.voices,
+    kitId: params.kitId,
   );
 }
 
@@ -79,9 +84,13 @@ class PatternRenderer {
   /// Renders a [Pattern] into a [Float32List] of normalized mono audio (-1.0 to 1.0).
   Float32List renderFloat32(
     Pattern pattern, {
-    List<Voice> voices = defaultVoices,
+    List<Voice>? voices,
+    Kit? kit,
+    String? kitId,
     double? bpm,
   }) {
+    final effectiveVoices = kit?.voices ?? voices ?? defaultVoices;
+    final effectiveKitId = kit?.id ?? kitId;
     final effectiveBpm = bpm ?? pattern.tempoBpm.toDouble();
     final stepCount = pattern.stepCount;
     final totalSamples = timing.loopLengthSamples(stepCount, effectiveBpm);
@@ -104,8 +113,14 @@ class PatternRenderer {
       }
       if (!hasActiveStep) continue;
 
-      final voice = track < voices.length ? voices[track] : defaultVoices[track % defaultVoices.length];
-      final hit = voiceRenderer.renderVoice(voice, trackIndex: track);
+      final voice = track < effectiveVoices.length
+          ? effectiveVoices[track]
+          : defaultVoices[track % defaultVoices.length];
+      final hit = voiceRenderer.renderVoice(
+        voice,
+        trackIndex: track,
+        kitId: effectiveKitId,
+      );
 
       for (var s = 0; s < stepCount; s++) {
         if (!pattern.tracks[track][s]) continue;
@@ -129,10 +144,18 @@ class PatternRenderer {
   /// Renders a [Pattern] into an [Int16List] of 16-bit mono PCM audio.
   Int16List renderPcm(
     Pattern pattern, {
-    List<Voice> voices = defaultVoices,
+    List<Voice>? voices,
+    Kit? kit,
+    String? kitId,
     double? bpm,
   }) {
-    final floats = renderFloat32(pattern, voices: voices, bpm: bpm);
+    final floats = renderFloat32(
+      pattern,
+      voices: voices,
+      kit: kit,
+      kitId: kitId,
+      bpm: bpm,
+    );
     final pcm = Int16List(floats.length);
     for (var i = 0; i < floats.length; i++) {
       pcm[i] = (floats[i] * 32767.0).clamp(-32768.0, 32767.0).round();
@@ -143,11 +166,19 @@ class PatternRenderer {
   /// Renders a [Pattern] into an [AudioBuffer] including WAV container bytes.
   AudioBuffer renderBuffer(
     Pattern pattern, {
-    List<Voice> voices = defaultVoices,
+    List<Voice>? voices,
+    Kit? kit,
+    String? kitId,
     double? bpm,
   }) {
     final effectiveBpm = bpm ?? pattern.tempoBpm.toDouble();
-    final pcm = renderPcm(pattern, voices: voices, bpm: effectiveBpm);
+    final pcm = renderPcm(
+      pattern,
+      voices: voices,
+      kit: kit,
+      kitId: kitId,
+      bpm: effectiveBpm,
+    );
     final wavBytes = encodeWav(pcm, sampleRate: sampleRate);
     final durationUs = (pcm.length * 1000000 / sampleRate).round();
 
@@ -191,9 +222,13 @@ class PatternRenderer {
   Float32List renderSequence(
     Sequence sequence,
     Object patterns, {
-    List<Voice> voices = defaultVoices,
+    List<Voice>? voices,
+    Kit? kit,
+    String? kitId,
     int? maxSamples,
   }) {
+    final effectiveVoices = kit?.voices ?? voices ?? defaultVoices;
+    final effectiveKitId = kit?.id ?? kitId;
     final patternMap = resolvePatternMap(patterns);
     final limit = maxSamples ?? (sampleRate * maxSequenceDurationSeconds);
 
@@ -207,7 +242,11 @@ class PatternRenderer {
 
       final renderedPattern = cachedRenders.putIfAbsent(
         entry.patternId,
-        () => renderFloat32(pattern, voices: voices),
+        () => renderFloat32(
+          pattern,
+          voices: effectiveVoices,
+          kitId: effectiveKitId,
+        ),
       );
 
       if (renderedPattern.isEmpty) continue;
@@ -241,13 +280,17 @@ class PatternRenderer {
   AudioBuffer renderSequenceBuffer(
     Sequence sequence,
     Object patterns, {
-    List<Voice> voices = defaultVoices,
+    List<Voice>? voices,
+    Kit? kit,
+    String? kitId,
     int? maxSamples,
   }) {
     final floats = renderSequence(
       sequence,
       patterns,
       voices: voices,
+      kit: kit,
+      kitId: kitId,
       maxSamples: maxSamples,
     );
     final pcm = Int16List(floats.length);
@@ -271,7 +314,9 @@ class PatternRenderer {
     required Sequence sequence,
     required Object patterns,
     int sampleRate = SynthTiming.defaultSampleRate,
-    List<Voice> voices = defaultVoices,
+    List<Voice>? voices,
+    Kit? kit,
+    String? kitId,
   }) {
     final patternMap = resolvePatternMap(patterns);
     return compute(
@@ -280,7 +325,8 @@ class PatternRenderer {
         sequence: sequence,
         patterns: patternMap,
         sampleRate: sampleRate,
-        voices: voices,
+        voices: kit?.voices ?? voices ?? defaultVoices,
+        kitId: kit?.id ?? kitId,
       ),
     );
   }
@@ -290,7 +336,9 @@ class PatternRenderer {
     required Sequence sequence,
     required Object patterns,
     int sampleRate = SynthTiming.defaultSampleRate,
-    List<Voice> voices = defaultVoices,
+    List<Voice>? voices,
+    Kit? kit,
+    String? kitId,
   }) {
     final patternMap = resolvePatternMap(patterns);
     return compute(
@@ -299,7 +347,8 @@ class PatternRenderer {
         sequence: sequence,
         patterns: patternMap,
         sampleRate: sampleRate,
-        voices: voices,
+        voices: kit?.voices ?? voices ?? defaultVoices,
+        kitId: kit?.id ?? kitId,
       ),
     );
   }

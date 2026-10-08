@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "id": "classic-synth",
+  "name": "Classic synth",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Kick",
+      "waveform": "sine",
+      "startFreqHz": 150.0,
+      "endFreqHz": 45.0,
+      "decayMs": 260.0,
+      "gain": 0.8,
+      "highpassHz": null,
+      "lowpassHz": null
+    },
+    {
+      "label": "Low tom",
+      "waveform": "sine",
+      "startFreqHz": 120.0,
+      "endFreqHz": 70.0,
+      "decayMs": 200.0,
+      "gain": 0.8,
+      "highpassHz": null,
+      "lowpassHz": null
+    },
+    {
+      "label": "Mid perc",
+      "waveform": "triangle",
+      "startFreqHz": 180.0,
+      "endFreqHz": 120.0,
+      "decayMs": 160.0,
+      "gain": 0.8,
+      "highpassHz": null,
+      "lowpassHz": null
+    },
+    {
+      "label": "High perc",
+      "waveform": "triangle",
+      "startFreqHz": 260.0,
+      "endFreqHz": 200.0,
+      "decayMs": 140.0,
+      "gain": 0.8,
+      "highpassHz": null,
+      "lowpassHz": null
+    },
+    {
+      "label": "Low synth",
+      "waveform": "square",
+      "startFreqHz": 400.0,
+      "endFreqHz": 400.0,
+      "decayMs": 90.0,
+      "gain": 0.4,
+      "highpassHz": null,
+      "lowpassHz": null
+    },
+    {
+      "label": "High synth",
+      "waveform": "square",
+      "startFreqHz": 800.0,
+      "endFreqHz": 800.0,
+      "decayMs": 70.0,
+      "gain": 0.4,
+      "highpassHz": null,
+      "lowpassHz": null
+    },
+    {
+      "label": "Snare",
+      "waveform": "noise",
+      "startFreqHz": 0.0,
+      "endFreqHz": 0.0,
+      "decayMs": 80.0,
+      "gain": 0.6,
+      "highpassHz": 3000.0,
+      "lowpassHz": null
+    },
+    {
+      "label": "Hat",
+      "waveform": "noise",
+      "startFreqHz": 0.0,
+      "endFreqHz": 0.0,
+      "decayMs": 40.0,
+      "gain": 0.6,
+      "highpassHz": 7000.0,
+      "lowpassHz": null
+    }
+  ]
+}

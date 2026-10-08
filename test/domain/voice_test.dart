@@ -317,5 +317,115 @@ void main() {
       expect(track7.highpassHz, equals(7000.0));
       expect(track7.lowpassHz, isNull);
     });
+
+    test('defaultVoices have standard track labels', () {
+      expect(defaultVoices.map((v) => v.label).toList(), equals([
+        'Kick',
+        'Low tom',
+        'Mid perc',
+        'High perc',
+        'Low synth',
+        'High synth',
+        'Snare',
+        'Hat',
+      ]));
+    });
+  });
+
+  group('PitchSteps Domain Model', () {
+    test('round-trips JSON correctly', () {
+      const steps = PitchSteps(semitones: [0, 4, 7, 12], stepMs: 45.0);
+      final json = steps.toJson();
+      expect(json, equals({
+        'semitones': [0, 4, 7, 12],
+        'stepMs': 45.0,
+      }));
+      final restored = PitchSteps.fromJson(json);
+      expect(restored, equals(steps));
+      expect(restored.hashCode, equals(steps.hashCode));
+      expect(restored.toString(), contains('PitchSteps'));
+    });
+
+    test('rejects invalid JSON inputs', () {
+      expect(() => PitchSteps.fromJson({'semitones': 'not a list', 'stepMs': 50}), throwsArgumentError);
+      expect(() => PitchSteps.fromJson({'semitones': [0], 'stepMs': 0}), throwsArgumentError);
+      expect(() => PitchSteps.fromJson({'semitones': [0], 'stepMs': -10}), throwsArgumentError);
+    });
+  });
+
+  group('Extended Voice Parameters', () {
+    test('serializes and deserializes new parameters', () {
+      const voice = Voice(
+        label: 'Coin',
+        waveform: Waveform.pulse,
+        startFreqHz: 988.0,
+        endFreqHz: 988.0,
+        decayMs: 280.0,
+        gain: 0.35,
+        dutyCycle: 0.5,
+        pitchSteps: PitchSteps(semitones: [0, 5], stepMs: 60.0),
+        bitDepth: 8,
+        downsampleHz: 22050.0,
+      );
+
+      final json = voice.toJson();
+      expect(json['label'], equals('Coin'));
+      expect(json['waveform'], equals('pulse'));
+      expect(json['dutyCycle'], equals(0.5));
+      expect(json['bitDepth'], equals(8));
+      expect(json['downsampleHz'], equals(22050.0));
+      expect(json['pitchSteps'], equals({'semitones': [0, 5], 'stepMs': 60.0}));
+
+      final restored = Voice.fromJson(json);
+      expect(restored, equals(voice));
+      expect(restored.label, equals('Coin'));
+      expect(restored.dutyCycle, equals(0.5));
+      expect(restored.pitchSteps?.semitones, equals([0, 5]));
+      expect(restored.bitDepth, equals(8));
+      expect(restored.downsampleHz, equals(22050.0));
+    });
+
+    test('serializes and deserializes lfsrNoise parameters', () {
+      const voice = Voice(
+        label: 'Snare',
+        waveform: Waveform.lfsrNoise,
+        decayMs: 120.0,
+        gain: 0.6,
+        highpassHz: 800.0,
+        lfsrClockHz: 16000.0,
+        lfsrShort: false,
+      );
+
+      final json = voice.toJson();
+      expect(json['waveform'], equals('lfsrNoise'));
+      expect(json['lfsrClockHz'], equals(16000.0));
+      expect(json['lfsrShort'], isFalse);
+
+      final restored = Voice.fromJson(json);
+      expect(restored, equals(voice));
+      expect(restored.lfsrClockHz, equals(16000.0));
+      expect(restored.lfsrShort, isFalse);
+    });
+
+    test('copyWith updates new fields and clears via sentinel', () {
+      const voice = Voice(
+        label: 'Laser',
+        waveform: Waveform.pulse,
+        decayMs: 100.0,
+        dutyCycle: 0.25,
+        bitDepth: 6,
+      );
+
+      final updated = voice.copyWith(
+        label: 'Laser 2',
+        dutyCycle: 0.5,
+        bitDepth: null,
+      );
+
+      expect(updated.label, equals('Laser 2'));
+      expect(updated.dutyCycle, equals(0.5));
+      expect(updated.bitDepth, isNull);
+    });
   });
 }
+
