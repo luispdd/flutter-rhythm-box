@@ -111,6 +111,32 @@ class SharedPreferencesSettingsStore implements SettingsStore {
   }
 
   @override
+  Future<void> savePatternLibrary(List<Pattern> patterns) async {
+    final jsonList = patterns.map((p) => p.toJson()).toList();
+    final jsonString = jsonEncode(jsonList);
+    await _prefs.setString('pattern_library', jsonString);
+  }
+
+  @override
+  Future<List<Pattern>> loadPatternLibrary() async {
+    final raw = _prefs.getString('pattern_library');
+    if (raw == null || raw.trim().isEmpty) {
+      return [];
+    }
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is List) {
+        return decoded
+            .map((e) => Pattern.fromJson(Map<String, dynamic>.from(e as Map)))
+            .toList();
+      }
+      return [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  @override
   Future<void> saveTempoBpm(int bpm) => saveTempo(Tempo(bpm));
 
   @override

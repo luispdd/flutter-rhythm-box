@@ -58,6 +58,23 @@ class FakeSettingsStore implements SettingsStore {
     savedSettings = null;
     savedTempo = null;
     savedPattern = null;
+    savedPatternLibrary = [];
+  }
+
+  List<Pattern> savedPatternLibrary = [];
+  int savePatternLibraryCalls = 0;
+  int loadPatternLibraryCalls = 0;
+
+  @override
+  Future<void> savePatternLibrary(List<Pattern> patterns) async {
+    savePatternLibraryCalls++;
+    savedPatternLibrary = List.from(patterns);
+  }
+
+  @override
+  Future<List<Pattern>> loadPatternLibrary() async {
+    loadPatternLibraryCalls++;
+    return List.from(savedPatternLibrary);
   }
 
   @override

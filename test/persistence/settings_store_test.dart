@@ -147,6 +147,49 @@ void main() {
       });
     });
 
+    group('Pattern Library', () {
+      test('loadPatternLibrary returns empty list when empty', () async {
+        final result = await store.loadPatternLibrary();
+        expect(result, isEmpty);
+      });
+
+      test('round-trips custom Pattern Library correctly', () async {
+        var pattern1 = Pattern.empty(id: '1', name: 'Beat 1');
+        pattern1 = pattern1.toggle(0, 0); // track 0, step 0
+        pattern1 = pattern1.setStepCount(8);
+
+        var pattern2 = Pattern.empty(id: '2', name: 'Beat 2');
+        pattern2 = pattern2.toggle(1, 4);
+
+        final library = [pattern1, pattern2];
+
+        await store.savePatternLibrary(library);
+        final loaded = await store.loadPatternLibrary();
+
+        expect(loaded, isNotEmpty);
+        expect(loaded.length, equals(2));
+        expect(loaded[0], equals(pattern1));
+        expect(loaded[1], equals(pattern2));
+
+        // Verify stored value in SharedPreferences is valid JSON string
+        final raw = prefs.getString('pattern_library');
+        expect(raw, isNotNull);
+        final decoded = jsonDecode(raw!) as List<dynamic>;
+        expect(decoded.length, equals(2));
+        expect(decoded[0]['name'], equals('Beat 1'));
+      });
+
+      test('returns empty list gracefully when stored JSON is invalid or corrupted', () async {
+        await prefs.setString(
+          'pattern_library',
+          'not valid json {[[',
+        );
+
+        final result = await store.loadPatternLibrary();
+        expect(result, isEmpty);
+      });
+    });
+
     group('clear', () {
       test('removes all saved settings from storage', () async {
         final settings = MetronomeSettings(beatsPerBar: 5);

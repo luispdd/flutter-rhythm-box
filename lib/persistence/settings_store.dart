@@ -30,6 +30,13 @@ abstract interface class SettingsStore {
   /// if no pattern has been saved yet or if deserialization fails.
   Future<Pattern?> loadWorkingPattern();
 
+  /// Persists a list of [Pattern]s representing the saved pattern library.
+  Future<void> savePatternLibrary(List<Pattern> patterns);
+
+  /// Loads the persisted list of [Pattern]s for the library, or returns
+  /// an empty list if no library has been saved or if deserialization fails.
+  Future<List<Pattern>> loadPatternLibrary();
+
   /// Convenience method to save tempo by integer BPM.
   Future<void> saveTempoBpm(int bpm);
 
