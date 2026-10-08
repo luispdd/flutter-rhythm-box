@@ -54,7 +54,7 @@ class MetronomeController extends Notifier<MetronomeState> {
     // Listen for global tempo changes to trigger seamless boundary swaps when playing.
     ref.listen<int>(tempoProvider, (previous, next) {
       if (previous != null && previous != next && state.isPlaying) {
-        _swapAtBoundary(bpm: next.toDouble());
+        _restartPlayback(bpm: next.toDouble());
       }
     });
 
@@ -85,7 +85,7 @@ class MetronomeController extends Notifier<MetronomeState> {
     state = state.copyWith(settings: newSettings);
     await _saveSettingsToStore(newSettings);
     if (state.isPlaying) {
-      await _swapAtBoundary(settings: newSettings);
+      await _restartPlayback(settings: newSettings);
     }
   }
 
@@ -152,7 +152,7 @@ class MetronomeController extends Notifier<MetronomeState> {
     }
   }
 
-  Future<void> _swapAtBoundary({double? bpm, MetronomeSettings? settings}) async {
+  Future<void> _restartPlayback({double? bpm, MetronomeSettings? settings}) async {
     if (!state.isPlaying) return;
 
     final effectiveBpm = bpm ?? ref.read(tempoProvider).toDouble();
@@ -162,7 +162,7 @@ class MetronomeController extends Notifier<MetronomeState> {
       bpm: effectiveBpm,
     );
 
-    await _engine.swapLoopAtBoundary(buffer);
+    await _engine.startLoop(buffer);
   }
 
   Future<void> _saveSettingsToStore(MetronomeSettings settings) async {

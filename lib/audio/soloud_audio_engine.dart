@@ -31,6 +31,8 @@ class SoLoudAudioEngine implements AudioEngine {
   bool _isInitialized = false;
   bool _isPlaying = false;
 
+  Future<void>? _activeOperation;
+
   Timer? _positionTimer;
   final StreamController<Duration> _positionStreamController =
       StreamController<Duration>.broadcast();
@@ -43,8 +45,31 @@ class SoLoudAudioEngine implements AudioEngine {
   @override
   Stream<Duration> get positionStream => _positionStreamController.stream;
 
+  Future<T> _enqueueOperation<T>(Future<T> Function() operation) async {
+    final previousOperation = _activeOperation;
+    final completer = Completer<void>();
+    _activeOperation = completer.future;
+
+    if (previousOperation != null) {
+      try {
+        await previousOperation;
+      } catch (_) {}
+    }
+
+    try {
+      return await operation();
+    } finally {
+      completer.complete();
+      if (_activeOperation == completer.future) {
+        _activeOperation = null;
+      }
+    }
+  }
+
   @override
-  Future<void> init() async {
+  Future<void> init() => _enqueueOperation(_initInternal);
+
+  Future<void> _initInternal() async {
     if (_isInitialized) return;
     if (!_soloud.isInitialized) {
       await _soloud.init();
@@ -53,8 +78,10 @@ class SoLoudAudioEngine implements AudioEngine {
   }
 
   @override
-  Future<void> dispose() async {
-    await stop();
+  Future<void> dispose() => _enqueueOperation(_disposeInternal);
+
+  Future<void> _disposeInternal() async {
+    await _stopInternal();
     _positionTimer?.cancel();
     await _positionStreamController.close();
     if (_isInitialized) {
@@ -64,11 +91,13 @@ class SoLoudAudioEngine implements AudioEngine {
   }
 
   @override
-  Future<void> startLoop(AudioBuffer buffer) async {
-    await init();
+  Future<void> startLoop(AudioBuffer buffer) => _enqueueOperation(() => _startLoopInternal(buffer));
+
+  Future<void> _startLoopInternal(AudioBuffer buffer) async {
+    await _initInternal();
 
     if (_isPlaying) {
-      await stop();
+      await _stopInternal();
     }
 
     final soundId = 'loop_${_bufferCounter++}';
@@ -109,12 +138,14 @@ class SoLoudAudioEngine implements AudioEngine {
   }
 
   @override
-  Future<void> swapLoopAtBoundary(AudioBuffer nextBuffer) async {
+  Future<void> swapLoopAtBoundary(AudioBuffer nextBuffer) => _enqueueOperation(() => _swapLoopAtBoundaryInternal(nextBuffer));
+
+  Future<void> _swapLoopAtBoundaryInternal(AudioBuffer nextBuffer) async {
     if (!_isPlaying ||
         _audibleHandle == null ||
         _audibleBuffer == null ||
         _audibleAnchorTime == null) {
-      await startLoop(nextBuffer);
+      await _startLoopInternal(nextBuffer);
       return;
     }
 
@@ -175,7 +206,9 @@ class SoLoudAudioEngine implements AudioEngine {
   }
 
   @override
-  Future<void> stop() async {
+  Future<void> stop() => _enqueueOperation(_stopInternal);
+
+  Future<void> _stopInternal() async {
     _positionTimer?.cancel();
     _positionTimer = null;
 

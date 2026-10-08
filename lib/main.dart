@@ -3,10 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'audio/soloud_audio_engine.dart';
 import 'domain/metronome_settings.dart';
+import 'persistence/settings_store.dart';
+import 'persistence/shared_preferences_settings_store.dart';
 import 'synth/metronome_renderer.dart';
 import 'synth/pattern_renderer.dart';
+import 'ui/metronome_screen.dart';
 import 'ui/playback_controller.dart';
 import 'ui/spike_screen.dart';
 import 'ui/theme.dart';
@@ -64,7 +69,18 @@ void main(List<String> args) async {
     }
   }
 
-  runApp(const ProviderScope(child: RhythmBoxApp()));
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final settingsStore = SharedPreferencesSettingsStore(prefs);
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        settingsStoreProvider.overrideWithValue(settingsStore),
+      ],
+      child: const RhythmBoxApp(),
+    ),
+  );
 }
 
 class RhythmBoxApp extends StatelessWidget {
@@ -78,7 +94,7 @@ class RhythmBoxApp extends StatelessWidget {
       theme: buildAppTheme(),
       darkTheme: buildAppTheme(),
       themeMode: ThemeMode.dark,
-      home: const SpikeScreen(),
+      home: const MetronomeScreen(),
     );
   }
 }
