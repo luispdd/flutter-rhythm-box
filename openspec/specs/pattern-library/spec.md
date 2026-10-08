@@ -14,11 +14,15 @@ The system SHALL allow users to save their current working sequencer pattern wit
 - **THEN** the current working pattern (including step data, step count, and global tempo) is persisted to the local library.
 
 ### Requirement: List Saved Patterns
-The system SHALL display all saved patterns in a library view.
+The system SHALL display all saved patterns in a library view, providing guidance when empty.
 
 #### Scenario: View Library
-- **WHEN** the user opens the pattern library
+- **WHEN** the user opens the pattern library and there are saved patterns
 - **THEN** the system displays a list of all saved patterns, showing their names and tempos.
+
+#### Scenario: View Empty Library
+- **WHEN** the user opens the pattern library and there are no saved patterns
+- **THEN** the system displays a friendly empty state hint indicating that no patterns exist yet.
 
 ### Requirement: Load Pattern
 The system SHALL allow users to load a saved pattern into the sequencer.
@@ -44,3 +48,10 @@ The system SHALL allow users to delete a saved pattern from the library.
 #### Scenario: Delete Referenced Pattern
 - **WHEN** the user attempts to delete a pattern that is referenced by one or more sequences
 - **THEN** the system shows a warning listing the affected sequences, and if confirmed, removes the referencing entries from those sequences.
+
+### Requirement: Clear Pattern Confirmation
+The system SHALL require confirmation before clearing a pattern in the sequencer.
+
+#### Scenario: Clear Working Pattern
+- **WHEN** the user attempts to clear the current working pattern in the sequencer
+- **THEN** the system displays a confirmation dialog to prevent accidental data loss.
