@@ -7,6 +7,7 @@ class SequencerControls extends StatelessWidget {
   final VoidCallback onPlayPauseToggled;
   final void Function(int) onStepCountChanged;
   final VoidCallback onClearPattern;
+  final VoidCallback onSavePattern;
 
   const SequencerControls({
     super.key,
@@ -15,6 +16,7 @@ class SequencerControls extends StatelessWidget {
     required this.onPlayPauseToggled,
     required this.onStepCountChanged,
     required this.onClearPattern,
+    required this.onSavePattern,
   });
 
   @override
@@ -49,6 +51,11 @@ class SequencerControls extends StatelessWidget {
         ElevatedButton(
           onPressed: onClearPattern,
           child: const Text('Clear'),
+        ),
+        const SizedBox(width: 8),
+        ElevatedButton(
+          onPressed: onSavePattern,
+          child: const Text('Save'),
         ),
       ],
     );

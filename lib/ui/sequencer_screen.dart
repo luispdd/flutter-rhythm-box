@@ -8,8 +8,62 @@ import 'package:rhythm_box/ui/tempo_controller.dart';
 import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/ui/hold_timer_icon_button.dart';
 
+import 'package:rhythm_box/ui/pattern_library_notifier.dart';
+import 'package:rhythm_box/ui/pattern_library_screen.dart';
+
 class SequencerScreen extends ConsumerWidget {
   const SequencerScreen({super.key});
+
+  Future<void> _showSaveDialog(BuildContext context, WidgetRef ref) async {
+    final state = ref.read(sequencerControllerProvider);
+    final tempo = ref.read(tempoProvider);
+    final textController = TextEditingController();
+
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Save Pattern'),
+        content: TextField(
+          controller: textController,
+          autofocus: true,
+          decoration: const InputDecoration(hintText: 'Pattern Name'),
+          onSubmitted: (value) {
+            final name = value.trim();
+            if (name.isNotEmpty) {
+              Navigator.of(context).pop(name);
+            }
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              final name = textController.text.trim();
+              if (name.isNotEmpty) {
+                Navigator.of(context).pop(name);
+              }
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+
+    if (result != null && result.isNotEmpty && context.mounted) {
+      final newPattern = state.pattern.copyWith(
+        id: DateTime.now().toIso8601String(),
+        name: result,
+        tempoBpm: tempo,
+      );
+      ref.read(patternLibraryProvider.notifier).savePattern(newPattern);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Pattern "$result" saved')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,6 +73,19 @@ class SequencerScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sequencer'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.library_music),
+            tooltip: 'Pattern Library',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const PatternLibraryScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -70,6 +137,7 @@ class SequencerScreen extends ConsumerWidget {
             onClearPattern: () {
               ref.read(sequencerControllerProvider.notifier).clearPattern();
             },
+            onSavePattern: () => _showSaveDialog(context, ref),
           ),
           const Expanded(
             child: Padding(

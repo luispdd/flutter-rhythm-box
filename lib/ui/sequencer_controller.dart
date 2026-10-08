@@ -155,6 +155,11 @@ class SequencerController extends Notifier<SequencerState> {
     await _updatePattern(updated);
   }
 
+  /// Loads a complete pattern into the sequencer.
+  Future<void> loadPattern(Pattern pattern) async {
+    await _updatePattern(pattern);
+  }
+
   /// Invoked when external playback (such as the metronome) starts.
   void onExternalStop() {
     if (state.isPlaying) {
