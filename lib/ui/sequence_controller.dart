@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../audio/audio_engine.dart';
+import '../audio/background_audio_service.dart';
 import '../domain/audio_buffer.dart';
 import '../domain/pattern.dart';
 import '../domain/sequence.dart';
@@ -86,6 +87,8 @@ class SequenceController extends Notifier<SequenceState> {
   }
 
   AudioEngine get _engine => ref.read(audioEngineProvider);
+  BackgroundAudioService get _backgroundService =>
+      ref.read(backgroundAudioServiceProvider);
 
   /// Loads [sequence] into the active editor/controller.
   void setSequence(Sequence sequence) {
@@ -197,6 +200,7 @@ class SequenceController extends Notifier<SequenceState> {
 
       ref.read(audioErrorProvider.notifier).clear();
       _subscribeToPositionStream(buffer, patternMap);
+      unawaited(_backgroundService.start());
     } catch (e) {
       state = state.copyWith(isLoading: false, isPlaying: false);
       final msg = 'Audio playback failed: $e';
@@ -212,6 +216,7 @@ class SequenceController extends Notifier<SequenceState> {
 
     if (state.isPlaying) {
       await _engine.stop();
+      unawaited(_backgroundService.stop());
     }
     state = state.copyWith(
       isPlaying: false,

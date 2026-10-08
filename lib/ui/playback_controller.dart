@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../audio/audio_engine.dart';
+import '../audio/background_audio_service.dart';
 import '../audio/soloud_audio_engine.dart';
 import '../domain/metronome_settings.dart';
 import '../domain/pattern.dart';
@@ -212,6 +215,8 @@ class MetronomePlaybackController extends Notifier<MetronomePlaybackState> {
   }
 
   AudioEngine get _engine => ref.read(audioEngineProvider);
+  BackgroundAudioService get _backgroundService =>
+      ref.read(backgroundAudioServiceProvider);
   MetronomeRenderer get _renderer => ref.read(metronomeRendererProvider);
 
   /// Starts metronome playback or swaps to it if playback is already active.
@@ -233,6 +238,7 @@ class MetronomePlaybackController extends Notifier<MetronomePlaybackState> {
       isPlaying: true,
       lastEvent: 'Metronome running at ${tempo.round()} BPM',
     );
+    unawaited(_backgroundService.start());
   }
 
   /// Stops metronome playback immediately.
@@ -243,6 +249,7 @@ class MetronomePlaybackController extends Notifier<MetronomePlaybackState> {
         isPlaying: false,
         lastEvent: 'Metronome stopped',
       );
+      unawaited(_backgroundService.stop());
     }
   }
 
@@ -297,6 +304,8 @@ class SequencerPlaybackController extends Notifier<SequencerPlaybackState> {
   }
 
   AudioEngine get _engine => ref.read(audioEngineProvider);
+  BackgroundAudioService get _backgroundService =>
+      ref.read(backgroundAudioServiceProvider);
   PatternRenderer get _renderer => ref.read(patternRendererProvider);
 
   /// Starts sequencer pattern playback or swaps to it if playback is already active.
@@ -318,6 +327,7 @@ class SequencerPlaybackController extends Notifier<SequencerPlaybackState> {
       isPlaying: true,
       lastEvent: 'Sequencer running at ${tempo.round()} BPM',
     );
+    unawaited(_backgroundService.start());
   }
 
   /// Stops sequencer playback immediately.
@@ -328,6 +338,7 @@ class SequencerPlaybackController extends Notifier<SequencerPlaybackState> {
         isPlaying: false,
         lastEvent: 'Sequencer stopped',
       );
+      unawaited(_backgroundService.stop());
     }
   }
 
@@ -362,6 +373,7 @@ final sequencerPlaybackControllerProvider =
 /// Stops all active audio engine playback and resets playback controller states.
 Future<void> stopAllPlayback(WidgetRef ref) async {
   await ref.read(audioEngineProvider).stop();
+  unawaited(ref.read(backgroundAudioServiceProvider).stop());
   ref.read(metronomePlaybackControllerProvider.notifier).onExternalStop();
   ref.read(sequencerPlaybackControllerProvider.notifier).onExternalStop();
 }

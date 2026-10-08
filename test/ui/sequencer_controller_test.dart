@@ -1,26 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rhythm_box/audio/background_audio_service.dart';
 import 'package:rhythm_box/domain/pattern.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
-import 'package:rhythm_box/ui/sequencer_controller.dart';
-import '../audio/fake_audio_engine.dart';
-import '../persistence/fake_settings_store.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
+import 'package:rhythm_box/ui/sequencer_controller.dart';
+
+import '../audio/fake_audio_engine.dart';
+import '../audio/fake_background_audio_service.dart';
+import '../persistence/fake_settings_store.dart';
 
 void main() {
   group('SequencerController', () {
     late ProviderContainer container;
     late FakeSettingsStore store;
     late FakeAudioEngine engine;
+    late FakeBackgroundAudioService backgroundService;
 
     setUp(() async {
       store = FakeSettingsStore();
       engine = FakeAudioEngine();
+      backgroundService = FakeBackgroundAudioService();
 
       container = ProviderContainer(
         overrides: [
           settingsStoreProvider.overrideWithValue(store),
           audioEngineProvider.overrideWithValue(engine),
+          backgroundAudioServiceProvider
+              .overrideWithValue(backgroundService),
         ],
       );
     });
@@ -97,16 +104,18 @@ void main() {
       expect(saved!.isStepOn(0, 0), isFalse);
     });
 
-    test('togglePlay starts and stops AudioEngine', () async {
+    test('togglePlay starts and stops AudioEngine and BackgroundAudioService', () async {
       final controller = container.read(sequencerControllerProvider.notifier);
       
       await controller.togglePlay();
       expect(container.read(sequencerControllerProvider).isPlaying, isTrue);
       expect(engine.startLoopCalls, equals(1));
+      expect(backgroundService.startCalls, equals(1));
 
       await controller.togglePlay();
       expect(container.read(sequencerControllerProvider).isPlaying, isFalse);
       expect(engine.stopCalls, equals(1));
+      expect(backgroundService.stopCalls, equals(1));
     });
 
     test('pattern updates swap buffer if playing', () async {

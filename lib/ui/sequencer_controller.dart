@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../audio/audio_engine.dart';
+import '../audio/background_audio_service.dart';
 import '../domain/pattern.dart';
 import '../persistence/settings_store.dart';
 import '../synth/pattern_renderer.dart';
@@ -95,6 +98,8 @@ class SequencerController extends Notifier<SequencerState> {
   }
 
   AudioEngine get _engine => ref.read(audioEngineProvider);
+  BackgroundAudioService get _backgroundService =>
+      ref.read(backgroundAudioServiceProvider);
   PatternRenderer get _renderer => ref.read(patternRendererProvider);
 
   /// Starts sequencer looped playback.
@@ -115,6 +120,7 @@ class SequencerController extends Notifier<SequencerState> {
       }
       state = state.copyWith(isPlaying: true);
       ref.read(audioErrorProvider.notifier).clear();
+      unawaited(_backgroundService.start());
     } catch (e) {
       state = state.copyWith(isPlaying: false);
       final msg = 'Audio playback failed: $e';
@@ -129,6 +135,7 @@ class SequencerController extends Notifier<SequencerState> {
 
     await _engine.stop();
     state = state.copyWith(isPlaying: false);
+    unawaited(_backgroundService.stop());
   }
 
   /// Toggles playback between playing and stopped.

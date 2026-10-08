@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rhythm_box/audio/background_audio_service.dart';
 import 'package:rhythm_box/domain/pattern.dart';
 import 'package:rhythm_box/domain/sequence.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
@@ -11,6 +12,7 @@ import 'package:rhythm_box/ui/sequence_controller.dart';
 import 'package:rhythm_box/ui/sequencer_controller.dart';
 
 import '../audio/fake_audio_engine.dart';
+import '../audio/fake_background_audio_service.dart';
 import '../persistence/fake_settings_store.dart';
 
 void main() {
@@ -19,6 +21,7 @@ void main() {
   group('SequenceController', () {
     late FakeAudioEngine fakeEngine;
     late FakeSettingsStore fakeStore;
+    late FakeBackgroundAudioService fakeBackgroundService;
     late ProviderContainer container;
 
     final patternA = Pattern(
@@ -38,12 +41,15 @@ void main() {
     setUp(() {
       fakeEngine = FakeAudioEngine();
       fakeStore = FakeSettingsStore();
+      fakeBackgroundService = FakeBackgroundAudioService();
       fakeStore.savedPatternLibrary = [patternA, patternB];
 
       container = ProviderContainer(
         overrides: [
           audioEngineProvider.overrideWithValue(fakeEngine),
           settingsStoreProvider.overrideWithValue(fakeStore),
+          backgroundAudioServiceProvider
+              .overrideWithValue(fakeBackgroundService),
         ],
       );
     });
@@ -134,6 +140,7 @@ void main() {
       expect(fakeEngine.isPlaying, isTrue);
       expect(fakeEngine.lastLooping, isTrue);
       expect(fakeEngine.lastStartedBuffer, isNotNull);
+      expect(fakeBackgroundService.startCalls, equals(2));
 
       // Metronome must have been stopped
       expect(container.read(metronomeControllerProvider).isPlaying, isFalse);
@@ -153,6 +160,7 @@ void main() {
       await seqController.stop();
       expect(container.read(sequenceControllerProvider).isPlaying, isFalse);
       expect(fakeEngine.isPlaying, isFalse);
+      expect(fakeBackgroundService.stopCalls, greaterThanOrEqualTo(1));
     });
 
     test('visual playhead tracking maps positionStream to active entry index', () async {

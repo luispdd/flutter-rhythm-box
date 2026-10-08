@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rhythm_box/audio/background_audio_service.dart';
 import 'package:rhythm_box/domain/metronome_settings.dart';
 import 'package:rhythm_box/domain/voice.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
@@ -8,21 +9,26 @@ import 'package:rhythm_box/ui/metronome_controller.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
 
 import '../audio/fake_audio_engine.dart';
+import '../audio/fake_background_audio_service.dart';
 import '../persistence/fake_settings_store.dart';
 
 void main() {
   group('MetronomeController', () {
     late FakeSettingsStore fakeStore;
     late FakeAudioEngine fakeEngine;
+    late FakeBackgroundAudioService fakeBackgroundService;
     late ProviderContainer container;
 
     setUp(() {
       fakeStore = FakeSettingsStore();
       fakeEngine = FakeAudioEngine();
+      fakeBackgroundService = FakeBackgroundAudioService();
       container = ProviderContainer(
         overrides: [
           settingsStoreProvider.overrideWithValue(fakeStore),
           audioEngineProvider.overrideWithValue(fakeEngine),
+          backgroundAudioServiceProvider
+              .overrideWithValue(fakeBackgroundService),
         ],
       );
     });
@@ -144,6 +150,7 @@ void main() {
         final state = container.read(metronomeControllerProvider);
         expect(state.isPlaying, isTrue);
         expect(fakeEngine.startLoopCalls, equals(1));
+        expect(fakeBackgroundService.startCalls, equals(1));
         expect(fakeEngine.lastStartedBuffer, isNotNull);
         expect(fakeEngine.lastStartedBuffer!.totalSamples, greaterThan(0));
       });
@@ -156,6 +163,7 @@ void main() {
         await notifier.stop();
         expect(container.read(metronomeControllerProvider).isPlaying, isFalse);
         expect(fakeEngine.stopCalls, equals(1));
+        expect(fakeBackgroundService.stopCalls, equals(1));
       });
 
       test('togglePlayback starts when stopped and stops when playing', () async {

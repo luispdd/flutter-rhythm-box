@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../audio/audio_engine.dart';
+import '../audio/background_audio_service.dart';
 import '../domain/metronome_settings.dart';
 import '../domain/voice.dart';
 import '../persistence/settings_store.dart';
@@ -81,6 +84,8 @@ class MetronomeController extends Notifier<MetronomeState> {
   Future<void> loadFromStore() => _loadInitialSettings();
 
   AudioEngine get _engine => ref.read(audioEngineProvider);
+  BackgroundAudioService get _backgroundService =>
+      ref.read(backgroundAudioServiceProvider);
   MetronomeRenderer get _renderer => ref.read(metronomeRendererProvider);
 
   /// Updates settings, saves them to [SettingsStore], and swaps loop at boundary if currently playing.
@@ -140,6 +145,7 @@ class MetronomeController extends Notifier<MetronomeState> {
       }
       state = state.copyWith(isPlaying: true);
       ref.read(audioErrorProvider.notifier).clear();
+      unawaited(_backgroundService.start());
     } catch (e) {
       state = state.copyWith(isPlaying: false);
       final msg = 'Audio playback failed: $e';
@@ -154,6 +160,7 @@ class MetronomeController extends Notifier<MetronomeState> {
 
     await _engine.stop();
     state = state.copyWith(isPlaying: false);
+    unawaited(_backgroundService.stop());
   }
 
   /// Toggles metronome playback between playing and stopped.

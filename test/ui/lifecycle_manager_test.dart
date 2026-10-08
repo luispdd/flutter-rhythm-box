@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rhythm_box/audio/background_audio_service.dart';
 import 'package:rhythm_box/persistence/settings_store.dart';
 import 'package:rhythm_box/ui/home_screen.dart';
 import 'package:rhythm_box/ui/lifecycle_manager.dart';
+import 'package:rhythm_box/ui/metronome_controller.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
 
 import '../audio/fake_audio_engine.dart';
+import '../audio/fake_background_audio_service.dart';
 import '../persistence/fake_settings_store.dart';
 
 class FailingAudioEngine extends FakeAudioEngine {
@@ -117,6 +120,49 @@ void main() {
       await tester.pump();
 
       expect(fakeEngine.disposeCalls, equals(1));
+    });
+
+    testWidgets('stops active playback when notification stop is received',
+        (tester) async {
+      final fakeEngine = FailingAudioEngine();
+      final fakeStore = FakeSettingsStore();
+      final fakeBackgroundService = FakeBackgroundAudioService();
+
+      late WidgetRef capturedRef;
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            audioEngineProvider.overrideWithValue(fakeEngine),
+            settingsStoreProvider.overrideWithValue(fakeStore),
+            backgroundAudioServiceProvider
+                .overrideWithValue(fakeBackgroundService),
+          ],
+          child: MaterialApp(
+            home: AppLifecycleManager(
+              child: Consumer(
+                builder: (context, ref, _) {
+                  capturedRef = ref;
+                  return const Text('App Content');
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pump();
+
+      // Start metronome playback
+      await capturedRef.read(metronomeControllerProvider.notifier).start();
+      await tester.pump();
+      expect(capturedRef.read(metronomeControllerProvider).isPlaying, isTrue);
+
+      // Trigger notification stop
+      fakeBackgroundService.triggerNotificationStop();
+      await tester.pump();
+
+      expect(capturedRef.read(metronomeControllerProvider).isPlaying, isFalse);
     });
   });
 }
