@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,10 +31,10 @@ class InMemoryKitRepository implements KitRepository {
   final Kit defaultKit;
 
   InMemoryKitRepository({List<Kit>? kits, Kit? defaultKit})
-      : defaultKit = defaultKit ?? Kit.classicSynth,
-        _kits = kits != null
-            ? List<Kit>.from(kits)
-            : [defaultKit ?? Kit.classicSynth];
+    : defaultKit = defaultKit ?? Kit.classicSynth,
+      _kits = kits != null
+          ? List<Kit>.from(kits)
+          : [defaultKit ?? Kit.classicSynth];
 
   @override
   List<Kit> get availableKits => List.unmodifiable(_kits);
@@ -51,11 +52,7 @@ class InMemoryKitRepository implements KitRepository {
 
 /// Asset-backed [KitRepository] loading bundled kit JSON files from `assets/kits/`.
 class AssetKitRepository implements KitRepository {
-  static const String classicSynthPath = 'assets/kits/classic-synth.json';
-  static const String retro8BitPath = 'assets/kits/retro-8bit.json';
-
   final AssetBundle _bundle;
-  final List<String> _assetPaths;
   @override
   final Kit defaultKit;
 
@@ -63,21 +60,23 @@ class AssetKitRepository implements KitRepository {
 
   AssetKitRepository({
     AssetBundle? bundle,
-    List<String>? assetPaths,
     Kit? defaultKit,
-  })  : _bundle = bundle ?? rootBundle,
-        _assetPaths = assetPaths ?? [classicSynthPath, retro8BitPath],
-        defaultKit = defaultKit ?? Kit.classicSynth {
+  }) : _bundle = bundle ?? rootBundle,
+       defaultKit = defaultKit ?? Kit.classicSynth {
     _loadedKits[this.defaultKit.id] = this.defaultKit;
   }
-
 
   @override
   List<Kit> get availableKits => List.unmodifiable(_loadedKits.values);
 
   @override
   Future<List<Kit>> loadKits() async {
-    for (final path in _assetPaths) {
+    final manifest = await AssetManifest.loadFromAssetBundle(_bundle);
+    final kitPaths = manifest.listAssets().where(
+      (p) => p.endsWith('.kit.json'),
+    );
+
+    for (final path in kitPaths) {
       try {
         final content = await _bundle.loadString(path);
         final dynamic decoded = jsonDecode(content);

@@ -50,4 +50,11 @@ The kit repository SHALL expose all loaded built-in kits through `availableKits`
 
 #### Scenario: Discover available kits
 - **WHEN** querying available kits from the repository
-- **THEN** both `classic-synth` and `retro-8bit` kits are returned in the list
+- **THEN** all discovered kits are returned in the list
+
+### Requirement: Automatic kit discovery and loading
+The kit repository SHALL dynamically resolve the sound kits asset directory from the configuration declared under `flutter.assets` in `pubspec.yaml` and automatically discover and load all kit JSON files within that directory on application startup without requiring individual kit filenames or paths to be hardcoded.
+
+#### Scenario: Discover and load all bundled kits automatically
+- **WHEN** the application initializes the kit repository on startup
+- **THEN** all valid kit JSON files located in the configured kits folder (including `classic-synth`) are automatically discovered, loaded, and registered in `availableKits` without manual per-kit registration

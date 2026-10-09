@@ -1,0 +1,72 @@
+{
+    "schemaVersion": 1,
+    "id": "analog-drums",
+    "name": "Analog drums (808-style)",
+    "builtIn": true,
+    "voices": [
+        {
+            "label": "Kick",
+            "waveform": "sine",
+            "startFreqHz": 120.0,
+            "endFreqHz": 45.0,
+            "decayMs": 450.0,
+            "gain": 0.95
+        },
+        {
+            "label": "Low tom",
+            "waveform": "sine",
+            "startFreqHz": 130.0,
+            "endFreqHz": 85.0,
+            "decayMs": 350.0,
+            "gain": 0.8
+        },
+        {
+            "label": "Hi tom",
+            "waveform": "sine",
+            "startFreqHz": 230.0,
+            "endFreqHz": 150.0,
+            "decayMs": 280.0,
+            "gain": 0.7
+        },
+        {
+            "label": "Snare",
+            "waveform": "noise",
+            "highpassHz": 800.0,
+            "lowpassHz": 9000.0,
+            "decayMs": 200.0,
+            "gain": 0.6
+        },
+        {
+            "label": "Clap",
+            "waveform": "noise",
+            "highpassHz": 900.0,
+            "lowpassHz": 4000.0,
+            "attackMs": 6.0,
+            "decayMs": 160.0,
+            "gain": 0.55
+        },
+        {
+            "label": "Closed hat",
+            "waveform": "noise",
+            "highpassHz": 7500.0,
+            "decayMs": 40.0,
+            "gain": 0.35
+        },
+        {
+            "label": "Open hat",
+            "waveform": "noise",
+            "highpassHz": 6000.0,
+            "decayMs": 300.0,
+            "gain": 0.35
+        },
+        {
+            "label": "Cowbell",
+            "waveform": "square",
+            "startFreqHz": 540.0,
+            "endFreqHz": 540.0,
+            "lowpassHz": 2500.0,
+            "decayMs": 150.0,
+            "gain": 0.35
+        }
+    ]
+}

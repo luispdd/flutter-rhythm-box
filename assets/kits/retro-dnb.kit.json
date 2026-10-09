@@ -1,0 +1,83 @@
+{
+    "schemaVersion": 1,
+    "id": "retro-dnb",
+    "name": "Retro 8-bit D&B",
+    "builtIn": true,
+    "voices": [
+        {
+            "label": "Sub bass",
+            "waveform": "sine",
+            "startFreqHz": 45,
+            "endFreqHz": 45,
+            "decayMs": 450.0,
+            "gain": 1
+        },
+        {
+            "label": "Low bass",
+            "waveform": "triangle",
+            "startFreqHz": 53.0,
+            "endFreqHz": 53.0,
+            "lowpassHz": 500.0,
+            "decayMs": 400.0,
+            "gain": 1
+        },
+        {
+            "label": "Mid bass",
+            "waveform": "pulse",
+            "dutyCycle": 0.25,
+            "startFreqHz": 65.4,
+            "endFreqHz": 65.4,
+            "lowpassHz": 500.0,
+            "decayMs": 320.0,
+            "gain": 0.3
+        },
+        {
+            "label": "Slide bass",
+            "waveform": "pulse",
+            "dutyCycle": 0.125,
+            "startFreqHz": 100.8,
+            "endFreqHz": 82.4,
+            "lowpassHz": 700.0,
+            "decayMs": 260.0,
+            "gain": 0.1
+        },
+        {
+            "label": "Kick",
+            "waveform": "triangle",
+            "startFreqHz": 200.0,
+            "endFreqHz": 50.0,
+            "decayMs": 110.0,
+            "gain": 0.5,
+            "bitDepth": 5
+        },
+        {
+            "label": "Snare",
+            "waveform": "lfsrNoise",
+            "lfsrShort": false,
+            "lfsrClockHz": 24000.0,
+            "highpassHz": 1500.0,
+            "bitDepth": 5,
+            "decayMs": 110.0,
+            "gain": 0.0
+        },
+        {
+            "label": "Closed hat",
+            "waveform": "lfsrNoise",
+            "lfsrShort": true,
+            "lfsrClockHz": 32000.0,
+            "highpassHz": 6000.0,
+            "decayMs": 25.0,
+            "gain": 0.4
+        },
+        {
+            "label": "Open hat",
+            "waveform": "lfsrNoise",
+            "lfsrShort": true,
+            "lfsrClockHz": 32000.0,
+            "highpassHz": 5000.0,
+            "bitDepth": 6,
+            "decayMs": 120.0,
+            "gain": 0.2
+        }
+    ]
+}

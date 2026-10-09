@@ -80,9 +80,9 @@ To create a new kit:
 1. **Duplicate an existing kit:** Copy an existing file in `assets/kits/` (e.g. `cp assets/kits/retro-8bit.json assets/kits/my-kit.json`).
 2. **Update identity:** Change the `id` to a unique identifier (e.g. `"my-kit"`) and `name` to your preferred title (e.g. `"My Custom Kit"`). Set `"builtIn": false`.
 3. **Configure the 8 voices:** Adjust voice parameters for tracks 0 through 7. Ensure the `voices` array contains **exactly 8 voices** and all parameter values stay within their valid ranges.
-4. **Register the kit:**
-   - **Bundled asset kit:** Ensure the file path is listed under `flutter.assets` in `pubspec.yaml` and registered in `AssetKitRepository`.
-   - **User kits folder:** If the external user kits folder is supported, save the `.json` file into the application's user kits directory; the repository discovers and loads it on boot.
+4. **Automatic kit discovery:**
+   - **Bundled asset kit:** Save the `.kit.json` file into `assets/kits/` (declared in `pubspec.yaml`). On app launch, `AssetKitRepository` automatically discovers and loads all JSON kits in that directory without needing to manually register individual kits in Dart code.
+   - **User kits folder:** If the external user kits folder is supported, save the `.kit.json` file into the application's user kits directory; the repository discovers and loads it on boot.
 
 ---
 
