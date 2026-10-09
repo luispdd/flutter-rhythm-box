@@ -114,7 +114,33 @@ class MetronomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Metronome'),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Flexible(
+              child: Text(
+                'Metronome',
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                '$tempo BPM',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             key: const Key('export_library_button'),
@@ -146,8 +172,6 @@ class MetronomeScreen extends ConsumerWidget {
                   isPlaying: isPlaying,
                 ),
                 const SizedBox(height: 24),
-                _buildPlaybackControls(context, ref, isPlaying),
-                const SizedBox(height: 24),
                 _buildSettingsControls(context, ref, settings),
               ],
             ),
@@ -161,54 +185,31 @@ class MetronomeScreen extends ConsumerWidget {
     return Card(
       elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Row(
           children: [
-            Text(
-              'Tempo: $tempo BPM',
-              style: Theme.of(context).textTheme.titleLarge,
+            HoldTimerIconButton(
+              key: const Key('tempo_decrement_button'),
+              icon: Icons.remove,
+              onPressed: () => ref.read(tempoProvider.notifier).decrement(),
             ),
-            Row(
-              children: [
-                HoldTimerIconButton(
-                  key: const Key('tempo_decrement_button'),
-                  icon: Icons.remove,
-                  onPressed: () => ref.read(tempoProvider.notifier).decrement(),
-                ),
-                Expanded(
-                  child: Slider(
-                    key: const Key('tempo_slider'),
-                    value: tempo.toDouble(),
-                    min: Tempo.minBpm.toDouble(),
-                    max: Tempo.maxBpm.toDouble(),
-                    onChanged: (value) =>
-                        ref.read(tempoProvider.notifier).setBpm(value.toInt()),
-                  ),
-                ),
-                HoldTimerIconButton(
-                  key: const Key('tempo_increment_button'),
-                  icon: Icons.add,
-                  onPressed: () => ref.read(tempoProvider.notifier).increment(),
-                ),
-              ],
+            Expanded(
+              child: Slider(
+                key: const Key('tempo_slider'),
+                value: tempo.toDouble(),
+                min: Tempo.minBpm.toDouble(),
+                max: Tempo.maxBpm.toDouble(),
+                onChanged: (value) =>
+                    ref.read(tempoProvider.notifier).setBpm(value.toInt()),
+              ),
+            ),
+            HoldTimerIconButton(
+              key: const Key('tempo_increment_button'),
+              icon: Icons.add,
+              onPressed: () => ref.read(tempoProvider.notifier).increment(),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildPlaybackControls(BuildContext context, WidgetRef ref, bool isPlaying) {
-    return ElevatedButton.icon(
-      key: const Key('play_stop_button'),
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(16.0),
-      ),
-      onPressed: () => ref.read(metronomeControllerProvider.notifier).togglePlayback(),
-      icon: Icon(isPlaying ? Icons.stop : Icons.play_arrow),
-      label: Text(
-        isPlaying ? 'Stop' : 'Play',
-        style: const TextStyle(fontSize: 18),
       ),
     );
   }
@@ -336,38 +337,49 @@ class BeatIndicator extends ConsumerWidget {
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(beatsPerBar, (index) {
-            final isActive = index == activeBeat;
-            final isAccent = index == 0;
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: isActive
-                    ? (isAccent ? Colors.amber : Colors.amber.shade700)
-                    : theme.colorScheme.surfaceContainerHighest,
-                shape: BoxShape.circle,
-                border: Border.all(
+          children: [
+            ...List.generate(beatsPerBar, (index) {
+              final isActive = index == activeBeat;
+              final isAccent = index == 0;
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 6),
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
                   color: isActive
-                      ? Colors.amberAccent
-                      : theme.colorScheme.outline,
-                  width: 2,
+                      ? (isAccent ? Colors.amber : Colors.amber.shade700)
+                      : theme.colorScheme.surfaceContainerHighest,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: isActive
+                        ? Colors.amberAccent
+                        : theme.colorScheme.outline,
+                    width: 2,
+                  ),
                 ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                '${index + 1}',
-                style: TextStyle(
-                  color: isActive
-                      ? Colors.black
-                      : theme.colorScheme.onSurface.withValues(alpha: 0.5),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                alignment: Alignment.center,
+                child: Text(
+                  '${index + 1}',
+                  style: TextStyle(
+                    color: isActive
+                        ? Colors.black
+                        : theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+            const SizedBox(width: 8),
+            IconButton.filled(
+              key: const Key('play_stop_button'),
+              iconSize: 28,
+              onPressed: () =>
+                  ref.read(metronomeControllerProvider.notifier).togglePlayback(),
+              icon: Icon(isPlaying ? Icons.stop : Icons.play_arrow),
+              tooltip: isPlaying ? 'Stop' : 'Play',
+            ),
+          ],
         );
       },
     );

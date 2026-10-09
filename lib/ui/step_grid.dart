@@ -5,8 +5,10 @@ class StepGrid extends StatelessWidget {
   final List<List<bool>> tracks;
   final void Function(int trackIndex, int stepIndex) onStepToggled;
   final List<String>? trackLabels;
+  final bool showLabels;
 
   static const double labelWidth = 76.0;
+  static const double rowHeight = 36.0;
 
   const StepGrid({
     super.key,
@@ -14,32 +16,36 @@ class StepGrid extends StatelessWidget {
     required this.tracks,
     required this.onStepToggled,
     this.trackLabels,
+    this.showLabels = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: List.generate(8, (row) {
         // Track 0 is the lowest voice, display it at the bottom.
         final trackIndex = 7 - row;
         final label = (trackLabels != null && trackIndex < trackLabels!.length)
             ? trackLabels![trackIndex]
             : 'Trk ${trackIndex + 1}';
-        return Expanded(
+        return SizedBox(
+          height: rowHeight,
           child: Row(
             children: [
-              SizedBox(
-                width: labelWidth,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 6.0),
-                  child: Text(
-                    label,
-                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+              if (showLabels)
+                SizedBox(
+                  width: labelWidth,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 6.0),
+                    child: Text(
+                      label,
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
                 ),
-              ),
               Expanded(
                 child: Row(
                   children: List.generate(stepCount, (stepIndex) {

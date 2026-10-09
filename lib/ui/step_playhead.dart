@@ -14,6 +14,7 @@ class StepPlayhead extends ConsumerWidget {
     final tempo = ref.watch(tempoProvider);
     final state = ref.watch(sequencerControllerProvider);
     final kitRepo = ref.watch(kitRepositoryProvider);
+    final showTrackLabels = ref.watch(trackLabelsVisibleProvider);
     final isPlaying = state.isPlaying;
     final stepCount = state.pattern.stepCount;
 
@@ -39,10 +40,12 @@ class StepPlayhead extends ConsumerWidget {
         }
 
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
-                const SizedBox(width: StepGrid.labelWidth),
+                if (showTrackLabels)
+                  const SizedBox(width: StepGrid.labelWidth),
                 Expanded(
                   child: Row(
                     children: List.generate(stepCount, (index) {
@@ -63,15 +66,14 @@ class StepPlayhead extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 4),
-            Expanded(
-              child: StepGrid(
-                stepCount: stepCount,
-                tracks: state.pattern.tracks,
-                trackLabels: trackLabels,
-                onStepToggled: (trackIndex, stepIndex) {
-                  ref.read(sequencerControllerProvider.notifier).toggleStep(trackIndex, stepIndex);
-                },
-              ),
+            StepGrid(
+              stepCount: stepCount,
+              tracks: state.pattern.tracks,
+              trackLabels: trackLabels,
+              showLabels: showTrackLabels,
+              onStepToggled: (trackIndex, stepIndex) {
+                ref.read(sequencerControllerProvider.notifier).toggleStep(trackIndex, stepIndex);
+              },
             ),
           ],
         );

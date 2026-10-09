@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +9,7 @@ import 'package:rhythm_box/ui/pattern_library_screen.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
 import 'package:rhythm_box/ui/sequencer_controller.dart';
 import 'package:rhythm_box/ui/sequencer_screen.dart';
+import 'package:rhythm_box/ui/step_playhead.dart';
 
 import '../audio/fake_audio_engine.dart';
 import '../persistence/fake_settings_store.dart';
@@ -70,7 +72,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Tap the Clear button
-      await tester.tap(find.text('Clear'));
+      await tester.tap(find.byKey(const Key('clear_pattern_button')));
       await tester.pumpAndSettle();
 
       // Verify confirmation dialog appears
@@ -90,7 +92,7 @@ void main() {
       expect(container.read(sequencerControllerProvider).pattern.tracks[0][0], isTrue);
 
       // Tap Clear again and confirm
-      await tester.tap(find.text('Clear'));
+      await tester.tap(find.byKey(const Key('clear_pattern_button')));
       await tester.pumpAndSettle();
 
       await tester.tap(find.widgetWithText(TextButton, 'Clear'));
@@ -134,6 +136,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      // Toggle track labels to visible so voice labels are rendered
+      await tester.tap(find.byKey(const Key('toggle_track_labels_button')));
+      await tester.pumpAndSettle();
+
       // Find kit dropdown selector
       final selectorFinder = find.byKey(const Key('sequencerKitSelector'));
       expect(selectorFinder, findsOneWidget);
@@ -155,6 +161,138 @@ void main() {
 
       // Verify step grid labels updated to retro kit voice labels
       expect(find.text('8Bit ${Kit.classicSynth.voices[0].label!}'), findsOneWidget);
+    });
+
+    testWidgets('SequencerScreen shows BPM badge in AppBar and reordered controls with tooltips',
+        (tester) async {
+      final fakeStore = FakeSettingsStore();
+      final fakeEngine = FakeAudioEngine();
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            settingsStoreProvider.overrideWithValue(fakeStore),
+            audioEngineProvider.overrideWithValue(fakeEngine),
+          ],
+          child: const MaterialApp(
+            home: SequencerScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // BPM in AppBar
+      expect(find.text('120 BPM'), findsOneWidget);
+      // No "Tempo: 120 BPM" title above slider
+      expect(find.text('Tempo: 120 BPM'), findsNothing);
+
+      // Verify all control buttons exist by Key
+      expect(find.byKey(const Key('toggle_track_labels_button')), findsOneWidget);
+      expect(find.byKey(const Key('step_count_slider')), findsOneWidget);
+      expect(find.byKey(const Key('clear_pattern_button')), findsOneWidget);
+      expect(find.byKey(const Key('save_pattern_button')), findsOneWidget);
+      expect(find.byKey(const Key('play_stop_button')), findsOneWidget);
+
+      // Verify tooltips
+      expect(find.byTooltip('Hide track labels'), findsNothing); // default hidden on android
+      expect(find.byTooltip('Show track labels'), findsOneWidget);
+      expect(find.byTooltip('Clear pattern'), findsOneWidget);
+      expect(find.byTooltip('Save pattern'), findsOneWidget);
+      expect(find.byTooltip('Play'), findsOneWidget);
+    });
+
+    testWidgets('SequencerScreen is vertically scrollable in landscape orientation',
+        (tester) async {
+      // Simulate landscape phone dimensions (e.g., 800x360)
+      tester.view.physicalSize = const Size(800, 360);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      final fakeStore = FakeSettingsStore();
+      final fakeEngine = FakeAudioEngine();
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            settingsStoreProvider.overrideWithValue(fakeStore),
+            audioEngineProvider.overrideWithValue(fakeEngine),
+          ],
+          child: const MaterialApp(
+            home: SequencerScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Ensure SingleChildScrollView exists and can be scrolled down
+      final scrollableFinder = find.byType(SingleChildScrollView);
+      expect(scrollableFinder, findsOneWidget);
+
+      // Drag to scroll down without layout overflow
+      await tester.drag(scrollableFinder, const Offset(0.0, -200.0));
+      await tester.pumpAndSettle();
+
+      // StepPlayhead is still rendered and responsive
+      expect(find.byType(StepPlayhead), findsOneWidget);
+    });
+
+    testWidgets('track label toggle respects platform default and toggles visibility',
+        (tester) async {
+      final fakeStore = FakeSettingsStore();
+      final fakeEngine = FakeAudioEngine();
+
+      // Test mobile default (Android in test binding)
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            settingsStoreProvider.overrideWithValue(fakeStore),
+            audioEngineProvider.overrideWithValue(fakeEngine),
+          ],
+          child: const MaterialApp(
+            home: SequencerScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Mobile default: track labels hidden
+      expect(find.text(Kit.classicSynth.voices[0].label!), findsNothing);
+
+      // Tap toggle button
+      await tester.tap(find.byKey(const Key('toggle_track_labels_button')));
+      await tester.pumpAndSettle();
+
+      // Track labels now visible
+      expect(find.text(Kit.classicSynth.voices[0].label!), findsOneWidget);
+
+      // Tap toggle again
+      await tester.tap(find.byKey(const Key('toggle_track_labels_button')));
+      await tester.pumpAndSettle();
+
+      // Track labels hidden again
+      expect(find.text(Kit.classicSynth.voices[0].label!), findsNothing);
+    });
+
+    test('trackLabelsVisibleProvider defaults based on platform', () {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      final mobileContainer = ProviderContainer();
+      expect(mobileContainer.read(trackLabelsVisibleProvider), isFalse);
+      mobileContainer.dispose();
+
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      final iosContainer = ProviderContainer();
+      expect(iosContainer.read(trackLabelsVisibleProvider), isFalse);
+      iosContainer.dispose();
+
+      debugDefaultTargetPlatformOverride = TargetPlatform.linux;
+      final linuxContainer = ProviderContainer();
+      expect(linuxContainer.read(trackLabelsVisibleProvider), isTrue);
+      linuxContainer.dispose();
+
+      debugDefaultTargetPlatformOverride = null;
     });
   });
 }

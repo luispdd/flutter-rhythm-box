@@ -40,7 +40,7 @@ void main() {
 
     // Verify Playback controls
     expect(find.byKey(const Key('play_stop_button')), findsOneWidget);
-    expect(find.text('Play'), findsOneWidget); // initially not playing
+    expect(find.byIcon(Icons.play_arrow), findsOneWidget); // initially not playing
 
     // Verify Settings controls
     expect(find.byKey(const Key('beats_per_bar_slider')), findsOneWidget);
@@ -67,7 +67,7 @@ void main() {
     // Interact with tempo increment
     await tester.tap(find.byKey(const Key('tempo_increment_button')));
     await tester.pumpAndSettle();
-    expect(find.text('Tempo: 121 BPM'), findsOneWidget);
+    expect(find.text('121 BPM'), findsOneWidget);
 
     // Interact with accent toggle
     final accentToggle = find.byKey(const Key('accent_toggle'));
@@ -78,7 +78,7 @@ void main() {
     final playButton = find.byKey(const Key('play_stop_button'));
     await tester.tap(playButton);
     await tester.pumpAndSettle();
-    expect(find.text('Stop'), findsOneWidget);
+    expect(find.byIcon(Icons.stop), findsOneWidget);
   });
 
   testWidgets('modifying settings during playback keeps playback running', (WidgetTester tester) async {
@@ -106,33 +106,33 @@ void main() {
     // Start playback
     await tester.tap(find.byKey(const Key('play_stop_button')));
     await tester.pumpAndSettle();
-    expect(find.text('Stop'), findsOneWidget);
+    expect(find.byIcon(Icons.stop), findsOneWidget);
     expect(fakeEngine.isPlaying, isTrue);
 
     // Toggle accent during playback
     await tester.tap(find.byKey(const Key('accent_toggle')));
     await tester.pumpAndSettle();
-    expect(find.text('Stop'), findsOneWidget);
+    expect(find.byIcon(Icons.stop), findsOneWidget);
     expect(fakeEngine.isPlaying, isTrue);
 
     // Change waveform during playback
     await tester.tap(find.text('Square'));
     await tester.pumpAndSettle();
-    expect(find.text('Stop'), findsOneWidget);
+    expect(find.byIcon(Icons.stop), findsOneWidget);
     expect(fakeEngine.isPlaying, isTrue);
 
     // Modify pitch slider during playback
     final pitchSlider = find.byKey(const Key('pitch_slider'));
     await tester.drag(pitchSlider, const Offset(50.0, 0.0));
     await tester.pumpAndSettle();
-    expect(find.text('Stop'), findsOneWidget);
+    expect(find.byIcon(Icons.stop), findsOneWidget);
     expect(fakeEngine.isPlaying, isTrue);
 
     // Modify decay slider during playback
     final decaySlider = find.byKey(const Key('decay_slider'));
     await tester.drag(decaySlider, const Offset(-30.0, 0.0));
     await tester.pumpAndSettle();
-    expect(find.text('Stop'), findsOneWidget);
+    expect(find.byIcon(Icons.stop), findsOneWidget);
     expect(fakeEngine.isPlaying, isTrue);
 
     // Verify swapLoopAtBoundary was triggered repeatedly without ever calling stop

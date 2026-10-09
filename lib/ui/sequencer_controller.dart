@@ -204,3 +204,26 @@ class SequencerController extends Notifier<SequencerState> {
 final sequencerControllerProvider =
     NotifierProvider<SequencerController, SequencerState>(
         SequencerController.new);
+
+/// Controls visibility of track labels in the sequencer grid.
+/// Defaults to hidden on mobile platforms (Android/iOS) and visible on desktop.
+final trackLabelsVisibleProvider =
+    NotifierProvider<TrackLabelsVisibleNotifier, bool>(
+  TrackLabelsVisibleNotifier.new,
+);
+
+class TrackLabelsVisibleNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    return !(defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS);
+  }
+
+  void toggle() {
+    state = !state;
+  }
+
+  void setVisible(bool visible) {
+    state = visible;
+  }
+}
