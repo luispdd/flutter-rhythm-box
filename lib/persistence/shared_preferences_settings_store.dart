@@ -284,6 +284,24 @@ class SharedPreferencesSettingsStore implements SettingsStore {
   }
 
   @override
+  Future<void> replaceAll(List<Pattern> patterns, List<Sequence> sequences) async {
+    try {
+      final patternsJson = jsonEncode(patterns.map((p) => p.toJson()).toList());
+      final sequencesJson = jsonEncode(sequences.map((s) => s.toJson()).toList());
+      final okPatterns = await _prefs.setString(patternLibraryKey, patternsJson);
+      final okSequences = await _prefs.setString(sequenceLibraryKey, sequencesJson);
+      if (!okPatterns || !okSequences) {
+        throw StateError('Failed to write replaced library to storage');
+      }
+      _lastError = null;
+    } catch (e, st) {
+      _lastError = 'Error replacing library: $e';
+      debugPrint('$_lastError\n$st');
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> clear() async {
     await _prefs.remove(metronomeSettingsKey);
     await _prefs.remove(tempoKey);

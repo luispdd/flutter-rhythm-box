@@ -62,6 +62,9 @@ abstract interface class SettingsStore {
   /// Returns the most recent storage error message, or `null` if none.
   String? get lastError;
 
+  /// Atomically replaces the stored pattern and sequence libraries with [patterns] and [sequences].
+  Future<void> replaceAll(List<Pattern> patterns, List<Sequence> sequences);
+
   /// Clears all persisted settings.
   Future<void> clear();
 }

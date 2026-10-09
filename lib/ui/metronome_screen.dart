@@ -3,12 +3,107 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rhythm_box/domain/metronome_settings.dart';
 import 'package:rhythm_box/domain/tempo.dart';
 import 'package:rhythm_box/domain/voice.dart';
+import 'package:rhythm_box/services/library_import_export_service.dart';
 import 'package:rhythm_box/ui/metronome_controller.dart';
 import 'package:rhythm_box/ui/playback_controller.dart';
 import 'package:rhythm_box/ui/hold_timer_icon_button.dart';
 
 class MetronomeScreen extends ConsumerWidget {
   const MetronomeScreen({super.key});
+
+  Future<void> _handleExport(BuildContext context, WidgetRef ref) async {
+    final service = ref.read(libraryImportExportServiceProvider);
+    final result = await service.exportLibrary();
+
+    if (!context.mounted) return;
+
+    if (result.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Nothing to export')),
+      );
+    } else if (result.isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Exported ${result.patternCount} patterns and ${result.sequenceCount} sequences',
+          ),
+        ),
+      );
+    } else if (result.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result.errorMessage!)),
+      );
+    }
+  }
+
+  Future<void> _handleImport(BuildContext context, WidgetRef ref) async {
+    final service = ref.read(libraryImportExportServiceProvider);
+    final prepResult = await service.pickAndValidateImportFile();
+
+    if (!context.mounted) return;
+
+    if (prepResult.isCanceled) {
+      return;
+    }
+
+    if (!prepResult.isReady || prepResult.data == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(prepResult.errorMessage ?? 'Import validation failed'),
+        ),
+      );
+      return;
+    }
+
+    final data = prepResult.data!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Replace all data?'),
+        content: Text(
+          data.patterns.isEmpty && data.sequences.isEmpty
+              ? 'This file contains 0 patterns and 0 sequences. Importing will permanently delete and clear all saved patterns and sequences on this device.'
+              : 'This file contains ${data.patterns.length} patterns and ${data.sequences.length} sequences.\n\nImporting will permanently delete everything currently saved on this device and replace it with the contents of the file.',
+        ),
+        actions: [
+          TextButton(
+            key: const Key('cancel_import_button'),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            key: const Key('confirm_import_button'),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
+            child: const Text('Replace All'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && context.mounted) {
+      final execResult = await service.executeImport(data);
+      if (!context.mounted) return;
+
+      if (execResult.isSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Imported ${execResult.patternCount} patterns and ${execResult.sequenceCount} sequences',
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(execResult.errorMessage ?? 'Import execution failed'),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,6 +115,20 @@ class MetronomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Metronome'),
+        actions: [
+          IconButton(
+            key: const Key('export_library_button'),
+            icon: const Icon(Icons.file_upload_outlined),
+            tooltip: 'Export Library',
+            onPressed: () => _handleExport(context, ref),
+          ),
+          IconButton(
+            key: const Key('import_library_button'),
+            icon: const Icon(Icons.file_download_outlined),
+            tooltip: 'Import Library',
+            onPressed: () => _handleImport(context, ref),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

@@ -123,6 +123,15 @@ class FakeSettingsStore implements SettingsStore {
     return savedTabIndex;
   }
 
+  int replaceAllCalls = 0;
+
+  @override
+  Future<void> replaceAll(List<Pattern> patterns, List<Sequence> sequences) async {
+    replaceAllCalls++;
+    savedPatternLibrary = List.from(patterns);
+    savedSequenceLibrary = List.from(sequences);
+  }
+
   @override
   String? lastError;
 }

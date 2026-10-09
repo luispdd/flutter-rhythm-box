@@ -312,6 +312,51 @@ void main() {
       });
     });
 
+    group('replaceAll', () {
+      test('overwrites existing patterns and sequences', () async {
+        final initialPattern = Pattern(id: 'old_p', name: 'Old Pattern');
+        final initialSequence = Sequence(id: 'old_s', name: 'Old Sequence');
+        await store.savePatternLibrary([initialPattern]);
+        await store.saveSequenceLibrary([initialSequence]);
+
+        final newPattern = Pattern(id: 'new_p', name: 'New Pattern', tempoBpm: 140);
+        final newSequence = Sequence(
+          id: 'new_s',
+          name: 'New Sequence',
+          entries: [SequenceEntry(patternId: 'new_p', repeats: 2)],
+        );
+
+        await store.replaceAll([newPattern], [newSequence]);
+
+        final loadedPatterns = await store.loadPatternLibrary();
+        final loadedSequences = await store.loadSequenceLibrary();
+
+        expect(loadedPatterns.length, equals(1));
+        expect(loadedPatterns.first.id, equals('new_p'));
+        expect(loadedPatterns.first.name, equals('New Pattern'));
+        expect(loadedPatterns.first.tempoBpm, equals(140));
+
+        expect(loadedSequences.length, equals(1));
+        expect(loadedSequences.first.id, equals('new_s'));
+        expect(loadedSequences.first.name, equals('New Sequence'));
+        expect(loadedSequences.first.entries.first.patternId, equals('new_p'));
+        expect(loadedSequences.first.entries.first.repeats, equals(2));
+      });
+
+      test('clears library when replacing with empty lists', () async {
+        await store.savePatternLibrary([Pattern(id: 'p1', name: 'P1')]);
+        await store.saveSequenceLibrary([Sequence(id: 's1', name: 'S1')]);
+
+        await store.replaceAll([], []);
+
+        final loadedPatterns = await store.loadPatternLibrary();
+        final loadedSequences = await store.loadSequenceLibrary();
+
+        expect(loadedPatterns, isEmpty);
+        expect(loadedSequences, isEmpty);
+      });
+    });
+
     group('lastError', () {
       test('starts as null', () {
         expect(store.lastError, isNull);
