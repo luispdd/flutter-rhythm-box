@@ -85,15 +85,17 @@ class SequencerController extends Notifier<SequencerState> {
 
   Future<void> _updatePattern(Pattern newPattern) async {
     state = state.copyWith(pattern: newPattern);
-    try {
-      final store = ref.read(settingsStoreProvider);
-      await store.saveWorkingPattern(newPattern);
-    } catch (e) {
-      if (!isStoreUnimplemented(e)) {
-        ref.read(appErrorProvider.notifier).setError('Failed to save working pattern: $e');
-        showAppSnackBar('Failed to save working pattern');
+    unawaited(() async {
+      try {
+        final store = ref.read(settingsStoreProvider);
+        await store.saveWorkingPattern(newPattern);
+      } catch (e) {
+        if (!isStoreUnimplemented(e)) {
+          ref.read(appErrorProvider.notifier).setError('Failed to save working pattern: $e');
+          showAppSnackBar('Failed to save working pattern');
+        }
       }
-    }
+    }());
     if (state.isPlaying) {
       await _restartPlayback(pattern: newPattern);
     }

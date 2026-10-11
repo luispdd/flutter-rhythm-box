@@ -58,7 +58,7 @@
             "highpassHz": 1500.0,
             "bitDepth": 5,
             "decayMs": 110.0,
-            "gain": 0.0
+            "gain": 0.1
         },
         {
             "label": "Closed hat",

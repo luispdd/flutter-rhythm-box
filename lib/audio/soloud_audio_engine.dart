@@ -77,6 +77,7 @@ class SoLoudAudioEngine implements AudioEngine {
       if (!_soloud.isInitialized) {
         await _soloud.init();
       }
+      _soloud.setAudioDeviceIdleTimeout(null);
       _isInitialized = true;
     } catch (e, st) {
       _isInitialized = false;
@@ -112,8 +113,8 @@ class SoLoudAudioEngine implements AudioEngine {
     final soundId = 'loop_${_bufferCounter++}';
     final source = await _soloud.loadMem(soundId, buffer.wavBytes);
 
-    // Anchor start to engine clock with a small lead margin (20 ms)
-    final startTime = _soloud.getEngineTime() + const Duration(milliseconds: 20);
+    // Anchor start to engine clock with a 60 ms lead margin for sink stabilization
+    final startTime = _soloud.getEngineTime() + const Duration(milliseconds: 60);
     final handle = _soloud.playScheduled(source, startTime, looping: looping);
 
     _audibleAnchorTime = startTime;
@@ -163,7 +164,6 @@ class SoLoudAudioEngine implements AudioEngine {
     // Check if the previous pending boundary already passed
     _promotePendingIfBoundaryPassed();
 
-    final now = _soloud.getEngineTime();
     const leadMarginUs = 30000; // 30 ms lead time
 
     // If a swap is already pending before its boundary, cancel it immediately.
@@ -185,11 +185,14 @@ class SoLoudAudioEngine implements AudioEngine {
     final nextSoundId = 'loop_${_bufferCounter++}';
     final nextSource = await _soloud.loadMem(nextSoundId, nextBuffer.wavBytes);
 
+    final now = _soloud.getEngineTime();
+
     Duration boundaryEngineTime;
-    if (_pendingBoundaryTime != null) {
+    if (_pendingBoundaryTime != null &&
+        now + const Duration(microseconds: leadMarginUs) < _pendingBoundaryTime!) {
       // Reuse the established boundary time for the current cycle so the audible
       // handle (already scheduled to stop at _pendingBoundaryTime) and the new
-      // pending handle align seamlessly.
+      // pending handle align seamlessly, as long as it is still in the future.
       boundaryEngineTime = _pendingBoundaryTime!;
     } else {
       // Compute boundary strictly from the audible loop's anchor timeline
@@ -268,38 +271,40 @@ class SoLoudAudioEngine implements AudioEngine {
       if (!_isPlaying) return;
       _promotePendingIfBoundaryPassed();
 
-      // If a swap is pending, the transition is scheduled or in progress;
-      // do not treat the retiring handle as stopped.
-      if (_pendingHandle != null) {
-        final currentHandle = _audibleHandle;
-        if (currentHandle != null && _soloud.getIsValidVoiceHandle(currentHandle)) {
-          try {
-            final pos = _soloud.getPosition(currentHandle);
-            if (!_positionStreamController.isClosed) {
-              _positionStreamController.add(pos);
-            }
-          } catch (_) {}
+      if (!_isLooping) {
+        final handle = _audibleHandle;
+        if (handle != null && !_soloud.getIsValidVoiceHandle(handle)) {
+          unawaited(stop());
+          return;
         }
-        return;
       }
 
-      final handle = _audibleHandle;
-      if (handle == null) return;
+      final anchor = _audibleAnchorTime;
+      final buffer = _audibleBuffer;
+      if (anchor == null || buffer == null) return;
 
-      // Only check handle expiration for non-looping playback (e.g. play-once sequences)
-      if (!_isLooping && !_soloud.getIsValidVoiceHandle(handle)) {
-        unawaited(stop());
-        return;
-      }
+      final loopDurUs = buffer.duration.inMicroseconds;
+      if (loopDurUs <= 0) return;
 
-      try {
-        if (_soloud.getIsValidVoiceHandle(handle)) {
-          final pos = _soloud.getPosition(handle);
+      final now = _soloud.getEngineTime();
+      if (now < anchor) {
+        if (!_positionStreamController.isClosed) {
+          _positionStreamController.add(Duration.zero);
+        }
+      } else {
+        final elapsedUs = (now - anchor).inMicroseconds;
+        if (_isLooping) {
+          final posUs = elapsedUs % loopDurUs;
           if (!_positionStreamController.isClosed) {
-            _positionStreamController.add(pos);
+            _positionStreamController.add(Duration(microseconds: posUs));
+          }
+        } else {
+          final clampedUs = elapsedUs > loopDurUs ? loopDurUs : elapsedUs;
+          if (!_positionStreamController.isClosed) {
+            _positionStreamController.add(Duration(microseconds: clampedUs));
           }
         }
-      } catch (_) {}
+      }
     });
   }
 }

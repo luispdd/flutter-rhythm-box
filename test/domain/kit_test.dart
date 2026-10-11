@@ -85,7 +85,7 @@ void main() {
     });
 
     test('loads and validates retro-8bit.json asset', () {
-      final file = File('assets/kits/retro-8bit.json');
+      final file = File('assets/kits/retro-8bit.kit.json');
       expect(file.existsSync(), isTrue);
       final json = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
       final kit = Kit.fromJson(json);
