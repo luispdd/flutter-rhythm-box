@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "id": "electro-pop",
+  "name": "Electro pop",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Punch kick",
+      "waveform": "sine",
+      "startFreqHz": 150.0,
+      "endFreqHz": 42.0,
+      "decayMs": 260.0,
+      "gain": 1.0
+    },
+    {
+      "label": "Synth bass",
+      "waveform": "triangle",
+      "startFreqHz": 65.4,
+      "endFreqHz": 55.0,
+      "decayMs": 280.0,
+      "gain": 0.85,
+      "lowpassHz": 800.0
+    },
+    {
+      "label": "Clap",
+      "waveform": "noise",
+      "highpassHz": 1100.0,
+      "lowpassHz": 6500.0,
+      "decayMs": 140.0,
+      "gain": 0.6
+    },
+    {
+      "label": "Pop snare",
+      "waveform": "pulse",
+      "dutyCycle": 0.35,
+      "startFreqHz": 180.0,
+      "endFreqHz": 90.0,
+      "decayMs": 150.0,
+      "gain": 0.6,
+      "highpassHz": 300.0
+    },
+    {
+      "label": "Clave",
+      "waveform": "sine",
+      "startFreqHz": 1800.0,
+      "endFreqHz": 1750.0,
+      "decayMs": 35.0,
+      "gain": 0.5
+    },
+    {
+      "label": "Vocal blip",
+      "waveform": "sine",
+      "startFreqHz": 659.25,
+      "endFreqHz": 659.25,
+      "pitchSteps": {
+        "semitones": [0, 7],
+        "stepMs": 35.0
+      },
+      "decayMs": 180.0,
+      "gain": 0.4
+    },
+    {
+      "label": "Closed hat",
+      "waveform": "noise",
+      "highpassHz": 8500.0,
+      "decayMs": 30.0,
+      "gain": 0.38
+    },
+    {
+      "label": "Open hat",
+      "waveform": "noise",
+      "highpassHz": 6800.0,
+      "decayMs": 240.0,
+      "gain": 0.35
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "id": "space-modular",
+  "name": "Space modular",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Sub boom",
+      "waveform": "sine",
+      "startFreqHz": 110.0,
+      "endFreqHz": 32.0,
+      "lowpassHz": 250.0,
+      "decayMs": 600.0,
+      "gain": 1.0
+    },
+    {
+      "label": "Modular ping",
+      "waveform": "sine",
+      "startFreqHz": 880.0,
+      "endFreqHz": 110.0,
+      "decayMs": 140.0,
+      "gain": 0.6
+    },
+    {
+      "label": "Cosmic sweep",
+      "waveform": "triangle",
+      "startFreqHz": 70.0,
+      "endFreqHz": 440.0,
+      "lowpassHz": 1500.0,
+      "decayMs": 320.0,
+      "gain": 0.55
+    },
+    {
+      "label": "Meteor blast",
+      "waveform": "noise",
+      "highpassHz": 400.0,
+      "lowpassHz": 3200.0,
+      "decayMs": 240.0,
+      "gain": 0.55
+    },
+    {
+      "label": "Cosmic arp",
+      "waveform": "pulse",
+      "dutyCycle": 0.3,
+      "startFreqHz": 392.0,
+      "endFreqHz": 392.0,
+      "pitchSteps": {
+        "semitones": [0, 3, 7, 10, 14, 17],
+        "stepMs": 40.0
+      },
+      "decayMs": 300.0,
+      "gain": 0.38
+    },
+    {
+      "label": "Telemetry",
+      "waveform": "square",
+      "startFreqHz": 1250.0,
+      "endFreqHz": 980.0,
+      "decayMs": 70.0,
+      "gain": 0.35
+    },
+    {
+      "label": "Beacon ping",
+      "waveform": "sine",
+      "startFreqHz": 2400.0,
+      "endFreqHz": 2400.0,
+      "decayMs": 20.0,
+      "gain": 0.45
+    },
+    {
+      "label": "Shimmer cloud",
+      "waveform": "noise",
+      "highpassHz": 7500.0,
+      "lowpassHz": 16000.0,
+      "decayMs": 480.0,
+      "gain": 0.3
+    }
+  ]
+}

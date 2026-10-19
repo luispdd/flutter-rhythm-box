@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "id": "industrial-glitch",
+  "name": "Industrial glitch",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Anvil kick",
+      "waveform": "square",
+      "startFreqHz": 160.0,
+      "endFreqHz": 38.0,
+      "lowpassHz": 1200.0,
+      "decayMs": 260.0,
+      "gain": 0.75,
+      "bitDepth": 4,
+      "downsampleHz": 8000.0
+    },
+    {
+      "label": "Sub drone",
+      "waveform": "sine",
+      "startFreqHz": 65.0,
+      "endFreqHz": 30.0,
+      "decayMs": 500.0,
+      "gain": 0.9,
+      "bitDepth": 6
+    },
+    {
+      "label": "Metal clang",
+      "waveform": "square",
+      "startFreqHz": 820.0,
+      "endFreqHz": 610.0,
+      "highpassHz": 500.0,
+      "lowpassHz": 3500.0,
+      "decayMs": 130.0,
+      "gain": 0.45,
+      "bitDepth": 5
+    },
+    {
+      "label": "Glitch snare",
+      "waveform": "lfsrNoise",
+      "lfsrShort": false,
+      "lfsrClockHz": 12000.0,
+      "highpassHz": 1200.0,
+      "decayMs": 130.0,
+      "gain": 0.5,
+      "bitDepth": 4,
+      "downsampleHz": 11025.0
+    },
+    {
+      "label": "Stutter pulse",
+      "waveform": "pulse",
+      "dutyCycle": 0.08,
+      "startFreqHz": 440.0,
+      "endFreqHz": 440.0,
+      "pitchSteps": {
+        "semitones": [0, -3, -7, -12],
+        "stepMs": 20.0
+      },
+      "decayMs": 160.0,
+      "gain": 0.4,
+      "bitDepth": 4
+    },
+    {
+      "label": "Static burst",
+      "waveform": "noise",
+      "highpassHz": 1500.0,
+      "lowpassHz": 8000.0,
+      "decayMs": 90.0,
+      "gain": 0.5,
+      "bitDepth": 3,
+      "downsampleHz": 6000.0
+    },
+    {
+      "label": "Wire tap",
+      "waveform": "lfsrNoise",
+      "lfsrShort": true,
+      "lfsrClockHz": 8000.0,
+      "highpassHz": 2500.0,
+      "decayMs": 25.0,
+      "gain": 0.45
+    },
+    {
+      "label": "Toxic sizzle",
+      "waveform": "lfsrNoise",
+      "lfsrShort": false,
+      "lfsrClockHz": 42000.0,
+      "highpassHz": 6000.0,
+      "decayMs": 220.0,
+      "gain": 0.35,
+      "bitDepth": 5
+    }
+  ]
+}

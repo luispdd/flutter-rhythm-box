@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "modern-studio",
+  "name": "Modern studio",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Kick",
+      "waveform": "triangle",
+      "startFreqHz": 160.0,
+      "endFreqHz": 48.0,
+      "decayMs": 220.0,
+      "gain": 0.95,
+      "highpassHz": 30.0
+    },
+    {
+      "label": "Low tom",
+      "waveform": "sine",
+      "startFreqHz": 130.0,
+      "endFreqHz": 80.0,
+      "decayMs": 240.0,
+      "gain": 0.8
+    },
+    {
+      "label": "High tom",
+      "waveform": "sine",
+      "startFreqHz": 210.0,
+      "endFreqHz": 135.0,
+      "decayMs": 190.0,
+      "gain": 0.75
+    },
+    {
+      "label": "Snare",
+      "waveform": "noise",
+      "highpassHz": 900.0,
+      "lowpassHz": 8500.0,
+      "decayMs": 170.0,
+      "gain": 0.65
+    },
+    {
+      "label": "Rimshot",
+      "waveform": "triangle",
+      "startFreqHz": 420.0,
+      "endFreqHz": 360.0,
+      "decayMs": 45.0,
+      "gain": 0.6,
+      "highpassHz": 400.0,
+      "lowpassHz": 3000.0
+    },
+    {
+      "label": "Shaker",
+      "waveform": "noise",
+      "highpassHz": 5500.0,
+      "lowpassHz": 14000.0,
+      "decayMs": 75.0,
+      "gain": 0.45
+    },
+    {
+      "label": "Closed hat",
+      "waveform": "noise",
+      "highpassHz": 7500.0,
+      "decayMs": 38.0,
+      "gain": 0.4
+    },
+    {
+      "label": "Crash",
+      "waveform": "noise",
+      "highpassHz": 4500.0,
+      "decayMs": 550.0,
+      "gain": 0.35
+    }
+  ]
+}

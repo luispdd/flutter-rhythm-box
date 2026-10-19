@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "arcade-chiptune",
+  "name": "Arcade chiptune",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Triangle kick",
+      "waveform": "triangle",
+      "startFreqHz": 180.0,
+      "endFreqHz": 40.0,
+      "decayMs": 130.0,
+      "gain": 0.9,
+      "bitDepth": 4
+    },
+    {
+      "label": "Laser tom",
+      "waveform": "pulse",
+      "dutyCycle": 0.15,
+      "startFreqHz": 400.0,
+      "endFreqHz": 80.0,
+      "decayMs": 150.0,
+      "gain": 0.45,
+      "bitDepth": 5
+    },
+    {
+      "label": "Jump blip",
+      "waveform": "pulse",
+      "dutyCycle": 0.5,
+      "startFreqHz": 330.0,
+      "endFreqHz": 330.0,
+      "pitchSteps": {
+        "semitones": [0, 4, 7, 12, 16],
+        "stepMs": 25.0
+      },
+      "decayMs": 160.0,
+      "gain": 0.35
+    },
+    {
+      "label": "Arcade snare",
+      "waveform": "lfsrNoise",
+      "lfsrShort": false,
+      "lfsrClockHz": 20000.0,
+      "highpassHz": 1000.0,
+      "decayMs": 100.0,
+      "gain": 0.55,
+      "bitDepth": 5
+    },
+    {
+      "label": "1-Up chime",
+      "waveform": "pulse",
+      "dutyCycle": 0.25,
+      "startFreqHz": 523.25,
+      "endFreqHz": 523.25,
+      "pitchSteps": {
+        "semitones": [0, 4, 7, 12, 16, 19],
+        "stepMs": 30.0
+      },
+      "decayMs": 240.0,
+      "gain": 0.35
+    },
+    {
+      "label": "Laser blast",
+      "waveform": "pulse",
+      "dutyCycle": 0.125,
+      "startFreqHz": 1400.0,
+      "endFreqHz": 120.0,
+      "decayMs": 110.0,
+      "gain": 0.38
+    },
+    {
+      "label": "Metallic tick",
+      "waveform": "lfsrNoise",
+      "lfsrShort": true,
+      "lfsrClockHz": 28000.0,
+      "highpassHz": 4000.0,
+      "decayMs": 28.0,
+      "gain": 0.4
+    },
+    {
+      "label": "Splash cymbal",
+      "waveform": "lfsrNoise",
+      "lfsrShort": true,
+      "lfsrClockHz": 36000.0,
+      "highpassHz": 3500.0,
+      "decayMs": 180.0,
+      "gain": 0.32,
+      "bitDepth": 5
+    }
+  ]
+}

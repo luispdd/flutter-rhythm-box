@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "synthwave-80s",
+  "name": "80s Synthwave",
+  "builtIn": true,
+  "voices": [
+    {
+      "label": "Gated kick",
+      "waveform": "sine",
+      "startFreqHz": 170.0,
+      "endFreqHz": 50.0,
+      "decayMs": 240.0,
+      "gain": 0.95
+    },
+    {
+      "label": "Simmons low",
+      "waveform": "sine",
+      "startFreqHz": 260.0,
+      "endFreqHz": 65.0,
+      "decayMs": 280.0,
+      "gain": 0.8
+    },
+    {
+      "label": "Simmons hi",
+      "waveform": "sine",
+      "startFreqHz": 420.0,
+      "endFreqHz": 110.0,
+      "decayMs": 220.0,
+      "gain": 0.75
+    },
+    {
+      "label": "Power snare",
+      "waveform": "noise",
+      "highpassHz": 600.0,
+      "lowpassHz": 7500.0,
+      "decayMs": 250.0,
+      "gain": 0.7
+    },
+    {
+      "label": "Synth brass",
+      "waveform": "pulse",
+      "dutyCycle": 0.2,
+      "startFreqHz": 220.0,
+      "endFreqHz": 220.0,
+      "lowpassHz": 2200.0,
+      "decayMs": 200.0,
+      "gain": 0.45
+    },
+    {
+      "label": "Neon cowbell",
+      "waveform": "square",
+      "startFreqHz": 587.0,
+      "endFreqHz": 587.0,
+      "highpassHz": 400.0,
+      "lowpassHz": 2800.0,
+      "decayMs": 160.0,
+      "gain": 0.4
+    },
+    {
+      "label": "Crisp hat",
+      "waveform": "noise",
+      "highpassHz": 7000.0,
+      "decayMs": 42.0,
+      "gain": 0.4
+    },
+    {
+      "label": "Sizzle ride",
+      "waveform": "noise",
+      "highpassHz": 5500.0,
+      "decayMs": 400.0,
+      "gain": 0.35
+    }
+  ]
+}

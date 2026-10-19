@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rhythm_box/domain/kit.dart';
 import 'package:rhythm_box/domain/voice.dart';
+import 'package:rhythm_box/synth/voice_renderer.dart';
 
 
 void main() {
@@ -118,6 +119,50 @@ void main() {
       expect(updated.name, equals('Updated Name'));
       expect(updated.builtIn, isFalse);
       expect(updated.voices, equals(kit.voices));
+    });
+
+    test('all bundled kit assets in assets/kits are valid and synthesizable', () {
+      final kitDir = Directory('assets/kits');
+      expect(kitDir.existsSync(), isTrue);
+      final kitFiles = kitDir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.kit.json'))
+          .toList();
+
+      expect(kitFiles.length, greaterThanOrEqualTo(10));
+
+      final seenIds = <String>{};
+      final renderer = const VoiceRenderer();
+
+      for (final file in kitFiles) {
+        final content = file.readAsStringSync();
+        final json = jsonDecode(content) as Map<String, dynamic>;
+        final kit = Kit.fromJson(json);
+
+        expect(kit.id, isNotEmpty);
+        expect(kit.name, isNotEmpty);
+        expect(kit.builtIn, isTrue);
+        expect(seenIds.add(kit.id), isTrue, reason: 'Duplicate kit id: ${kit.id}');
+        expect(kit.voices.length, equals(8));
+
+        for (var i = 0; i < kit.voices.length; i++) {
+          final voice = kit.voices[i];
+          expect(voice.label, isNotNull);
+          expect(voice.label, isNotEmpty);
+          final pcm = renderer.renderVoicePcm(
+            voice,
+            trackIndex: i,
+            kitId: kit.id,
+            durationSec: 0.1,
+          );
+          expect(pcm.length, greaterThan(0));
+          // Verify samples are non-trivial numbers and within 16-bit range
+          for (final s in pcm) {
+            expect(s, inInclusiveRange(-32768, 32767));
+          }
+        }
+      }
     });
   });
 }
